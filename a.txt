@@ -1,0 +1,27 @@
+Timestamps:
+00:00:00 Demo Project
+00:05:25 1- UI Design
+01:30:18 2- REST API
+03:24:40 3- Login and Signup
+04:07:40 3- Update Profile
+04:42:50 3- Follow/Unfollow
+05:01:35 3- Create Post
+05:31:00 3- Feed Posts
+05:56:36 3- Like/Unlike Post
+06:05:00 3- Reply to Post
+06:15:14 3- User Page
+06:32:13 3- Post Page
+06:50:20 3- Optimizations
+07:26:30 4- Chat UI Design
+08:11:21 4- Chat API Routes
+08:44:40 4- Connecting Chat App to UI
+08:50:00 4- Implementing Socket.io
+10:35:46 4- Seen && Unseen Messages
+10:55:30 4- Image Support for Messages
+11:18:04 4- Suggested Users
+11:48:16 4- Notification Sounds
+11:51:15 4- Freeze Account
+12:05:06 5- Deployment
+12:23:51 BONUS:Cron Jobs
+
+React.js MongoDB Node.js MERN
