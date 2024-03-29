@@ -1,13 +1,16 @@
 import React, { useEffect }  from 'react'
 import Navigation from './Components/Navigation/Navigation'
 import toast, { Toaster } from 'react-hot-toast'
+import { Container } from './Components/Global/GlobalStyle'
 
 
 
 
 const App = () => {
 
-
+  // useEffect(() => {
+  //   document.body.style.zoom = "80%";
+  // }, []);
 
 
   return (
@@ -34,8 +37,11 @@ const App = () => {
         }
       }}
       
-/>
-      <Navigation/>
+/> 
+     <Container $width='100vw'>
+       <Navigation/>
+
+     </Container>
     </>
   )
 }

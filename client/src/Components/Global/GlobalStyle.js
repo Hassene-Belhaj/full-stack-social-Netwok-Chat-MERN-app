@@ -4,6 +4,7 @@ import { createGlobalStyle , css, styled } from 'styled-components'
 
 export const GlobalStyleCss = createGlobalStyle`
 * {
+    zoom: 99%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,6 +15,7 @@ html {
     scroll-behavior: smooth;
     background: ${({theme})=>theme.background};
     color: ${({theme})=>theme.color};
+    overflow-x:hidden ;
     
 }
 
@@ -63,6 +65,10 @@ right: ${({$right})=>$right};
 bottom: ${({$bottom})=>$bottom};
 transform:${({$transform})=>$transform} ;
 padding: ${({$padding})=>$padding};
+padding-top: ${({$paddingTop})=>$paddingTop};
+padding-right: ${({$paddingRight})=>$paddingRight};
+padding-Left: ${({$paddingLeft})=>$paddingLeft};
+padding-Bottom: ${({$paddingBottom})=>$paddingBottom};
 margin: ${({$margin})=>$margin};
 text-align: ${({$ta})=>$ta};
 text-decoration: ${({$td})=>$td};
@@ -182,6 +188,8 @@ ${sharedProps};
 
 export const Button = styled.button`
 ${sharedProps}
+color: ${({theme})=> theme.color};
+background-color: ${({theme})=>theme.background};
 `
 
 export const Button1 = styled.button`
@@ -192,7 +200,11 @@ cursor: pointer;
 outline: none;
 &:hover {
     transition: all ease-in-out 0.3s;
-    background-color: ${({theme}) =>(theme.background === dark.background  ?  "#3f3f46" : "#e1e1e1")}
+    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
+}
+&:active {
+    scale : 0.8;
+    transition: all ease-in-out 0.3s;
 }
 `
 
@@ -202,11 +214,13 @@ background: ${({theme})=> theme.color === dark.color ? '#fff': theme.color};
 color: ${({theme})=>theme.background };
 cursor: pointer;
 outline: none;
-border: ${({theme})=>theme.color === dark.color ? "1px solid #fff" : null};
+text-transform: capitalize;
+border: ${({theme})=>theme.color === dark.color ? "1px solid #fff" : 'none'};
 border-radius:15px ;
+font-weight : 600 ;
 &:hover {
     transition: all ease-in-out 0.3s;
-    /* opacity: 0.8; */
+    opacity: 0.8;
 }
 `
 
@@ -216,13 +230,16 @@ background: ${({theme})=> theme.background};
 color: ${({theme})=>theme.color };
 cursor: pointer;
 outline: none;
-/* border: ${({theme})=>theme.color === dark.color ? "1px solid #fff" : null}; */
+text-transform: capitalize;
+border: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`};
 border-radius:15px ;
+font-weight : 600 ;
 &:hover {
     transition: all ease-in-out 0.3s;
-    /* opacity: 0.8; */
+    opacity: 0.8;
 }
 `
+
 
 
 export const DivMenu = styled.span`
@@ -231,4 +248,12 @@ background-color: ${({theme}) =>(theme.background === dark.background  ?  "#1818
 box-shadow: ${({theme}) =>(theme.background ===dark.background  ?  "rgba(255,255,255, 0.05) 0px 0px 10px,rgba(255,255,255, 0.05) 0px 0px 10px" : "rgba(0, 0, 0, 0.05) 0px 0px 10px,rgba(0, 0, 0, 0.05) 0px 0px 10px" )} ;
 `
 
+export const ItemDiv = styled.div`
+${sharedProps} ;
+border-bottom: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`}  ;
+`
 
+export const ContainerBorderBottom = styled.div`
+${sharedProps} ;
+border-bottom: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`}  ;
+`

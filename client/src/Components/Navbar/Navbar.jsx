@@ -1,7 +1,8 @@
 import React  from 'react'
 import styled from 'styled-components'
 import { Button, Image, Nav } from '../Global/GlobalStyle'
-
+import logo1 from '/light-logo.svg'
+import logo2 from '/dark-logo.svg'
 
 
 
@@ -14,7 +15,7 @@ const Navbar = ({theme , setTheme}) => {
 
   return (
     <Nav $height='80px' $display='flex' $jc='center' $ai='center'>
-            <Image $width='2rem' $height='2rem' $cursor='pointer'  onClick={handleToggleTheme} src={theme === 'dark' ? "light-logo.svg" : "dark-logo.svg"} alt="" />
+            <Image $width='2rem' $height='2rem' $cursor='pointer'  onClick={handleToggleTheme} src={theme === 'dark' ? logo1 : logo2} alt="logo" />
     </Nav>   
   )
 }
