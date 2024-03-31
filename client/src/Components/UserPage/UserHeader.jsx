@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import { Button, Button1,Container, Div, DivMenu, FlexContainer, Image, Section, Span, Text, Title2, Title4 } from '../Global/GlobalStyle'
+import React from 'react'
+import { Button1,Container, ContainerBorderBottom, Div, DivMenu, FlexContainer, Image, Section, Span, Text, Title2, Title4 } from '../Global/GlobalStyle'
 import { FaInstagram } from 'react-icons/fa'
 import { PiDotsThreeCircle } from "react-icons/pi";
 import toast from 'react-hot-toast';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
+import { useState } from 'react';
 
 
 
 
 const ButtonStyle = styled.button`
-border: ${({$border})=>$border};
 flex: 1;
+border: ${({theme})=>`1px solid ${theme.background}`};
 cursor: pointer;
 text-align: center;
-background: transparent;
-color: ${({$color})=>$color};
-/* border-bottom: ${({$active})=> $active === 'dark' ? "solid 1px rgba(255,255,255,1" : "solid 1px rgba(0,0,0,0.05"}; */
+font-weight: 600;
+color: ${({theme})=>theme.color};
+background: ${({theme})=>theme.background};
+border-bottom: ${({theme,$active})=> $active ? `1px solid ${theme.color}` :  '1px solid rgba(0,0,0,0)'} ;
 `
 
 
@@ -23,10 +25,9 @@ color: ${({$color})=>$color};
 
 const UserHeader = () => {
     const [menuList , setMenuList] = useState(false)
-    const [active , setActive] = useState(true)
+    const [active , setActive] = useState('Threads')
 
-    let $active = localStorage.getItem('theme') 
-    console.log($active) 
+
 
     const get_url = () => {
         toast.dismiss()
@@ -43,12 +44,12 @@ const UserHeader = () => {
     }
   return (
     <Section>
-        <FlexContainer  $width='100%' $display='flex' $jc='space-between'  $paddingTop='4rem' $padding>
+        <FlexContainer  $width='100%' $display='flex' $jc='space-between'  $paddingTop='4rem' >
             <Div $display='flex' $fd='column' $flex='1'>
             <Title2 $fw='500'>Mark Zuckerberg</Title2>
                 <Div $display='flex' $ai='center' $padding='4px 0' $gap='1rem'>
                     <Text>zuck</Text>
-                    <Button1 $border='none' $padding='4px 12px' $br='25px'>threads.net</Button1>
+                    {/* <Button1 $border='none' $padding='4px 12px' $br='25px'>threads.net</Button1> */}
                 </Div>
             </Div>
             <Div $flex='1' $display='flex' $jc='end'>
@@ -56,7 +57,7 @@ const UserHeader = () => {
             </Div>
         </FlexContainer>
         
-        <Container $display='flex' $fd='column' $padding='2rem 0' $gap='1rem' >
+        <Container $display='flex' $fd='column' $padding='1rem 0' $gap='1rem' >
 
                     <Text >Co-founder, executive chairman and CEO of Meta Platforms .</Text>
 
@@ -67,9 +68,9 @@ const UserHeader = () => {
 
                 <Div $display='flex' $ai='center' $jc='center' $gap='.5rem' $position='relative'>
 
-                    <Button1  $padding='8px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > <FaInstagram size={25} /> </Button1> 
-
-                    <Button1  onBlur={handleBlurMenu} onClick={()=>setMenuList(!menuList)}  $padding='8px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > <PiDotsThreeCircle size={25} /></Button1> 
+                    <Button1  $padding='4px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > <FaInstagram size={25} /> </Button1> 
+ 
+                    <Button1  onBlur={handleBlurMenu} onClick={()=>setMenuList(!menuList)}  $padding='4px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > <PiDotsThreeCircle size={25} /></Button1> 
 
                     
             {menuList && (
@@ -82,10 +83,10 @@ const UserHeader = () => {
                 </Div>
             </FlexContainer>   
         </Container>
-        <FlexContainer $height='2.5rem' $display='flex' $gap='.5rem' $borderBottom='1px solid gray'>
-                  <ButtonStyle $border='none' onClick={()=>setActive(!active)}   >Threads</ButtonStyle> 
-                  <ButtonStyle $border='none' onClick={()=>setActive(!active)}  >Replies</ButtonStyle> 
-        </FlexContainer>
+        <ContainerBorderBottom $height='2.5rem' $display='flex'  $gap='.5rem' >
+                  <ButtonStyle  $active={active === 'Threads' ? true : false} onClick={()=>setActive('Threads')}   >Threads</ButtonStyle> 
+                  <ButtonStyle   $active={active === 'Replies' ? true : false} onClick={()=>setActive('Replies')}  >Replies</ButtonStyle> 
+        </ContainerBorderBottom>
     </Section>
   )
 }   

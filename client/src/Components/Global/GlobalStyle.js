@@ -11,13 +11,14 @@ export const GlobalStyleCss = createGlobalStyle`
     font-family: "poppins", sans-serif;
 }
 
-html {
+body {
     scroll-behavior: smooth;
     background: ${({theme})=>theme.background};
     color: ${({theme})=>theme.color};
     overflow-x:hidden ;
-    
 }
+
+
 
 `
 
@@ -105,9 +106,6 @@ inset: ${({$inset})=>$inset};
     scale: ${({$scaleHover})=>$scaleHover};
 }
 
-&:active{ 
-    color :${({$active})=>$active} ;
-}
 
 &:focus{  
     border: ${({$borderFocus})=>$borderFocus};
@@ -173,6 +171,10 @@ ${sharedProps} ;
 export const Image = styled.img`
 ${sharedProps};
 `
+export const Image2 = styled.img`
+${sharedProps}
+border: ${({theme})=>theme.color === dark.color ? `.1px solid rgba(255,255,255,0.2)` : null};
+`
 export const Span = styled.span`
 ${sharedProps};
 `
@@ -199,12 +201,10 @@ background-color: ${({theme})=>theme.background};
 cursor: pointer;
 outline: none;
 &:hover {
-    transition: all ease-in-out 0.3s;
     background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
 }
 &:active {
-    scale : 0.8;
-    transition: all ease-in-out 0.3s;
+    scale : 0.9;    
 }
 `
 
@@ -220,7 +220,7 @@ border-radius:15px ;
 font-weight : 600 ;
 &:hover {
     transition: all ease-in-out 0.3s;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 `
 
@@ -239,7 +239,6 @@ font-weight : 600 ;
     opacity: 0.8;
 }
 `
-
 
 
 export const DivMenu = styled.span`

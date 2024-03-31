@@ -4,14 +4,12 @@ import Home from '../Home/Home'
 import { ThemeProvider } from 'styled-components'
 import { Container, GlobalStyleCss } from '../Global/GlobalStyle'
 import Navbar from '../Navbar/Navbar'
-import UserHeader from '../UserPage/UserHeader'
-import UserPost from '../UserPage/UserPost'
 import UserPage from '../UserPage/UserPage'
 import PostPage from '../Post/PostPage'
 
 
 const Navigation = () => {
-    const [theme , setTheme] = useState('dark')
+    const [theme , setTheme] = useState(undefined)
 
     let Get_theme = localStorage.getItem('theme')
 
@@ -33,8 +31,8 @@ const Navigation = () => {
     }
   
 
-  return (
-    <ThemeProvider theme={theme === 'dark' ? dark : light }>
+    return (
+      <ThemeProvider theme={theme === 'dark' ? dark : light }>
         <GlobalStyleCss />
        <Container $maxWidth='620px' $margin='auto' $paddingRight='2rem'>
                 <Navbar theme={theme} setTheme={setTheme} />
@@ -45,7 +43,7 @@ const Navigation = () => {
         </Container> 
     </ThemeProvider>
 
-  )
+)
 }
 
 export default Navigation

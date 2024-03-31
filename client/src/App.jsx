@@ -16,6 +16,7 @@ const App = () => {
   return (
     <>
      <Toaster
+      reverseOrder='true'
       toastOptions={{
         duration : 2000,
         style : {
