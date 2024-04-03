@@ -4,6 +4,7 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const userRoute = require('./Routes/user');
+const postsRoute = require('./Routes/post');
 const { errorHandling } = require('./Middlewares/ErrorHandler');
 const { notFound } = require('./Middlewares/notFound');
 
@@ -11,7 +12,9 @@ const { notFound } = require('./Middlewares/notFound');
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
-app.use(cors())
+app.use(cors({
+    // origin : ['http://localhost:5176']
+}))
 app.use(cookieParser())
 
 
@@ -33,6 +36,7 @@ Start()
 
 
 app.use('/api/user',userRoute)
+app.use('/api/posts',postsRoute)
 
 
 app.use(errorHandling)
