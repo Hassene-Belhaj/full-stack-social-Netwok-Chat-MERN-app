@@ -183,6 +183,7 @@ ${sharedProps};
 `
 export const Navlink = styled(Link)`
 ${sharedProps};
+color: ${({theme})=>theme};
 `
 export const Hr = styled.hr`
 ${sharedProps};
@@ -216,11 +217,11 @@ cursor: pointer;
 outline: none;
 text-transform: capitalize;
 border: ${({theme})=>theme.color === dark.color ? "1px solid #fff" : 'none'};
-border-radius:15px ;
+border-radius:25px ;
 font-weight : 600 ;
 &:hover {
     transition: all ease-in-out 0.3s;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 `
 

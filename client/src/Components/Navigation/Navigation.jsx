@@ -6,6 +6,7 @@ import { Container, GlobalStyleCss } from '../Global/GlobalStyle'
 import Navbar from '../Navbar/Navbar'
 import UserPage from '../UserPage/UserPage'
 import PostPage from '../Post/PostPage'
+import Auth from '../Authentication/Auth'
 
 
 const Navigation = () => {
@@ -34,11 +35,13 @@ const Navigation = () => {
     return (
       <ThemeProvider theme={theme === 'dark' ? dark : light }>
         <GlobalStyleCss />
-       <Container $maxWidth='620px' $margin='auto' $paddingRight='2rem'>
+       <Container $maxWidth='620px' $margin='auto' $padding='2rem 0'>
                 <Navbar theme={theme} setTheme={setTheme} />
                 <Routes>
                   <Route path=':username' element={<UserPage />} />
                   <Route path=':username/post/:id' element={<PostPage />} />
+                  <Route path='signin'  element={<Auth type='signin' />} />
+                  <Route path='signup'  element={<Auth type='signup'/>} />
                 </Routes>
         </Container> 
     </ThemeProvider>

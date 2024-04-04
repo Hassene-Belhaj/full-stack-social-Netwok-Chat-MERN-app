@@ -35,7 +35,7 @@ const signIn = Asyncwrapper(async (req, res, next) => {
   const isValidPawd = await bcrypt.compare(req.body.password, resp.password);
   if (!isValidPawd) return next(createCustomError("invalid credentials", 403));
   generateTokenAndSetCookie(resp._id,resp.username,resp.profilePic, res);
-  const { password, ...info } = resp._doc;
+  const { password,bio,createdAt, __v,followers,following,profilePic, ...info } = resp._doc;
   res.status(200).json({ success: true, msg: "sign in successfully", info });
 });
 

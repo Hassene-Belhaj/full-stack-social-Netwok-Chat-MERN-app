@@ -10,7 +10,7 @@ const generateTokenAndSetCookie = (id,username,profilePic,res) => {
   res.cookie("token" , token , {
     httpOnly : true , 
     maxAge : 24 * 60 * 60 * 1000 * 15 ,
-    sameSite : "strict"
+    sameSite : "Strict" ,
 })
 return token
 }
