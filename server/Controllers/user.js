@@ -6,11 +6,22 @@ const {
   generateTokenAndSetCookie,
 } = require("../jwt/generateTokenAndSetCookie");
 
-const signUp = Asyncwrapper(async (req, res, next) => {
-  const { name, username, email, password } = req.body;
-  const resp = await userModel.findOne({ $or: [{ email }, { username }] });
+let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/; // regex for email
+let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
-  if (resp) return next(createCustomError("user already exists", 400));
+const signUp = Asyncwrapper(async (req, res, next) => {
+
+  const { name, username, email, password } = req.body;
+  
+  if(username.length < 3 ) return  next(createCustomError('Username must be at least 3 letters long',403));
+  if(name.length < 3 ) return  next(createCustomError('Name must be at least 3 letters long',403));
+  if(!email.length ) return  next(createCustomError('Enter email',403));
+  if(!emailRegex.test(email)) return  next(createCustomError('Invalid Email',403));
+  if(!passwordRegex.test(password)) return next(createCustomError('password shoud be 6 to 9 characters long with a numeric , 1 lowercase and 1 uppercase letters',403));
+
+  const resp = await userModel.findOne({ $or: [{ email }, { username }] });
+  if(resp && resp?.username === username) return next(createCustomError("username already exists", 400));
+  if(resp && resp?.email === email) return next(createCustomError("email already exists", 400));
 
   const salt = bcrypt.genSaltSync(10);
   const cryptedPassword = bcrypt.hashSync(password, salt);
@@ -39,7 +50,7 @@ const signIn = Asyncwrapper(async (req, res, next) => {
   res.status(200).json({ success: true, msg: "sign in successfully", info });
 });
 
-const logOut = Asyncwrapper(async (req, res) => {
+const logOut = Asyncwrapper(async (_req, res) => {
   res.cookie("token", "", { maxAge: 1 });
   res.status(200).json({ success: true, msg: "log out successfully" });
 });
@@ -140,3 +151,6 @@ module.exports = {
   updateUser,
   getProfile,
 };
+
+
+

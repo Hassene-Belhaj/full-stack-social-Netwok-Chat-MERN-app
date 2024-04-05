@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button2, Container,Div,Navlink,Text,Title2 } from '../Global/GlobalStyle'
+import { Button2,Div,Navlink,Text,Title2 } from '../Global/GlobalStyle'
 import styled from 'styled-components'
 import { MdOutlineEmail } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
@@ -11,6 +11,25 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 
+
+const Container = styled.div`
+position: relative;
+background-image: url('/auth.png');
+background-position: top;
+background-repeat: no-repeat;
+height: 100vh;
+`
+
+const Wrapper = styled.div`
+width: 400px;
+padding:1rem;
+margin: auto;
+position: absolute;
+top: 16rem;
+left: 50%;
+transform: translateX(-50%);
+
+`
 
 const IconLuUser2 = styled(LuUser2)`
 position: absolute;
@@ -50,12 +69,12 @@ color: gray;
 cursor: pointer;
 `
 const Form = styled.form`
-padding-top: 4rem;
+padding-top: 3rem;
 display: flex;
 flex-direction: column;
 align-items: center;
 margin: auto;
-gap: 2.5rem;
+gap: 2rem;
 background-color: ${({theme})=>theme};
 `
 const Input = styled.input`
@@ -93,8 +112,8 @@ const Auth = ({type}) => {
         try {
             const data  = await axios.post('/user/signup' , formData)
             if(data.status === 201) {
+              toast.success('sign up successfully')
               setTimeout(() => { 
-                toast.success('sign up successfully')
                 (navigate('/signin')) 
               }, 1000)
                
@@ -140,13 +159,14 @@ const Auth = ({type}) => {
 
 
   return (
-    <Container $paddingTop='4rem' $maxWidth='400px' $margin='auto'>
-       <Title2 $fs='2rem' $fw='400' $ta='center'  >
+    <Container>
+      <Wrapper>
+       <Title2 $fs='1.5rem' $fw='400' $ta='center' >
         {type === 'signin' ? 'Login' : 'Register'}
        </Title2>
       <Form onSubmit={handleSubmitFormAuth} >
         {type === 'signup' && (
-        <Div $width='100%'  $position='relative'>
+          <Div $width='100%'  $position='relative'>
           <Input name='name' autoComplete='off' placeholder='Name'/>
           <IconLuUser2  />
         </Div >
@@ -156,7 +176,7 @@ const Auth = ({type}) => {
           <IconLuUser2  />
         </Div>
          {type === 'signup' && (
-             <Div $width='100%' $position='relative' >
+           <Div $width='100%' $position='relative' >
           <Input name='email' autoComplete='off' placeholder='Email' /> 
           <IconOutlineEmail/>
         </Div>
@@ -190,6 +210,7 @@ const Auth = ({type}) => {
                 } 
       </Div>
        
+    </Wrapper>
     </Container>
   )
 }

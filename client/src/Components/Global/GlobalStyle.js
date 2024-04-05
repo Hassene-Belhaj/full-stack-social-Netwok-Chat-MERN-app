@@ -9,16 +9,72 @@ export const GlobalStyleCss = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: "poppins", sans-serif;
+
 }
 
 body {
-    scroll-behavior: smooth;
+    overflow-x:hidden ;
     background: ${({theme})=>theme.background};
     color: ${({theme})=>theme.color};
-    overflow-x:hidden ;
+    
+&::-webkit-scrollbar {
+    width: 1.2em;
+    height: auto;
+}
+&::-webkit-scrollbar-track {
+    background: ${({theme})=>theme.background === dark.background ? '#1e1e1e' : '#f3f5f9'} ;
+
+}
+&::-webkit-scrollbar-button {
+    background: ${({theme})=>theme.color === dark.color ? '#585858' : '#d5d5d5'} ;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
+
+}
+&::-webkit-scrollbar-button:single-button:vertical:decrement {
+    height: auto;
+    width: 8px;
+    background-position: center 8px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='gray'><polygon points='50,00 0,50 100,50'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 12px;
 }
 
 
+&::-webkit-scrollbar-button:single-button:vertical:increment {
+    height: auto;
+    width: 8px;
+    background-position: center 8px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='gray'><polygon points='0,0 100,0 50,50'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    
+}
+
+
+&::-webkit-scrollbar-button:single-button:vertical:decrement:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
+    background-color: rgb(128, 128, 128);
+}
+
+&::-webkit-scrollbar-button:single-button:vertical:increment:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='0,0 100,0 50,50'/></svg>");
+    background-color: rgb(128, 128, 128);
+}
+
+&::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='50,00 0,50 100,50'/></svg>");
+} 
+
+&::-webkit-scrollbar-thumb:active {
+    background-color: rgb(128, 128, 128);
+}
+
+&::-webkit-scrollbar-thumb {
+    background: ${({theme})=>theme.color === dark.color ? '#585858' : '#d5d5d5'} ;
+    border-top: .5px solid ${({theme})=>theme.background};
+    border-bottom: .5px solid ${({theme})=>theme.background};
+}
+}
 
 `
 
@@ -232,25 +288,62 @@ color: ${({theme})=>theme.color };
 cursor: pointer;
 outline: none;
 text-transform: capitalize;
-border: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`};
+border: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.2)" }`};
 border-radius:15px ;
 font-weight : 600 ;
-&:hover {
-    transition: all ease-in-out 0.3s;
-    opacity: 0.8;
+
+&:active {
+    scale : 0.9;    
 }
 `
 
+export const Button4 = styled.button`
+${sharedProps}
+color: ${({theme})=> theme};
+background-color: transparent;
+cursor: pointer;
+outline: none;
+&:hover {
+    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
+}
+&:active {
+    scale : 0.9;    
+}
+`
+export const Button5 = styled.button`
+${sharedProps}
+color: ${({theme})=> theme};
+background-color: transparent;
+cursor: pointer;
+outline: none;
+border: none;
+&:hover {
+    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
+}
+&:active {
+    scale : 0.9;    
+}
+
+`
 
 export const DivMenu = styled.span`
 ${sharedProps};
+overflow: hidden;
 background-color: ${({theme}) =>(theme.background === dark.background  ?  "#181818" : "#fff")} ;
-box-shadow: ${({theme}) =>(theme.background ===dark.background  ?  "rgba(255,255,255, 0.05) 0px 0px 10px,rgba(255,255,255, 0.05) 0px 0px 10px" : "rgba(0, 0, 0, 0.05) 0px 0px 10px,rgba(0, 0, 0, 0.05) 0px 0px 10px" )} ;
+box-shadow: ${({theme}) =>(theme.background ===dark.background  ?  "rgba(255,255,255, 0.1) 0px 0px 5px,rgba(255,255,255, 0.05) 0px 0px 5px" : "rgba(0, 0, 0, 0.1) 0px 0px 5px,rgba(0, 0, 0, 0.05) 0px 0px 5px" )} ;
 `
 
 export const ItemDiv = styled.div`
 ${sharedProps} ;
+transition: all ease-in-out 0.2s;
 border-bottom: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`}  ;
+&:last-child {
+    border-bottom : none ;
+}
+/* &:hover {
+    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
+} */
+
 `
 
 export const ContainerBorderBottom = styled.div`

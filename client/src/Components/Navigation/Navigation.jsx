@@ -1,50 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Routes , Route } from 'react-router-dom'
-import Home from '../Home/Home'
-import { ThemeProvider } from 'styled-components'
-import { Container, GlobalStyleCss } from '../Global/GlobalStyle'
+import { Container } from '../Global/GlobalStyle'
 import Navbar from '../Navbar/Navbar'
 import UserPage from '../UserPage/UserPage'
 import PostPage from '../Post/PostPage'
 import Auth from '../Authentication/Auth'
+import Home from '../Home/Home'
+import { useSelector } from 'react-redux'
 
 
 const Navigation = () => {
-    const [theme , setTheme] = useState(undefined)
-
-    let Get_theme = localStorage.getItem('theme')
-
-    useEffect(()=>{
-    setTheme(Get_theme ? Get_theme : theme)
-    },[])
-  
-
-   
-  
-    const dark = {
-        background : "#101010",
-        color : "#f3f5f7 "
-    }
-  
-    const light = {
-        background : "#fff",
-        color : "#000"
-    }
-  
+   const {authentication} = useSelector(state=>state.auth)
+  //  console.log(authentication) 
 
     return (
-      <ThemeProvider theme={theme === 'dark' ? dark : light }>
-        <GlobalStyleCss />
-       <Container $maxWidth='620px' $margin='auto' $padding='2rem 0'>
-                <Navbar theme={theme} setTheme={setTheme} />
+
+       <Container $margin='auto' $padding='0 1rem '>
                 <Routes>
+                   {authentication === null && (
+                    <>
+                      <Route path='signup'  element={<Auth type='signup'/>} />
+                      <Route path='signin'  element={<Auth type='signin' />} />
+                    </>
+                   ) }
                   <Route path=':username' element={<UserPage />} />
                   <Route path=':username/post/:id' element={<PostPage />} />
-                  <Route path='signin'  element={<Auth type='signin' />} />
-                  <Route path='signup'  element={<Auth type='signup'/>} />
+                  <Route path='' element={<Home />} />
                 </Routes>
         </Container> 
-    </ThemeProvider>
+      
 
 )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button1, Container, ContainerBorderBottom, Div, FlexContainer, Image, Image2, Span, Text,Title5 } from '../Global/GlobalStyle'
+import { Button1, Container, ContainerBorderBottom, Div, FlexContainer, Image, Image2, Navlink, Span, Text,Title5 } from '../Global/GlobalStyle'
 import { BsThreeDots } from "react-icons/bs";
 import MenuList from '../MenuList/MenuList';
 import ButtonsGroup from '../ButtonsGroup/ButtonsGroup';
@@ -62,7 +62,9 @@ const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
 
              <Text>{postTitle}</Text>
               <Div $width='100%'  >
-                <Image2 $width='100%' $br='15px' src={postImage} />
+                <Navlink to={'/@zack/post/sssss'}>
+                    <Image2 $width='100%' $br='15px' src={postImage} />
+                </Navlink>
               </Div>
 
         <ButtonsGroup handleClickLike={handleClickLike} like={like}/>
