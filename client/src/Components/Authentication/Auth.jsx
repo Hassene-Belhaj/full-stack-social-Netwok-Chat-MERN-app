@@ -106,7 +106,8 @@ const Auth = ({type}) => {
     const inputRef =  useRef()
     const location = useLocation()
     const navigate = useNavigate()
-    
+
+
    const auth = async(serverRoute,formData) => {
      if(serverRoute === 'signup') {
         try {
@@ -149,7 +150,6 @@ const Auth = ({type}) => {
     let formData = {} 
     formData = Object.fromEntries(newformdata.entries())
     const {name , username , email , password} = formData ;
-    console.log(username ,  password)
     auth(serverRoute,formData)
   }
 
@@ -158,8 +158,8 @@ const Auth = ({type}) => {
     },[location])
 
 
-  return (
-    <Container>
+    return (
+      <Container>
       <Wrapper>
        <Title2 $fs='1.5rem' $fw='400' $ta='center' >
         {type === 'signin' ? 'Login' : 'Register'}

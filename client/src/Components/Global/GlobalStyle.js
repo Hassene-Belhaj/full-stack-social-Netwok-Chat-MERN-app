@@ -12,11 +12,12 @@ export const GlobalStyleCss = createGlobalStyle`
 
 }
 
-body {
+html {
     overflow-x:hidden ;
+    overflow-y: scroll;
     background: ${({theme})=>theme.background};
     color: ${({theme})=>theme.color};
-    
+
 &::-webkit-scrollbar {
     width: 1.2em;
     height: auto;
@@ -26,7 +27,7 @@ body {
 
 }
 &::-webkit-scrollbar-button {
-    background: ${({theme})=>theme.color === dark.color ? '#585858' : '#d5d5d5'} ;
+    background: ${({theme})=>theme.color === dark.color ? '#101010' : '#d5d5d5'} ;
         background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
 
 }
@@ -78,7 +79,7 @@ body {
 
 `
 
-const dark = {
+export const dark = {
     background : "#101010",
     color : "#f3f5f7 "
 }
@@ -127,6 +128,10 @@ padding-right: ${({$paddingRight})=>$paddingRight};
 padding-Left: ${({$paddingLeft})=>$paddingLeft};
 padding-Bottom: ${({$paddingBottom})=>$paddingBottom};
 margin: ${({$margin})=>$margin};
+margin-top: ${({$marginTop})=>$marginTop};
+margin-right: ${({$marginRight})=>$marginRight};
+margin-Left: ${({$marginLeft})=>$marginLeft};
+margin-Bottom: ${({$marginBottom})=>$marginBottom};
 text-align: ${({$ta})=>$ta};
 text-decoration: ${({$td})=>$td};
 font-size: ${({$fs})=>$fs};
@@ -313,17 +318,56 @@ outline: none;
 export const Button5 = styled.button`
 ${sharedProps}
 color: ${({theme})=> theme};
-background-color: transparent;
+background-color: transparent ;
 cursor: pointer;
 outline: none;
 border: none;
-&:hover {
-    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
-}
 &:active {
     scale : 0.9;    
 }
 
+`
+
+
+
+export const ButtonTheme1 = styled.button`
+position: relative;
+width: 100%;
+height: 3rem;
+font-weight: 600;
+background-color: ${({theme})=>theme.background === dark.background ? '#f1f5f9' : '#101010'} ;
+color: ${({theme})=>theme.background === dark.background ? '#0A0A0A' : '#f1f5f9' } ;
+border-radius: 10px;
+cursor: pointer;
+outline: none;
+border: none;
+border-top-left-radius: ${({$right})=>$right ? '15px' : 'none'};
+border-bottom-left-radius: ${({$right})=>$right ? '15px' : 'none'};
+border-top-right-radius: ${({$left})=>$left ? '15px' : 'none'};
+border-bottom-right-radius: ${({$left})=>$left ? '15px' : 'none'};
+&:hover {
+    opacity: 0.8;
+}
+`
+
+export const ButtonTheme2 = styled.button`
+position: relative;
+width: 100%;
+height: 3rem;
+font-weight: 600;
+background-color: ${({theme})=>theme.background === dark.background ? '#101010' : '#f1f5f9'} ;
+color: ${({theme})=>theme.background === dark.background ?  '#f1f5f9' : '#0A0A0A'} ;
+border-radius: 10px;
+cursor: pointer;
+outline: none;
+border: none;
+border-top-left-radius: ${({$right})=>$right ? '15px' : 'none'};
+border-bottom-left-radius: ${({$right})=>$right ? '15px' : 'none'};
+border-top-right-radius: ${({$left})=>$left ? '15px' : 'none'};
+border-bottom-right-radius: ${({$left})=>$left ? '15px' : 'none'};
+&:hover {
+    opacity: 0.8;
+}
 `
 
 export const DivMenu = styled.span`

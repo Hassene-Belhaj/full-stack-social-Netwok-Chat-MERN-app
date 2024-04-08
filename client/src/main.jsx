@@ -7,10 +7,8 @@ import store from './@reduxjs/store.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-  <BrowserRouter>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </BrowserRouter>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
   </Provider>
 )

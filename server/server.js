@@ -7,16 +7,24 @@ const userRoute = require('./Routes/user');
 const postsRoute = require('./Routes/post');
 const { errorHandling } = require('./Middlewares/ErrorHandler');
 const { notFound } = require('./Middlewares/notFound');
+const cloudinary = require('cloudinary').v2;
 
 
 const app = express()
-app.use(express.json())
+app.use(express.json({limit : "35mb"}))
 app.use(express.urlencoded({extended : true}))
 app.use(cors({
     origin : ['http://localhost:5173'],
     credentials : true
 }))
 app.use(cookieParser())
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY , 
+    api_secret:process.env.CLOUDINARY_API_SECRET,
+})
 
 
 const server = ()  => app.listen(process.env.PORT || 5000 , ()=>console.log('server is running'))

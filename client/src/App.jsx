@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
-import {useDispatch, useSelector} from 'react-redux'  
+import {useDispatch} from 'react-redux'  
 import { GetProfileAction } from './@reduxjs/actions/actions'
 
 
@@ -15,11 +15,7 @@ import { GetProfileAction } from './@reduxjs/actions/actions'
 const App = () => {
 
   const [theme , setTheme] = useState(undefined)
-  const [auth , setAuth] = useState(null)
-
-
   let Get_theme = localStorage.getItem('theme')
-
   useEffect(()=>{
   setTheme(Get_theme ? Get_theme : theme)
   },[])
@@ -27,11 +23,10 @@ const App = () => {
 
   axios.defaults.baseURL = 'http://localhost:5000/api'
   axios.defaults.withCredentials = 'true'
-  const location = useLocation()
+
+  const {pathname} = useLocation()
   const dispatch = useDispatch() ;
-  const {authentication} = useSelector(state=>state.auth)  
   
-  // console.log(authentication)
 
   const dark = {
     background : "#101010",
@@ -46,7 +41,7 @@ const light = {
   useEffect(() => {
     toast.dismiss()
     dispatch(GetProfileAction())
-  }, [location]);
+  }, [pathname]);
 
 
 
@@ -80,10 +75,14 @@ const light = {
               }}
               
               /> 
-        <Container $width='100%' $padding='0 2rem'>
-          <Navbar theme={theme} setTheme={setTheme} auth={auth} />
-          <Navigation theme={theme} setTheme={setTheme}/>
-        </Container>
+          <Container $width='100%' $padding='0 2rem'>
+          {!pathname.includes('sign') ? 
+            <Navbar theme={theme} setTheme={setTheme} />
+            :
+            null
+          }
+              <Navigation theme={theme} setTheme={setTheme}/>
+          </Container>
       </ThemeProvider>
   )
 }

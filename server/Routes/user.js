@@ -7,7 +7,7 @@ router.route('/signup').post(signUp)
 router.route('/signin').post(signIn)
 router.route('/logout').post(logOut)
 router.route('/follow/:id').post(VerifyToken, follow_unfollow)
-router.route('/update/:id').post(VerifyToken, updateUser)
+router.route('/update/:id').put(VerifyToken, updateUser)
 router.route('/profile/:username').get(VerifyToken, getProfile)
 
 router.route('/profile').get(VerifyToken, async(req,res) => {

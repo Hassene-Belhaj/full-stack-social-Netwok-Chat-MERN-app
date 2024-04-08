@@ -2,9 +2,8 @@ const { Asyncwrapper } = require("../Middlewares/AsyncWrapper");
 const { createCustomError } = require("../Middlewares/ErrorHandler");
 const userModel = require("../Models/userModel");
 const bcrypt = require("bcrypt");
-const {
-  generateTokenAndSetCookie,
-} = require("../jwt/generateTokenAndSetCookie");
+const {generateTokenAndSetCookie,} = require("../jwt/generateTokenAndSetCookie");
+const cloudianry = require('cloudinary').v2;
 
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/; // regex for email
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
@@ -46,7 +45,7 @@ const signIn = Asyncwrapper(async (req, res, next) => {
   const isValidPawd = await bcrypt.compare(req.body.password, resp.password);
   if (!isValidPawd) return next(createCustomError("invalid credentials", 403));
   generateTokenAndSetCookie(resp._id,resp.username,resp.profilePic, res);
-  const { password,bio,createdAt, __v,followers,following,profilePic, ...info } = resp._doc;
+  const { password,createdAt,updatedAt, __v,followers,following, ...info } = resp._doc;
   res.status(200).json({ success: true, msg: "sign in successfully", info });
 });
 
@@ -112,7 +111,8 @@ const follow_unfollow = Asyncwrapper(async (req, res, next) => {
 const updateUser = Asyncwrapper(async (req, res, next) => {
   const userID = req.user.id;
   const pwd = req.body.password
-  const { name, username, email, profilePic, bio } = req.body;
+  const { name, username, email, bio } = req.body;
+  let {profilePic} = req.body ;
 
   if (req.params.id !== userID)
     return next(createCustomError("you can not update other profile", 400));
@@ -123,14 +123,22 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
     const newPwd = bcrypt.hashSync(pwd, salt);
     user.password = newPwd;
   }
+  if(profilePic) {
+    if(user.profilePic) {
+      await cloudianry.uploader.destroy(user.profilePic.split("/").pop().split(".")[0])
+    }
+    const resp = await cloudianry.uploader.upload(profilePic)
+    profilePic =  resp.secure_url
+  }
+
   user.name = name || user.name;
   user.username = username || user.username;
   user.email = email || user.email;
   user.profilePic = profilePic || user.profilePic;
   user.bio = bio || user.bio;
   const userUpdateInfo = await user.save();
-  const  {password ,__v,  ...rest} = userUpdateInfo._doc
-  res.status(200).json({ success: true, rest });
+  const { password,createdAt,updatedAt, __v,followers,following, ...info } = userUpdateInfo._doc;
+  res.status(200).json({ success: true, info });
 });
 
 const getProfile = Asyncwrapper(async (req, res, next) => {

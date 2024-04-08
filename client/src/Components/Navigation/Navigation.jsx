@@ -1,31 +1,32 @@
-import React from 'react'
-import { Routes , Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Routes , Route , Navigate } from 'react-router-dom'
 import { Container } from '../Global/GlobalStyle'
-import Navbar from '../Navbar/Navbar'
 import UserPage from '../UserPage/UserPage'
 import PostPage from '../Post/PostPage'
 import Auth from '../Authentication/Auth'
 import Home from '../Home/Home'
 import { useSelector } from 'react-redux'
+import UpdateProfilePage from '../ProfilePage/UpdateProfilePage'
 
 
 const Navigation = () => {
    const {authentication} = useSelector(state=>state.auth)
-  //  console.log(authentication) 
+   
+
 
     return (
 
        <Container $margin='auto' $padding='0 1rem '>
                 <Routes>
-                   {authentication === null && (
-                    <>
-                      <Route path='signup'  element={<Auth type='signup'/>} />
-                      <Route path='signin'  element={<Auth type='signin' />} />
+                     <>
+                        <Route path='signup'  element={authentication === null ?  <Auth type='signup'/> : <Navigate  to='/' /> } />
+                        <Route path='signin'  element={authentication === null ?  <Auth type='signin' /> : <Navigate  to='/' /> } />
                     </>
-                   ) }
                   <Route path=':username' element={<UserPage />} />
                   <Route path=':username/post/:id' element={<PostPage />} />
+                  <Route path='/update/:username' element={<UpdateProfilePage />} />
                   <Route path='' element={<Home />} />
+                  <Route path='*'  element={<h2>page error</h2>} />
                 </Routes>
         </Container> 
       

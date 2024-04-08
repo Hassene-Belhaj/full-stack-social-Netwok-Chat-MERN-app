@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button4, DivMenu,ItemDiv, Title4 } from '../Global/GlobalStyle'
+import {DivMenu,ItemDiv, Title4 } from '../Global/GlobalStyle'
 
 const MenuList = () => {
 
