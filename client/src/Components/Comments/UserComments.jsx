@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button1, ContainerBorderBottom, Div, FlexContainer, Image, Section, Span, Text, Title5 } from '../Global/GlobalStyle'
 import { useState } from 'react'
-import MenuList from '../MenuList/MenuList'
+import MenuList from '../MenuList/MenuPost'
 import { BsThreeDots } from 'react-icons/bs'
 import ButtonsGroup from '../ButtonsGroup/ButtonsGroup'
 

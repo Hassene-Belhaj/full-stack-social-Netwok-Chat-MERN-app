@@ -31,7 +31,7 @@ const signUp = Asyncwrapper(async (req, res, next) => {
     password: cryptedPassword,
   });
 
-  generateTokenAndSetCookie(createdUser._id,createdUser.username,createdUser.profilePic, res);
+  // generateTokenAndSetCookie(createdUser._id,createdUser.username,createdUser.profilePic, res);
 
   res.status(201).json({ success: true, msg: "user created successfully" });
 });
@@ -80,8 +80,8 @@ const follow_unfollow = Asyncwrapper(async (req, res, next) => {
     );
     return res.status(200).json({
       success: true,
-      msg: "unfollowing successfully",
-      following,
+      msg: "following successfully",
+      // following,
       follow,
     });
   } else {
@@ -101,8 +101,8 @@ const follow_unfollow = Asyncwrapper(async (req, res, next) => {
     );
     return res.status(200).json({
       success: true,
-      msg: "following successfully",
-      unfollowing,
+      msg: "unfollowing successfully",
+      // unfollowing,
       unfollow,
     });
   }
@@ -127,7 +127,7 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
     if(user.profilePic) {
       await cloudianry.uploader.destroy(user.profilePic.split("/").pop().split(".")[0])
     }
-    const resp = await cloudianry.uploader.upload(profilePic)
+    const resp = await cloudianry.uploader.upload(profilePic , {folder : "threads"})
     profilePic =  resp.secure_url
   }
 
@@ -136,6 +136,7 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
   user.email = email || user.email;
   user.profilePic = profilePic || user.profilePic;
   user.bio = bio || user.bio;
+
   const userUpdateInfo = await user.save();
   const { password,createdAt,updatedAt, __v,followers,following, ...info } = userUpdateInfo._doc;
   res.status(200).json({ success: true, info });
@@ -143,12 +144,12 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
 
 const getProfile = Asyncwrapper(async (req, res, next) => {
   const { username } = req.params;
-  const finduser = await userModel
+  const resp = await userModel
     .findOne({ username })
     .select("-password -updatedAt -__v");
-  if (!finduser)
-    return next(createCustomError("sorry no user with this username", 400));
-  res.status(200).json({ success: true, finduser });
+  if (!resp)
+  return next(createCustomError("sorry no user with this username", 400));
+  res.status(200).json({ success: true, resp });
 });
 
 module.exports = {

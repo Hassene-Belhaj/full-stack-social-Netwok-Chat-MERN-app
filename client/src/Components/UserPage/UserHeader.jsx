@@ -1,10 +1,13 @@
 import React from 'react'
-import { Button1,Container, ContainerBorderBottom, Div, DivMenu, FlexContainer, Image, Section, Span, Text, Title2, Title4 } from '../Global/GlobalStyle'
+import { Button1,ButtonTheme1,Container, ContainerBorderBottom, Div, DivMenu, FlexContainer, Image, Section, Span, Text, Title2, Title4 } from '../Global/GlobalStyle'
 import { FaInstagram } from 'react-icons/fa'
 import { PiDotsThreeCircle } from "react-icons/pi";
 import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -23,11 +26,18 @@ border-bottom: ${({theme,$active})=> $active ? `1px solid ${theme.color}` :  '1p
 
 
 
-const UserHeader = () => {
+const UserHeader = ({user,authentication}) => {
+     
     const [menuList , setMenuList] = useState(false)
     const [active , setActive] = useState('Threads')
+    
+    const [follow , setFollow] = useState(!user?.followers?.includes(authentication?.id))
+    const [followersNbr , setFollowersNbr] = useState([...user?.followers])
+    const navigate = useNavigate()
 
+    // console.log(follow)
 
+    // console.log(authentication)
 
     const get_url = () => {
         toast.dismiss()
@@ -42,28 +52,49 @@ const UserHeader = () => {
             setMenuList(false)
          }, 300)
     }
-  return (
-    <Section>
+
+    const handleFollowUnfollow = async() => {
+        try {
+            const {data} = await axios.post(`/user/follow/${user._id}`)
+            console.log(data)
+            setFollow(!follow)
+            if(!follow) {
+               followersNbr.pop()   
+            } else {
+               followersNbr.push(authentication.id)
+            }
+        } catch (error) {
+            toast.error(error.response.data.msg)
+            setTimeout(() => { 
+                navigate('/signin')
+             }, 3000)
+            console.log(error)
+        }
+
+    }
+
+      return (
+          <Section>
         <FlexContainer  $width='100%' $display='flex' $jc='space-between'  $paddingTop='4rem' >
             <Div $display='flex' $fd='column' $flex='1'>
-            <Title2 $fw='500'>Mark Zuckerberg</Title2>
+            <Title2 $fw='500'>{user?.name}</Title2>
                 <Div $display='flex' $ai='center' $padding='4px 0' $gap='1rem'>
-                    <Text>zuck</Text>
+                    <Text>{user?.username}</Text>
                     {/* <Button1 $border='none' $padding='4px 12px' $br='25px'>threads.net</Button1> */}
                 </Div>
             </Div>
             <Div $flex='1' $display='flex' $jc='end'>
-                <Image $width='5rem' $height='5rem' $br='50%' src='zuck-avatar.png'/>
+                <Image $width='5rem' $height='5rem' $br='50%' src={user?.profilePic}  $objectfit='cover' />
             </Div>
         </FlexContainer>
         
         <Container $display='flex' $fd='column' $padding='1rem 0' $gap='1rem' >
 
-                    <Text >Co-founder, executive chairman and CEO of Meta Platforms .</Text>
+                    <Text >{user?.bio}</Text>
 
             <FlexContainer $display='flex' $jc='space-between' $ai='center'> 
                 <Div>
-                        <Text $color='gray'>3.2K followers &#x2022; instagram.com</Text>
+                        <Text $color='gray'>{followersNbr?.length} followers &#x2022; instagram.com</Text>
                 </Div> 
 
                 <Div $display='flex' $ai='center' $jc='center' $gap='.5rem' $position='relative'>
@@ -83,10 +114,26 @@ const UserHeader = () => {
                 </Div>
             </FlexContainer>   
         </Container>
+        {user._id === authentication?.id && (
+            <NavLink to={`/update/${user.username}`}>
+                <Div $width='50%' $padding='1.5rem 0'>
+                    <ButtonTheme1 type='reset' > Update Profile </ButtonTheme1> 
+                </Div>
+        </NavLink>    
+        )} 
+         {user._id !== authentication?.id && (
+             <Div $width='50%' $padding='1.5rem 0'>
+              
+              <ButtonTheme1 onClick={handleFollowUnfollow} type='reset'> {follow ? 'follow' : 'Unfollow'} </ButtonTheme1> 
+        </Div>
+        )} 
         <ContainerBorderBottom $height='2.5rem' $display='flex'  $gap='.5rem' >
                   <ButtonStyle  $active={active === 'Threads' ? true : false} onClick={()=>setActive('Threads')}   >Threads</ButtonStyle> 
                   <ButtonStyle   $active={active === 'Replies' ? true : false} onClick={()=>setActive('Replies')}  >Replies</ButtonStyle> 
         </ContainerBorderBottom>
+     
+
+
     </Section>
   )
 }   

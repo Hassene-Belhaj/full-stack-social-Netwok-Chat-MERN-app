@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
+import Spinner from '../../utils/Spinner';
 
 
 const Container = styled.div`
@@ -30,7 +31,6 @@ left: 50%;
 transform: translateX(-50%);
 
 `
-
 const IconLuUser2 = styled(LuUser2)`
 position: absolute;
 top: 50%;
@@ -75,7 +75,6 @@ flex-direction: column;
 align-items: center;
 margin: auto;
 gap: 2rem;
-background-color: ${({theme})=>theme};
 `
 const Input = styled.input`
 padding-left: 3.5rem;
@@ -102,6 +101,7 @@ border-radius: 25px;
 const Auth = ({type}) => {
 
     const [toggle,setToggle] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const inputRef =  useRef()
     const location = useLocation()
@@ -111,17 +111,20 @@ const Auth = ({type}) => {
    const auth = async(serverRoute,formData) => {
      if(serverRoute === 'signup') {
         try {
+            setLoading(true)
             const data  = await axios.post('/user/signup' , formData)
             if(data.status === 201) {
               toast.success('sign up successfully')
               setTimeout(() => { 
                 (navigate('/signin')) 
               }, 1000)
-               
+              setLoading(false)
               }
         } catch (error) {
-          if(error) return toast.error(error?.response.data.msg)
-
+          if(error) {
+            setLoading(false)
+            return toast.error(error?.response.data.msg)
+          }
 }
 } else {
     try {
@@ -149,7 +152,6 @@ const Auth = ({type}) => {
     const newformdata = new FormData(e.target)
     let formData = {} 
     formData = Object.fromEntries(newformdata.entries())
-    const {name , username , email , password} = formData ;
     auth(serverRoute,formData)
   }
 
@@ -189,7 +191,16 @@ const Auth = ({type}) => {
           
         </Div>
 
-        <Button2 type='submit' $margin='1rem 0 2rem 0' $width='100%' $height='3rem'>Login</Button2>
+        <Button2 type='submit' $margin='1rem 0 2rem 0' $width='100%' $height='3rem'>
+                   {loading ? <Spinner Size={'8px'} />
+                    :
+                    <>
+                     {type === 'signin' ? 'Login' : 'Sign Up'}
+                    </> 
+                  }
+              
+           
+                  </Button2>
       
      </Form> 
        <Div $ta='center'>

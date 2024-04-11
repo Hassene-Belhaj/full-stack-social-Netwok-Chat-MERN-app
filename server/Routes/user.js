@@ -8,9 +8,9 @@ router.route('/signin').post(signIn)
 router.route('/logout').post(logOut)
 router.route('/follow/:id').post(VerifyToken, follow_unfollow)
 router.route('/update/:id').put(VerifyToken, updateUser)
-router.route('/profile/:username').get(VerifyToken, getProfile)
+router.route('/profile/:username').get(getProfile)
 
-router.route('/profile').get(VerifyToken, async(req,res) => {
+router.route('/authentication').get(VerifyToken, async(req,res) => {
     res.status(200).json({success : true , msg :'you are authenticated' , user : req.user })
 })
 

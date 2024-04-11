@@ -1,21 +1,23 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Navlink } from '../Global/GlobalStyle'
+import { Container ,Navlink } from '../Global/GlobalStyle'
+import { useSelector } from 'react-redux'
 
-
-const Container = styled.div`
-
-`
 
 
 const Home = () => {
-  return (
-    <Container>
-        <Navlink  to={'/@zack'}>
-              visit profile page
+ const {authentication,loading} = useSelector(state=>state.auth)
+ console.log(authentication?.username)
+
+  
+
+      return (
+        <Container $ta='center' $paddingTop='8rem'>
+        <Navlink >
+              posts
         </Navlink>
     </Container>
   )
 }
+
 
 export default Home

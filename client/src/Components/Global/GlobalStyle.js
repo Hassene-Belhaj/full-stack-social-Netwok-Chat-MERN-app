@@ -333,7 +333,7 @@ border: none;
 export const ButtonTheme1 = styled.button`
 position: relative;
 width: 100%;
-height: 3rem;
+height: 2.5rem;
 font-weight: 600;
 background-color: ${({theme})=>theme.background === dark.background ? '#f1f5f9' : '#101010'} ;
 color: ${({theme})=>theme.background === dark.background ? '#0A0A0A' : '#f1f5f9' } ;
@@ -353,7 +353,7 @@ border-bottom-right-radius: ${({$left})=>$left ? '15px' : 'none'};
 export const ButtonTheme2 = styled.button`
 position: relative;
 width: 100%;
-height: 3rem;
+height: 2.5rem;
 font-weight: 600;
 background-color: ${({theme})=>theme.background === dark.background ? '#101010' : '#f1f5f9'} ;
 color: ${({theme})=>theme.background === dark.background ?  '#f1f5f9' : '#0A0A0A'} ;

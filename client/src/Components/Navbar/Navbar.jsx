@@ -7,13 +7,15 @@ import { LuUser2 } from "react-icons/lu";
 import { useState } from 'react'
 import { useSelector , useDispatch } from 'react-redux'
 import MenuNavbar from '../MenuList/MenuNavbar'
-import { LogOutAction } from '../../@reduxjs/actions/actions'
+import { LogOutAction, verifyAuthAction } from '../../redux/actions/actions'
+import { useNavigate } from 'react-router-dom'
 
 
 
 
 
 const Navbar = ({theme , setTheme }) => {
+     const navigate = useNavigate()
      const dispatch = useDispatch()
      const {authentication} = useSelector(state=>state.auth)  
      const Items = ['Theme' ,'Profile', 'Settings' , 'Records' , 'Your Likes' , 'To report a Problem','Sign out']
@@ -22,11 +24,10 @@ const Navbar = ({theme , setTheme }) => {
       const menuRef = useRef(null)
       const navBtnRef = useRef(null)
       
-      // console.log(authentication)
 
       const handleClickShowMenu = ()=> {
-      setShowMenu(!showMenu)
-      setToggleTheme(false)
+          setShowMenu(!showMenu)
+          setToggleTheme(false)
       }
       
       useEffect(()=>{
@@ -49,6 +50,9 @@ const Navbar = ({theme , setTheme }) => {
   }
   else if(e.target.innerText === 'Theme') {
       setToggleTheme(true)
+  }else if(e.target.innerText === 'Profile') {
+    navigate(`/update/${authentication?.username}`)
+    setShowMenu(false)
   }  
   }
 

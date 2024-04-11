@@ -1,19 +1,18 @@
 import React, { useEffect }  from 'react'
 import Navigation from './Components/Navigation/Navigation'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import {Container, GlobalStyleCss } from './Components/Global/GlobalStyle'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
-import {useDispatch} from 'react-redux'  
-import { GetProfileAction } from './@reduxjs/actions/actions'
+import  {useSelector} from 'react-redux'  
 
 
 
 const App = () => {
-
+  
   const [theme , setTheme] = useState(undefined)
   let Get_theme = localStorage.getItem('theme')
   useEffect(()=>{
@@ -24,9 +23,8 @@ const App = () => {
   axios.defaults.baseURL = 'http://localhost:5000/api'
   axios.defaults.withCredentials = 'true'
 
+  const {loading} = useSelector(state=>state.auth)
   const {pathname} = useLocation()
-  const dispatch = useDispatch() ;
-  
 
   const dark = {
     background : "#101010",
@@ -37,17 +35,9 @@ const light = {
     background : "#fff",
     color : "#000"
 }
-
-  useEffect(() => {
-    toast.dismiss()
-    dispatch(GetProfileAction())
-  }, [pathname]);
-
-
-
-
-  return (
-      <ThemeProvider theme={theme === 'dark' ? dark : light }>
+   
+       return (
+         <ThemeProvider theme={theme === 'dark' ? dark : light }>
         <GlobalStyleCss />
             <Toaster
               reverseOrder='true'
@@ -86,5 +76,6 @@ const light = {
       </ThemeProvider>
   )
 }
+
 
 export default App

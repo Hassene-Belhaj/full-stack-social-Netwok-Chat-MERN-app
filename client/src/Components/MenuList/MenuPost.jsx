@@ -1,7 +1,7 @@
 import React from 'react'
 import {DivMenu,ItemDiv, Title4 } from '../Global/GlobalStyle'
 
-const MenuList = () => {
+const MenuPost = () => {
 
   return (
     <DivMenu $position='absolute' $bottom={'0rem'} $transform='translateY(100%)'  $right='0rem'  $width='15rem' $height='auto' $br='15px' $display='flex' $fd='column' $jc='center' $ai='center'  $z='1000'>
@@ -19,4 +19,4 @@ const MenuList = () => {
   )
 }
 
-export default MenuList
+export default MenuPost
