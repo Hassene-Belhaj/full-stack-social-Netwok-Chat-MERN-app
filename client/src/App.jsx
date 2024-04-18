@@ -7,11 +7,20 @@ import { useLocation } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
-import  {useSelector} from 'react-redux'  
+import  {useDispatch} from 'react-redux' 
+import { toast } from 'react-hot-toast'
+import { verifyAuthAction } from './redux/actions/actions'
+import PostModal from './Components/Post/PostModal'
+import { dark, light } from './utils/ThemeColors'
+
 
 
 
 const App = () => {
+  const dispatch = useDispatch() 
+  const [showModal , setShowModal] = useState(false)
+
+
   
   const [theme , setTheme] = useState(undefined)
   let Get_theme = localStorage.getItem('theme')
@@ -23,55 +32,58 @@ const App = () => {
   axios.defaults.baseURL = 'http://localhost:5000/api'
   axios.defaults.withCredentials = 'true'
 
-  const {loading} = useSelector(state=>state.auth)
   const {pathname} = useLocation()
 
-  const dark = {
-    background : "#101010",
-    color : "#f3f5f7 "
-}
 
-const light = {
-    background : "#fff",
-    color : "#000"
-}
+
    
+useEffect(() => {
+  toast.dismiss()
+  dispatch(verifyAuthAction())
+}, [pathname]);
+
+
+
        return (
-         <ThemeProvider theme={theme === 'dark' ? dark : light }>
-        <GlobalStyleCss />
-            <Toaster
-              reverseOrder='true'
-              toastOptions={{
-                duration : 2000,
-                style : {
-                  background : '#d1fae5',
-                  padding:'1rem 2rem',
-                  fontWeight:'500',
-                  textTransform : 'capitalize'
-                } ,
-                success: {
-                  iconTheme: {
-                    primary: 'black',
-                    secondary: 'white',
-                  },
-                },
-                error : {
-                  iconTheme : {
-                    primary : 'black',
-                    secondary :'white',
-                  },
+        <ThemeProvider theme={theme === 'dark' ? dark : light }>
+            <GlobalStyleCss />
+                <Toaster
+                  reverseOrder='true'
+                  toastOptions={{
+                    duration : 2000,
+                    style : {
+                      background : '#d1fae5',
+                      padding:'1rem 2rem',
+                      fontWeight:'500',
+                      textTransform : 'capitalize'
+                    } ,
+                    success: {
+                      iconTheme: {
+                        primary: 'black',
+                        secondary: 'white',
+                      },
+                    },
+                    error : {
+                      iconTheme : {
+                        primary : 'black',
+                        secondary :'white',
+                      },
+                      
+                    }
+                  }}
                   
-                }
-              }}
-              
-              /> 
-          <Container $width='100%' $padding='0 2rem'>
+                  /> 
+          <Container $margin='auto' $position='relative' > 
           {!pathname.includes('sign') ? 
-            <Navbar theme={theme} setTheme={setTheme} />
+            <Navbar theme={theme} setTheme={setTheme} setShowModal={setShowModal} showModal={showModal}  />
             :
             null
           }
-              <Navigation theme={theme} setTheme={setTheme}/>
+              <Navigation showModal={showModal} theme={theme} setTheme={setTheme}/>
+
+              {showModal && (
+                 <PostModal showModal={showModal} setShowModal={setShowModal} />
+              )}
           </Container>
       </ThemeProvider>
   )

@@ -5,6 +5,7 @@ import { thunk } from "redux-thunk";
 const store = configureStore(
   {
     reducer: rootReducer,
+    
   },
   applyMiddleware(thunk)
 );

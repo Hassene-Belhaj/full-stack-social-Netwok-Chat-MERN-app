@@ -127,7 +127,7 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
     if(user.profilePic) {
       await cloudianry.uploader.destroy(user.profilePic.split("/").pop().split(".")[0])
     }
-    const resp = await cloudianry.uploader.upload(profilePic , {folder : "threads"})
+    const resp = await cloudianry.uploader.upload(profilePic)
     profilePic =  resp.secure_url
   }
 

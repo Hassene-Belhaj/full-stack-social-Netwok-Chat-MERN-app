@@ -7,23 +7,21 @@ import { useSelector  , useDispatch} from 'react-redux'
 import { getProfileAction } from '../../redux/actions/actions'
 import { useParams } from 'react-router-dom'
 import Spinner from '../../utils/Spinner'
-import { useState } from 'react'
 
 const UserPage = () => {
   const dispatch = useDispatch()
-  const {userProfile,authentication,loading} = useSelector(state=>state.auth)
+  const {userProfile,authentication,loading_profile} = useSelector(state=>state.auth)
   const {username} = useParams()
-
+  
 
   useEffect(()=>{
-    dispatch(getProfileAction(username))  
-  },[])
+    dispatch(getProfileAction(username))
+  },[username])
+  
+  // console.log(userProfile)
 
-
-  // console.log(user)
-
-  if(loading) return <Container $height='100vh' $display='flex' $jc='center' $ai='center'> <Spinner /> </Container>
-  else if(!userProfile) return <Container><Title4 $paddingTop='8rem' $ta='center' $fw='400'>No User was found With This Username</Title4></Container>
+  if(loading_profile) return <Container $height='100vh' $display='flex' $jc='center' $ai='center'> <Spinner /> </Container>
+  else if(!userProfile) return <Container><Title4 $padding='8rem 0 0 0' $ta='center' $fw='400'>No User was found With This Username</Title4></Container>
   else { 
     return (
     <Container $maxWidth='620px' $margin='auto'>

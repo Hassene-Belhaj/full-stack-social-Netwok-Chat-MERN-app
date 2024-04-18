@@ -49,7 +49,6 @@ overflow: hidden;
   position: absolute;
   inset: 0;
   background:${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
-  /* border: .5px solid ${({theme})=>theme.background === dark.background ? 'rgba(255,255,255,0.5)' :'rgba(0,0,0,0.2)'  }; */
   width: 50%;
   border-top-left-radius: ${({$active})=>$active ? '15px' : 'none'};
   border-bottom-left-radius: ${({$active})=>$active ? '15px' : 'none'};
@@ -93,7 +92,7 @@ const MenuNavbar = ({handleLogOut,Items,toggleTheme,setToggleTheme,theme,setThem
   return (
     
     <DivMenu  $position='absolute' $bottom='0' $transform='translateY(100%)'  $right='0rem'  $width={toggleTheme ? '20rem' : '15rem'} 
-    $height='auto' $br='15px' $display='flex' $fd='column' $jc='center' $ai='center'  $z='1000' $padding='.5rem' $transition={menuTransition ?  'all ease-in-out 0.2s' : null }>
+    $height='auto' $br='15px' $display='flex' $fd='column' $jc='center' $ai='center'  $z='1000' $transition={menuTransition ?  'all ease-in-out 0.2s' : null }>
         {!toggleTheme ? 
         <>
             {Items.map((item , i)=>{

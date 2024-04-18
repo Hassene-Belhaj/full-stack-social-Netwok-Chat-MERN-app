@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button1, ContainerBorderBottom, Div, FlexContainer, Image, Span, Text, Title5 } from '../Global/GlobalStyle'
+import { ButtonScaleEffect, ContainerBorderBottom, Div, FlexContainer, Image, Span, Text, Title5 } from '../Global/GlobalStyle'
 import { BsThreeDots } from 'react-icons/bs'
 import MenuList from '../MenuList/MenuPost'
 import { useState } from 'react'
@@ -47,9 +47,9 @@ const PostPage = ({avatar,verified,postTitle,postImage,likes,replies}) => {
 
                           <Div $display='flex' $ai='center' $gap='1rem'>
                             <Title5 $color='gray'>1d</Title5>
-                                  <Button1 onClick={()=>setMenuList(!menuList)} onBlur={handleBlur} $padding='8px' $br='50%'  $border='none' $display='flex' $jc='center' $ai='center'>
+                                  <ButtonScaleEffect onClick={()=>setMenuList(!menuList)} onBlur={handleBlur} $padding='8px' $br='50%'  $border='none' $display='flex' $jc='center' $ai='center'>
                                     <BsThreeDots size={15}  color='gray'/>
-                                  </Button1>
+                                  </ButtonScaleEffect>
                           </Div>
                         {menuList && (
                               <MenuList />
@@ -72,7 +72,7 @@ const PostPage = ({avatar,verified,postTitle,postImage,likes,replies}) => {
       </FlexContainer>
  
   
-      <FlexContainer $display='flex' $gap='1rem' $paddingTop='1rem'>
+      <FlexContainer $display='flex' $gap='1rem' $padding='1rem 0 0 0'>
         <Div $display='flex' $ai='center'><Text $color='gray'>{replies} replies <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
       </FlexContainer>
       

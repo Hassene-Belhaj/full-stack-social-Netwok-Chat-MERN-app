@@ -1,5 +1,5 @@
 import React, { useEffect,useRef }  from 'react'
-import { Button1,Div,Image, Nav, Navlink } from '../Global/GlobalStyle'
+import { ButtonScaleEffect,Button6,Div,Image, Nav, Section , Navlink } from '../Global/GlobalStyle'
 import logo1 from '/light-logo.svg'
 import logo2 from '/dark-logo.svg'
 import { BiMenuAltRight } from 'react-icons/bi'
@@ -7,23 +7,41 @@ import { LuUser2 } from "react-icons/lu";
 import { useState } from 'react'
 import { useSelector , useDispatch } from 'react-redux'
 import MenuNavbar from '../MenuList/MenuNavbar'
-import { LogOutAction, verifyAuthAction } from '../../redux/actions/actions'
+import { LogOutAction } from '../../redux/actions/actions'
 import { useNavigate } from 'react-router-dom'
+import { LiaEdit } from "react-icons/lia";
+import { RiSearch2Line } from "react-icons/ri";
+import { IoMdHome } from "react-icons/io";
+import { FaRegHeart } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa6";
+import { toast } from 'react-hot-toast'
 
 
 
 
 
-const Navbar = ({theme , setTheme }) => {
+
+
+
+
+
+
+
+
+
+
+const Navbar = ({theme , setTheme , setShowModal }) => {
      const navigate = useNavigate()
      const dispatch = useDispatch()
-     const {authentication} = useSelector(state=>state.auth)  
-     const Items = ['Theme' ,'Profile', 'Settings' , 'Records' , 'Your Likes' , 'To report a Problem','Sign out']
+     const {authentication, isLoggedIn} = useSelector(state=>state.auth)  
      const [showMenu , setShowMenu] = useState(false)
      const [toggleTheme , setToggleTheme] = useState(false)
-      const menuRef = useRef(null)
-      const navBtnRef = useRef(null)
+     const menuRef = useRef(null)
+     const navBtnRef = useRef(null)
+     const Items = ['Theme' ,'Profile', 'Settings' , 'Records' , 'Your Likes' , 'To report a Problem','Sign out']
       
+    
+
 
       const handleClickShowMenu = ()=> {
           setShowMenu(!showMenu)
@@ -51,12 +69,19 @@ const Navbar = ({theme , setTheme }) => {
   else if(e.target.innerText === 'Theme') {
       setToggleTheme(true)
   }else if(e.target.innerText === 'Profile') {
-    navigate(`/update/${authentication?.username}`)
+    navigate(`/update/${authentication.username}`)
     setShowMenu(false)
   }  
   }
 
-
+  const handleClickShowModal = () => {
+    if(authentication) {
+      setShowModal(true)
+    } else {
+      return toast.error("sign in Before")
+    }
+  }
+     
     return (
       <Nav $height='80px' $maxWidth='1200px' $display='flex' $jc='center' $ai='center' $margin='auto' $position='relative'>
             {showMenu && (
@@ -69,21 +94,47 @@ const Navbar = ({theme , setTheme }) => {
            </Navlink>
               
                 <>
-                {authentication !== null ? 
-                  <Button1 ref={navBtnRef} onClick={handleClickShowMenu} $position='absolute' $top='50%' $transform='translateY(-50%)' $right='0' $padding='4px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > 
+                {isLoggedIn ? 
+                  <ButtonScaleEffect ref={navBtnRef} onClick={handleClickShowMenu} $position='absolute' $top='50%' $transform='translateY(-50%)' $right='0' $padding='4px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > 
                       <BiMenuAltRight size={25}  />
-                  </Button1>
+                  </ButtonScaleEffect>
                   :
                   <Navlink to='/signin'>
-                      <Button1 $position='absolute' $top='50%' $transform='translateY(-50%)' $right='0' $padding='12px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > 
+                      <ButtonScaleEffect $position='absolute' $top='50%' $transform='translateY(-50%)' $right='0' $padding='12px' $br='50%' $border='none' $display='flex' $jc='center' $ai='center' > 
                           <LuUser2 size={20} />
-                      </Button1>
+                      </ButtonScaleEffect>
                   </Navlink>
                  }
                  </>
+                 <Section $height='100%' $maxWidth='620px'  $display='flex' $ai='center' $padding='4px 0'>
+                   
+                      <Navlink to='/'>
+                          <Button6  $border='none' $height='5rem' $width='5rem'  >
+                                <IoMdHome size={30}/>
+                          </Button6>
+                     </Navlink>
+
+                          <Button6 $border='none' $height='5rem' $width='5rem'  >
+                                <RiSearch2Line size={30}/>
+                          </Button6>
+
+                              <Button6 $border='none' $height='5rem' $width='5rem' onClick={handleClickShowModal} >
+                                    <LiaEdit size={30}/>
+                              </Button6>
+                               
+                              <Button6 $border='none' $height='5rem' $width='5rem'  >
+                                    <FaRegHeart size={25} />
+                              </Button6>
+
+                           <Navlink to={`/${authentication?.username}`}>
+                              <Button6 $border='none' $height='5rem' $width='5rem'  >
+                                    <FaUser size={25} />
+                              </Button6>
+                            </Navlink>    
+                 </Section>
 
     </Nav>   
   )
-  }
+}
 
 export default Navbar

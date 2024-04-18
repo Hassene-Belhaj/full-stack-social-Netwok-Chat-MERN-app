@@ -9,16 +9,7 @@ export const GlobalStyleCss = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: "poppins", sans-serif;
-
-}
-
-html {
-    overflow-x:hidden ;
-    overflow-y: scroll;
-    background: ${({theme})=>theme.background};
-    color: ${({theme})=>theme.color};
-
-&::-webkit-scrollbar {
+    &::-webkit-scrollbar {
     width: 1.2em;
     height: auto;
 }
@@ -28,8 +19,8 @@ html {
 }
 &::-webkit-scrollbar-button {
     background: ${({theme})=>theme.color === dark.color ? '#101010' : '#d5d5d5'} ;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
-
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
+    
 }
 &::-webkit-scrollbar-button:single-button:vertical:decrement {
     height: auto;
@@ -39,8 +30,6 @@ html {
     background-repeat: no-repeat;
     background-size: 12px;
 }
-
-
 &::-webkit-scrollbar-button:single-button:vertical:increment {
     height: auto;
     width: 8px;
@@ -48,135 +37,118 @@ html {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='gray'><polygon points='0,0 100,0 50,50'/></svg>");
     background-repeat: no-repeat;
     background-size: 12px;
+    cursor: pointer;
     
 }
-
-
 &::-webkit-scrollbar-button:single-button:vertical:decrement:active {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
     background-color: rgb(128, 128, 128);
-}
 
+}
 &::-webkit-scrollbar-button:single-button:vertical:increment:active {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='0,0 100,0 50,50'/></svg>");
     background-color: rgb(128, 128, 128);
 }
-
 &::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='50,00 0,50 100,50'/></svg>");
-} 
+    cursor: pointer;
 
+} 
 &::-webkit-scrollbar-thumb:active {
     background-color: rgb(128, 128, 128);
 }
-
 &::-webkit-scrollbar-thumb {
     background: ${({theme})=>theme.color === dark.color ? '#585858' : '#d5d5d5'} ;
     border-top: .5px solid ${({theme})=>theme.background};
     border-bottom: .5px solid ${({theme})=>theme.background};
+    cursor: pointer;
 }
 }
 
+html {
+    overflow-x:hidden ;
+    overflow-y: scroll;
+    background: ${({theme})=>theme.background};
+    color: ${({theme})=>theme.color};
+
+
+}
 `
-
 export const dark = {
     background : "#101010",
     color : "#f3f5f7 "
 }
 
-const light = {
-    background : "#fff",
-    color : "#000"
-}
 
-
-
-const size = {
-    xs: '400px', // for small screen mobile
-    sm: '600px', // for mobile screen
-    md: '900px', // for tablets
-    lg: '1280px', // for laptops
-    xl: '1440px', // for desktop / monitors
-    xxl: '1920px', // for big screens
-  }
 
 
 const sharedProps = css`
+width: ${({$width})=>$width};
+max-width: ${({$maxWidth})=>$maxWidth};
+height: ${({$height})=>$height};
 display: ${({$display})=>$display};
-justify-content: ${({$jc})=>$jc};
-align-items: ${({$ai})=>$ai};
 flex-direction: ${({$fd})=>$fd};
 flex: ${({$flex})=>$flex};
 flex-wrap: ${({$fw})=>$fw};
 order : ${({$order})=>$order};
-grid-template-columns: ${({$gridTemplateColumns})=>$gridTemplateColumns};
-width: ${({$width})=>$width};
-max-width: ${({$maxWidth})=>$maxWidth};
-min-width: ${({$minWidth})=>$minWidth};
-max-height: ${({$maxheight})=>$maxheight};
-height: ${({$height})=>$height};
+justify-content: ${({$jc})=>$jc};
+align-items: ${({$ai})=>$ai};
+gap: ${({$gap})=>$gap};
+padding: ${({$padding})=>$padding};
+margin: ${({$margin})=>$margin};
+overflow: ${({$overflow})=>$overflow};
+overflow-x: ${({$overflowX})=>$overflowX};
+overflow-y: ${({$overflowY})=>$overflowY}; 
+background-image: ${({$backgroundImage})=>$backgroundImage};
+background-position: ${({$backgroundPosition})=>$backgroundPosition};
+background-repeat: ${({$backgroundRepeat})=>$backgroundRepeat};
+color: ${({$color})=>$color};
+background-color: ${({$bg})=>$bg};
 position: ${({$position})=>$position};
-z-index: ${({$z})=>$z};
 top: ${({$top})=>$top};
 left: ${({$left})=>$left};
 right: ${({$right})=>$right};
 bottom: ${({$bottom})=>$bottom};
+inset: ${({$inset})=>$inset};
 transform:${({$transform})=>$transform} ;
-padding: ${({$padding})=>$padding};
-padding-top: ${({$paddingTop})=>$paddingTop};
-padding-right: ${({$paddingRight})=>$paddingRight};
-padding-Left: ${({$paddingLeft})=>$paddingLeft};
-padding-Bottom: ${({$paddingBottom})=>$paddingBottom};
-margin: ${({$margin})=>$margin};
-margin-top: ${({$marginTop})=>$marginTop};
-margin-right: ${({$marginRight})=>$marginRight};
-margin-Left: ${({$marginLeft})=>$marginLeft};
-margin-Bottom: ${({$marginBottom})=>$marginBottom};
+grid-template-columns: ${({$gridTemplateColumns})=>$gridTemplateColumns};
+min-width: ${({$minWidth})=>$minWidth};
+max-height: ${({$maxHeight})=>$maxHeight};
+z-index: ${({$z})=>$z};
 text-align: ${({$ta})=>$ta};
 text-decoration: ${({$td})=>$td};
 font-size: ${({$fs})=>$fs};
 font-weight: ${({$fw})=>$fw};
-color: ${({$color})=>$color};
-background-color: ${({$bg})=>$bg};
 outline: ${({$outline})=>$outline};
 border: ${({$border})=>$border};
-border-top: ${({$borderTop})=>$borderTop};
-border-bottom: ${({$borderBottom})=>$borderBottom};
-border-right: ${({$borderRight})=>$borderRight};
-border-left: ${({$borderLeft})=>$borderLeft};
 border-radius: ${({$br})=>$br};
 border-top-left-radius:${({$borderTopLeftRadius})=>$borderTopLeftRadius};
 border-top-right-radius:${({borderTopRightRadius})=>borderTopRightRadius} ;
 border-bottom-right-radius:${({$borderBottomRightRadius})=>$borderBottomRightRadius} ;
 border-bottom-left-radius:${({$borderBottomLeftRadius})=>$borderBottomLeftRadius} ;
 box-shadow: ${({$boxShadow})=>$boxShadow};
-gap: ${({$gap})=>$gap};
 object-fit: ${({$objectfit})=>$objectfit};
 resize: ${({$resize})=>$resize};
 transition:${({$transition})=>$transition};
 text-transform: ${({$textTranform})=>$textTranform};
-overflow: ${({$overflow})=>$overflow};
-overflow-x: ${({$overflowX})=>$overflowX};
-overflow-y: ${({$overflowY})=>$overflowY};
-inset: ${({$inset})=>$inset};
+cursor: ${({$cursor})=>$cursor};
+
 &:hover {
     background-color: ${({$bgHover})=>$bgHover};
-    cursor: ${({$cursor})=>$cursor};
-    opacity: ${({$opacity})=>$opacity};
     color: ${({$colorHover})=>$colorHover};
-    scale: ${({$scaleHover})=>$scaleHover};
 }
-
 
 &:focus{  
     border: ${({$borderFocus})=>$borderFocus};
-}
+} 
 
-&::placeholder{
+ &::placeholder{
     color: ${({$placeHolderColor})=>$placeHolderColor};
     font-weight: ${({$placeHolderFontWeight})=>$placeHolderFontWeight};
-}
+ }
 `
+
+
 export const Container = styled.div`
 ${sharedProps};
 `
@@ -205,12 +177,7 @@ ${sharedProps};
 export const Label = styled.label`
 ${sharedProps};
 `
-export const TextArea = styled.textarea`
-${sharedProps} ;
-`
-export const Title1 = styled.h1`
-${sharedProps};
-`
+
 export const Title2 = styled.h2`
 ${sharedProps};
 `
@@ -249,6 +216,9 @@ color: ${({theme})=>theme};
 export const Hr = styled.hr`
 ${sharedProps};
 `
+export const Video = styled.video`
+${sharedProps}
+`
 
 export const Button = styled.button`
 ${sharedProps}
@@ -256,7 +226,18 @@ color: ${({theme})=> theme.color};
 background-color: ${({theme})=>theme.background};
 `
 
-export const Button1 = styled.button`
+export const ButtonUserHeaderSection = styled.button`
+flex: 1;
+border: ${({theme})=>`1px solid ${theme.background}`};
+cursor: pointer;
+text-align: center;
+font-weight: 600;
+color: ${({theme})=>theme.color};
+background: ${({theme})=>theme.background};
+border-bottom: ${({theme,$active})=> $active ? `1px solid ${theme.color}` :  '1px solid rgba(0,0,0,0)'} ;
+`
+
+export const ButtonScaleEffect = styled.button`
 ${sharedProps}
 color: ${({theme})=> theme.color};
 background-color: ${({theme})=>theme.background};
@@ -270,7 +251,7 @@ outline: none;
 }
 `
 
-export const Button2 = styled.button`
+export const ButtonAuth = styled.button`
 ${sharedProps}
 background: ${({theme})=> theme.color === dark.color ? '#fff': theme.color};
 color: ${({theme})=>theme.background };
@@ -286,21 +267,6 @@ font-weight : 600 ;
 }
 `
 
-export const Button3 = styled.button`
-${sharedProps}
-background: ${({theme})=> theme.background};
-color: ${({theme})=>theme.color };
-cursor: pointer;
-outline: none;
-text-transform: capitalize;
-border: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.2)" }`};
-border-radius:15px ;
-font-weight : 600 ;
-
-&:active {
-    scale : 0.9;    
-}
-`
 
 export const Button4 = styled.button`
 ${sharedProps}
@@ -315,6 +281,7 @@ outline: none;
     scale : 0.9;    
 }
 `
+
 export const Button5 = styled.button`
 ${sharedProps}
 color: ${({theme})=> theme};
@@ -325,9 +292,22 @@ border: none;
 &:active {
     scale : 0.9;    
 }
-
 `
 
+export const Button6 = styled.button`
+${sharedProps}
+color: ${({theme})=> theme.color};
+background-color: ${({theme})=>theme.background};
+cursor: pointer;
+outline: none;
+border-radius: 15px;
+&:hover {
+    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
+}
+&:active {
+    scale : 0.9;    
+}
+`
 
 
 export const ButtonTheme1 = styled.button`
@@ -369,14 +349,12 @@ border-bottom-right-radius: ${({$left})=>$left ? '15px' : 'none'};
     opacity: 0.8;
 }
 `
-
 export const DivMenu = styled.span`
 ${sharedProps};
 overflow: hidden;
 background-color: ${({theme}) =>(theme.background === dark.background  ?  "#181818" : "#fff")} ;
 box-shadow: ${({theme}) =>(theme.background ===dark.background  ?  "rgba(255,255,255, 0.1) 0px 0px 5px,rgba(255,255,255, 0.05) 0px 0px 5px" : "rgba(0, 0, 0, 0.1) 0px 0px 5px,rgba(0, 0, 0, 0.05) 0px 0px 5px" )} ;
 `
-
 export const ItemDiv = styled.div`
 ${sharedProps} ;
 transition: all ease-in-out 0.2s;
@@ -384,13 +362,62 @@ border-bottom: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(25
 &:last-child {
     border-bottom : none ;
 }
-/* &:hover {
-    background-color: ${({theme})=>theme.background === dark.background ? '#262626' : '#e5e7eb'};
-} */
-
 `
-
 export const ContainerBorderBottom = styled.div`
 ${sharedProps} ;
 border-bottom: ${({theme})=> `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)" }`}  ;
+`
+
+export const InputAuth = styled.input`
+padding-left: 3.5rem;
+width: 100%;
+height: 3rem;
+background-color: ${({theme})=>theme.background ==='#101010' ? "#181818" : "#f1f5f9"};
+color: ${({theme})=>theme};
+outline: none;
+border: 3px solid rgba(0,0,0,0);
+border-radius: 25px;
+&:focus {
+ transition: ease-in-out 0.4s;
+ border: 3px solid #8b5cf6;
+}
+&::placeholder{
+    font-size: 1rem;
+    font-weight: 500;
+    color: gray;
+
+}
+`
+export const Wrapper = styled.section`
+width: ${({$width})=>$width};
+display: ${({$display})=>$display};
+flex-direction: ${({$fd})=>$fd};
+justify-content: ${({$jc})=>$jc};
+align-items: ${({$ai})=>$ai};
+gap: ${({$gap})=>$gap};
+margin:${({$margin})=>$margin};
+position:${({$position})=>$position};
+top: ${({$top})=>$top};
+left: ${({$left})=>$left};
+transform:${({$transform})=>$transform};
+`
+
+export const TextArea = styled.textarea`
+width: ${({$width})=>$width};
+background-color: ${({$bg})=>$bg} ;
+color: ${({theme})=>theme.color};
+outline: ${({$outline})=>$outline};
+border: ${({theme})=> theme.background === dark.background ?  '2px solid rgba(255,255,255,0.05)' :  '2px solid rgba(0,0,0,0.2)'};
+padding: ${({$padding})=>$padding};
+height: ${({$height})=>$height};
+resize: ${({$resize})=>$resize};
+font-size: 1rem;
+margin: auto;
+border-radius: ${({$borderRadius})=>$borderRadius};
+padding: ${({$padding})=>$padding};
+&:focus {
+    border: ${({theme})=> theme.background === dark.background ?  '2px solid rgba(255,255,255,0.5)' :  '2px solid rgba(0,0,0,0.5)'};
+    transition: ease-in-out 0.3s;
+
+}
 `

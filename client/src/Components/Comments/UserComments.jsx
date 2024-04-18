@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button1, ContainerBorderBottom, Div, FlexContainer, Image, Section, Span, Text, Title5 } from '../Global/GlobalStyle'
+import { ButtonScaleEffect, ContainerBorderBottom, Div, FlexContainer, Image, Section, Span, Text, Title5 } from '../Global/GlobalStyle'
 import { useState } from 'react'
 import MenuList from '../MenuList/MenuPost'
 import { BsThreeDots } from 'react-icons/bs'
@@ -34,9 +34,9 @@ const UserComments = ({avatar,createdAt,comment,username,mentions=5,likes}) => {
             <FlexContainer $display='flex' $position='relative'  >
                 <Div $display='flex' $ai='center' $gap='1rem'>
                     <Title5 $color='gray'>{createdAt}</Title5>
-                    <Button1 onClick={()=>setMenuList(!menuList)} onBlur={handleBlur} $padding='8px' $br='50%'  $border='none' $display='flex' $jc='center' $ai='center'>
+                    <ButtonScaleEffect onClick={()=>setMenuList(!menuList)} onBlur={handleBlur} $padding='8px' $br='50%'  $border='none' $display='flex' $jc='center' $ai='center'>
                         <BsThreeDots size={15}  color='gray'/>
-                    </Button1>
+                    </ButtonScaleEffect>
                 </Div>
                 {menuList && (
                 <MenuList />
@@ -45,12 +45,12 @@ const UserComments = ({avatar,createdAt,comment,username,mentions=5,likes}) => {
             
 
        </Section>
-        <Section $paddingLeft='3rem' $display='flex' $fd='column' $gap='1rem'>
+        <Section $padding='0 0 0 3rem' $display='flex' $fd='column' $gap='1rem'>
               <Text $paddingLeft='1rem'> 
                {comment}
               </Text>
               <ButtonsGroup padding='0 0 0 .5rem' like={like} handleClickLike={handleClickLike} />
-              <Div  $display='flex' $paddingLeft='1rem' $ai='center'><Text $color='gray'>{mentions} mentions <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
+              <Div  $display='flex' $padding='0 0 0 1rem' $ai='center'><Text $color='gray'>{mentions} mentions <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
         </Section>
     </ContainerBorderBottom>
   )

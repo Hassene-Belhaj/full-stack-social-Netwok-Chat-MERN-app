@@ -3,10 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  authentication: null,
-  userProfile : null,
-  loading : true,
-  status : 'idle'
+  authentication: null ,
+  isLoggedIn : false ,
+  userProfile : null ,
+  loading : true ,
+  loading_profile : true ,
+  error : null ,
 };
 
 const auth = createSlice({
@@ -14,31 +16,43 @@ const auth = createSlice({
   initialState,
   reducers: {
 
-    start_loading : (state ) => {
-     state.loading = true ;
-    },
-    end_loading : (state ) => {
-      state.loading = false;
-    },
-    Log_Out : (state) => {
-      state.authentication = null ;
-      localStorage.removeItem('info');
+    sign_in_start : (state ) => {
+      state.loading = true ;
+      return ;
+      },
+    sign_in_success : (state,action) => {
+      state.loading = false ;
+      state.authentication = action.payload ;
+      state.error = null ;
+      state.isLoggedIn = true ;
+      return ;
+      },
+    sign_in_failure : (state,action) => {
+      state.loading = false ; 
+      state.error = action.payload ;
       state.isLoggedIn = false ;
       return ;
-    },
-    verify_Auth: (state, action) => {
-      state.authentication = action.payload;
+      },
+    start_loading_profile : (state ) => {
+      state.loading_profile = true ;
+      return ;
+     },
+     end_loading_profile : (state ) => {
+      state.loading_profile = false ;
+      return ;
+     },
+    Log_Out : (state) => {
+      state.authentication = null ;
       return ;
     },
     get_profile : (state , action) => {
       state.userProfile = action.payload ;
       return ;
     },
-    follow_unfollow : (state ,action) => {
-       state.userProfile.followers.map((item)=>item === action.payload._id ? action.payload : item )
-       return ;
-    }
-    
+    // follow_unfollow : (state ,action) => {
+    //    state.userProfile.followers.map((id)=>id === action.payload._id ? action.payload : item )
+    //    return ;
+    // }
   },
 
 });
@@ -46,4 +60,5 @@ const auth = createSlice({
  
 
 export default auth.reducer;
-export const { verify_Auth ,isLoggedIn_start , isLoggedIn_end , Log_Out ,get_profile , start_loading , end_loading } = auth.actions;
+export const {isLoggedIn_start , isLoggedIn_end , Log_Out ,get_profile , start_loading_auth , end_loading_auth , start_loading_profile , end_loading_profile , sign_in_start , sign_in_success , sign_in_failure } = auth.actions;
+
