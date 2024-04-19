@@ -50,7 +50,7 @@ const UserComments = ({avatar,createdAt,comment,username,mentions=5,likes}) => {
                {comment}
               </Text>
               <ButtonsGroup padding='0 0 0 .5rem' like={like} handleClickLike={handleClickLike} />
-              <Div  $display='flex' $padding='0 0 0 1rem' $ai='center'><Text $color='gray'>{mentions} mentions <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
+              <Div $display='flex' $padding='0 0 0 1rem' $ai='center'><Text $color='gray'>{mentions} mentions <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
         </Section>
     </ContainerBorderBottom>
   )

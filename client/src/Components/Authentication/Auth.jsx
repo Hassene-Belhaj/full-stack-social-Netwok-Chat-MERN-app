@@ -4,9 +4,8 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
-import Spinner from '../../utils/Spinner';
-import { IconFaEye, IconFaEyeSlash, IconFaRegUserCircle, IconIoKeyOutline, IconLuUser2, IconOutlineEmail } from '../Global/Icons';
 import Spinner2 from '../../utils/Spinner2';
+import { IconFaEye, IconFaEyeSlash, IconFaRegUserCircle, IconIoKeyOutline, IconLuUser2, IconOutlineEmail } from '../Global/Icons';
 
 
 
@@ -98,7 +97,7 @@ const Auth = ({type}) => {
                           </Div>
 
                           <ButtonAuth type='submit' $margin='1rem 0 2rem 0' $width='100%' $height='3rem'>
-                                    {loading ? <Spinner2 Size={'8px'} />
+                                    {loading ? <Spinner2 width={'1.5rem'} height={'1.5rem'}  />
                                       :
                                       <>
                                       {type === 'signin' ? 'Login' : 'Sign Up'}
@@ -112,14 +111,14 @@ const Auth = ({type}) => {
                                   {type === 'signup' ? 
                                   <Text $padding='.5rem 0 0 0'>
                                       Already a Member ?
-                                      <Navlink $padding='0 0 0 1rem' $fw='500' to='/signin'>
+                                      <Navlink $padding='0 0 0 1rem' $fw='500' to='/signin' > 
                                           Sign in
                                       </Navlink>
                                   </Text> 
                                   :
                                   <Text $padding='.5rem 0 0 0'>
                                       Dont't have an Account yet ?
-                                  <Navlink $padding='0 0 0 1rem' $fw='500' to='/signup'>
+                                  <Navlink $padding='0 0 0 1rem' $fw='500' to='/signup'  >
                                       Sign up
                                   </Navlink>
                               </Text> 

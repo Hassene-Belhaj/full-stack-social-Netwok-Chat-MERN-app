@@ -1,6 +1,5 @@
 import React from 'react'
 import PostCard from './PostCard'
-
 import avatar from '/zuck-avatar.png'
 import postImage from '/post3.png'
 import verified from '/verified.png'

@@ -117,6 +117,7 @@ max-height: ${({$maxHeight})=>$maxHeight};
 z-index: ${({$z})=>$z};
 text-align: ${({$ta})=>$ta};
 text-decoration: ${({$td})=>$td};
+text-transform: ${({$tt})=>$tt};
 font-size: ${({$fs})=>$fs};
 font-weight: ${({$fw})=>$fw};
 outline: ${({$outline})=>$outline};
@@ -130,7 +131,6 @@ box-shadow: ${({$boxShadow})=>$boxShadow};
 object-fit: ${({$objectfit})=>$objectfit};
 resize: ${({$resize})=>$resize};
 transition:${({$transition})=>$transition};
-text-transform: ${({$textTranform})=>$textTranform};
 cursor: ${({$cursor})=>$cursor};
 
 &:hover {
@@ -211,7 +211,7 @@ ${sharedProps};
 `
 export const Navlink = styled(Link)`
 ${sharedProps};
-color: ${({theme})=>theme};
+color: ${({theme})=>theme.color};
 `
 export const Hr = styled.hr`
 ${sharedProps};
@@ -388,6 +388,28 @@ border-radius: 25px;
 
 }
 `
+export const InputEditProfile = styled.input`
+  padding-left: 3.5rem;
+  width: 100%;
+  height: 3rem;
+  background-color: ${({ theme }) =>
+    theme.background === dark.background ? "#101010" : "#f1f5f9"};
+  color: ${({ theme }) => theme};
+  outline: none;
+  border: 3px solid rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  &:focus {
+    transition: ease-in-out 0.4s;
+    border: 3px solid #8b5cf6;
+  }
+  &::placeholder {
+    font-size: 1rem;
+    font-weight: 500;
+    color: gray;
+  }
+`;
+
+
 export const Wrapper = styled.section`
 width: ${({$width})=>$width};
 display: ${({$display})=>$display};

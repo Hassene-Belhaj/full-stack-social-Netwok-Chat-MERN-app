@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import auth from "./Slices/auth";
-import post from "./Slices/post";
+import posts from "./Slices/posts";
 
 const rootReducer = combineReducers({
   auth : auth,
-  post,
+  posts : posts ,
 });
 
 export default rootReducer;

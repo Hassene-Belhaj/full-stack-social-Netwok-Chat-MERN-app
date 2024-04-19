@@ -1,20 +1,53 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import CreatePost from '../Post/CreatePost'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Container, Div } from '../Global/GlobalStyle'
+import { Container, Div, Title3 } from '../Global/GlobalStyle'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import axios from 'axios'
+import Spinner from '../../utils/Spinner'
+import PostCard from '../../Components/Post/PostCard'
+import UserComments from '../Comments/UserComments'
+import { FeedPostAction } from '../../redux/actions/actions'
 
 
 
 const Home = () => {
- const {authentication,loading} = useSelector(state=>state.auth)
+  const dispatch = useDispatch()
+ const {authentication , isLoggedIn} = useSelector(state=>state.auth)
+ const {posts,loading,error} = useSelector(state=>state.posts)
+
+ console.log(error)
+ 
+ 
+ useEffect(()=>{
+  dispatch(FeedPostAction())
+},[])
+
+       if(loading) return <Container $height='95vh' $display='flex' $ai='center' $jc='center'><Spinner Size={'8px'} /></Container> 
+       else if(!posts?.length && isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 $fs='1.2rem' $tt='capitalize' $fw='400' $ta="center">follow some users to see the feed</Title3></Container>
+       else if(!isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 $fs='1.2rem' $tt='capitalize' $fw='400' $ta="center">{error}</Title3></Container>
+       else {
+         return (
+           <Container $maxWidth='620px' $height='100%' $margin='auto'>
+            {posts.map(({image,text,followers,following,username,postedBy},i)=>{
+              return (
+                 <PostCard 
+                    key={i}
+                    avatar={postedBy.profilePic} 
+                    username={postedBy.username}
+                    postTitle={text}
+                    postImage={image}  
+                    createdAt={postedBy.createdAt}
+                    
+                    />
+                  )
+                })}
   
-  
-      return (
-        <Container $maxWidth='620px' $height='800px' $margin='auto'>
-  
+                {/* <UserComments  avatar={postedBy} createdAt={'2d'} comment={'nice post i like it'} username={'Zuck'} likes={'62'}  /> */}
         </Container>
   )
+}
 }
 
 

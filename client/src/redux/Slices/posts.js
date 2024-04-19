@@ -6,8 +6,8 @@ const initialState = ({
     error : null ,
 })
 
-const post  = createSlice({
-    name : 'Post',
+const posts  = createSlice({
+    name : 'posts',
     initialState,
     reducers : {
     start_post_loading :(state)  =>{
@@ -23,10 +23,13 @@ const post  = createSlice({
     state.error = action.payload ;
     return;
     },
+    get_posts: (state,action) => {
+    state.posts = action.payload ;
+    }
     }
 
 })
 
 
-export default post.reducer ;
-export const {start_post_loading , end_post_loading , error_loading} = post.actions ;
+export default posts.reducer ;
+export const {start_post_loading , end_post_loading , error_loading , get_posts} = posts.actions ;

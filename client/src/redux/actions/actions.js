@@ -1,6 +1,7 @@
-import { GetProfile, LogOut,verifyAuth } from "../api/Api_call";
-import {Log_Out,get_profile,start_loading_profile,end_loading_profile,sign_in_failure,sign_in_success} from "../Slices/auth";
+import { GetFeedPost, GetProfile, LogOut,verifyAuth } from "../api/Api_call";
+import {Log_Out,get_profile,start_loading_profile,end_loading_profile,sign_in_failure,sign_in_success, end_loading_auth} from "../Slices/auth";
 import { toast } from "react-hot-toast";
+import { end_post_loading, error_loading, get_posts, start_post_loading } from "../Slices/posts";
 
 export const verifyAuthAction = () => async (dispatch) => {
   try {
@@ -41,6 +42,7 @@ export const LogOutAction = () => async (dispatch) => {
     console.log(error);
   }
 }
+
 // export const followUnfollowAction = (id) =>async(dispatch) => {
 // try {
 //   const {data} = await followUnfollow(id)
@@ -51,6 +53,23 @@ export const LogOutAction = () => async (dispatch) => {
 // }
 // }
 //post
+
+export const FeedPostAction = () => async(dispatch) => {
+  try {
+    dispatch(start_post_loading())
+    const {data} = await GetFeedPost()
+    // console.log(data)
+    dispatch(get_posts(data.posts))
+    dispatch(end_post_loading())
+  } catch (error) {  
+    // console.log(error.response.data.msg)
+    dispatch(error_loading(error.response.data.msg))
+  }
+}
+
+
+
+
 
 
 

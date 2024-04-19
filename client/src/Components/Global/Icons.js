@@ -4,7 +4,7 @@ import { LuUser2 } from "react-icons/lu";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoIosImages } from "react-icons/io";
+import { IoIosImages, IoIosInformationCircleOutline } from "react-icons/io";
 
 
 
@@ -67,6 +67,13 @@ cursor: pointer;
 
 
 export const IconIoIosImages = styled(IoIosImages)`
-
-
 `
+
+export const IconIoIosInformationCircleOutline = styled(IoIosInformationCircleOutline)`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 1.5rem;
+  color: gray;
+  cursor: pointer;
+`;
