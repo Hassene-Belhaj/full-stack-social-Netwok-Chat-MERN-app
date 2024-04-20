@@ -146,9 +146,8 @@ const getProfile = Asyncwrapper(async (req, res, next) => {
   const { username } = req.params;
   const resp = await userModel
     .findOne({ username })
-    .select("-password -updatedAt -__v");
-  if (!resp)
-  return next(createCustomError("sorry no user with this username", 400));
+    .select("-password -createdAt -updatedAt -__v");
+  if (!resp) return next(createCustomError("sorry no user with this username", 400));
   res.status(200).json({ success: true, resp });
 });
 

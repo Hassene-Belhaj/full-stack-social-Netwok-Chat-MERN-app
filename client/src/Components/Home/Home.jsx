@@ -1,14 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { Container, Div, Title3 } from '../Global/GlobalStyle'
-import { useState } from 'react'
+import { Container, Title3 } from '../Global/GlobalStyle'
 import { useEffect } from 'react'
-import axios from 'axios'
 import Spinner from '../../utils/Spinner'
-import PostCard from '../../Components/Post/PostCard'
 import UserComments from '../Comments/UserComments'
 import { FeedPostAction } from '../../redux/actions/actions'
+import UserPosts from '../UserPage/UserPosts'
 
 
 
@@ -17,7 +14,7 @@ const Home = () => {
  const {authentication , isLoggedIn} = useSelector(state=>state.auth)
  const {posts,loading,error} = useSelector(state=>state.posts)
 
- console.log(error)
+ console.log(posts)
  
  
  useEffect(()=>{
@@ -30,16 +27,17 @@ const Home = () => {
        else {
          return (
            <Container $maxWidth='620px' $height='100%' $margin='auto'>
-            {posts.map(({image,text,followers,following,username,postedBy},i)=>{
+            {posts.map(({_id , image,text,followers,following,username,postedBy,createdAt,replies},i)=>{
               return (
-                 <PostCard 
+                 <UserPosts 
                     key={i}
+                    id={_id}
                     avatar={postedBy.profilePic} 
                     username={postedBy.username}
                     postTitle={text}
                     postImage={image}  
-                    createdAt={postedBy.createdAt}
-                    
+                    createdAt={createdAt}
+                    replies={replies}
                     />
                   )
                 })}

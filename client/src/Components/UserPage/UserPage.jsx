@@ -18,7 +18,7 @@ const UserPage = () => {
     dispatch(getProfileAction(username))
   },[username])
   
-  // console.log(userProfile)
+  console.log(userProfile)
 
   if(loading_profile) return <Container $height='95vh' $display='flex' $ai='center' $jc='center'><Spinner Size={'8px'} /></Container> 
   else if(!userProfile) return <Container><Title4 $padding='8rem 0 0 0' $ta='center' $fw='400'>No User was found With This Username</Title4></Container>

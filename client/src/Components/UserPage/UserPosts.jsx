@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { ButtonScaleEffect, Container, ContainerBorderBottom, Div, FlexContainer, Image, Image2, Navlink, Span, Text,Title5 } from '../Global/GlobalStyle'
+import { ButtonScaleEffect,ContainerBorderBottom,Div, FlexContainer, Image, Image2, Navlink, Span, Text,Title4,Title5 } from '../Global/GlobalStyle'
 import { BsThreeDots } from "react-icons/bs";
 import MenuList from '../MenuList/MenuPost';
 import ButtonsGroup from '../ButtonsGroup/ButtonsGroup';
+import verified from '/verified.png'
+import moment from 'moment'
 
 
-
-
-
-const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
+const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,createdAt}) => {
+  // console.log(replies[1]?.userProfilePic)
   
   const height = `calc(100% - 4rem)`
 
@@ -26,9 +26,12 @@ const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
   }
   return (
     <ContainerBorderBottom $padding='2rem 0' >
-      <FlexContainer $display='flex' $gap='.5rem'>
+      <FlexContainer $display='flex' $gap='1rem'>
             <Div $width='4rem' $position='relative'>
-                <Image $width='4rem' $height='4rem' src={avatar} $br='50%'/>
+                 <Navlink to={`/${username}`}>
+                       <Image $width='4rem' $height='4rem' $objectfit='cover' src={avatar} $br='50%'/>
+                  </Navlink>
+
                 <Div $position='absolute' $top='5rem' $left='50%' $transform='translateX(-50%)' $width='1px' $height={height} $bg='gray'></Div>
             </Div>
 
@@ -37,16 +40,18 @@ const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
           <FlexContainer $display='flex' $fd='column' $gap='1rem'>
 
             <FlexContainer $display='flex' $jc='space-between' $position='relative'  >
+
                 <Div $display='flex' $ai='center' $gap='.5rem' >
-                    <Title5>markzuckerberg</Title5>
+                   <Navlink to={`/${username}`} $td='none'>
+                      <Title4>{username}</Title4>
+                   </Navlink>
                     <Div $width='1.3rem' $display='flex' $jc='center' $ai='center' >
                         <Image  $width='100%' src={verified} $br='15px' />
                     </Div>
                 </Div>
 
                 <Div $display='flex' $ai='center' $gap='1rem'>
-                  <Title5 $color='gray'>1d</Title5>
-
+                      <Title5 $color='gray'>{moment(createdAt).startOf('day').fromNow()}</Title5>
                     <ButtonScaleEffect  onClick={()=>setMenuList(!menuList)} onBlur={handleBlur} $padding='8px' $br='50%'  $border='none' $display='flex' $jc='center' $ai='center'>
                       <BsThreeDots size={25}  color='gray'/>
                     </ButtonScaleEffect>
@@ -61,9 +66,9 @@ const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
 
              <Text>{postTitle}</Text>
 
-              <Div $width='100%'  >
-                <Navlink to={'/@zack/post/sssss'}>
-                    <Image2 $width='100%' $br='15px' src={postImage} />
+              <Div $maxWidth='620px'>
+                <Navlink to={`/${username}/post/${id}`}>
+                    <Image2 $width='100%' $br='15px' $objectfit='cover' src={postImage} />
                 </Navlink>
               </Div>
 
@@ -76,11 +81,22 @@ const UserPosts = ({avatar,verified,postTitle,postImage,likes,replies}) => {
 
           <FlexContainer $display='flex' $gap='1rem' $padding='1rem 0 0 0'>
             <Div $width='4rem' $height='4rem' $position='relative' $bg='transparent'>
-                <Div $position='absolute' $top='4px' $right='25%' $transform='translateX(25%)' $width='1.6rem' $height='1.6rem' ><Image $br='50%' $width='100%'$height='100%' src='zuck-avatar.png'/></Div>
-                <Div $position='absolute'  $top='10px' $left='4px'   $width='1.4rem' $height='1.4rem' ><Image $br='50%' $idth='100%'$height='100%' src='zuck-avatar.png'/></Div>
-                <Div $position='absolute' $top='34px' $right='50%' $transform='translate(50%)'  $width='1.2rem' $height='1.2rem' ><Image $br='50%' $width='100%'$height='100%' src='zuck-avatar.png'/></Div>
+      
+               {replies[0] ?  
+                 <Div $position='absolute' $top='34px' $right='50%' $transform='translate(50%)'  $width='1.8rem' $height='1.8rem' ><Image $br='50%' $width='100%'$height='100%' $objectfit='cover' src={replies[0].userProfilePic}/></Div>
+                : 
+                  <Div $position='absolute' $top='8px' $right='50%' $transform='translate(50%)'  $width='1.8rem' $height='1.8rem' $display='flex' $jc='center' $ai='center' >
+                    🥱
+                  </Div> 
+                   }
+                {replies[1] && (
+                  <Div $position='absolute' $top='4px' $right='25%' $transform='translateX(25%)' $width='1.6rem' $height='1.6rem' ><Image $br='50%' $width='100%' $height='100%' $objectfit='cover' src={replies[1].userProfilePic}/></Div>
+                )}
+                {replies[2] && (
+                  <Div $position='absolute'  $top='10px' $left='4px'   $width='1.4rem' $height='1.4rem' ><Image $br='50%' $idth='100%'$height='100%' $objectfit='cover' src={replies[2].userProfilePic}/></Div>
+                )}
             </Div>
-            <Div $display='flex' $ai='center'><Text $color='gray'>{replies} replies <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
+            <Div $display='flex' $ai='center'><Text $color='gray'> {replies.length} Replies <Span $margin='0 .5rem'> &#x2022; </Span>{likes} likes</Text></Div>
           </FlexContainer>
        
     </ContainerBorderBottom>

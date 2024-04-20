@@ -1,26 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Button,
-  ButtonTheme1,
-  ButtonTheme2,
-  Container,
-  Div,
-  DivMenu,
-  FlexContainer,
-  Form,
-  Image,
-  Input,
-  Section,
-  Text,
-  TextArea,
-  Title3,
-  Title4,
-  Wrapper,
-} from "../Global/GlobalStyle";
-import { IconAiOutlineClose, IconIoIosImages } from "../Global/Icons";
+import {Button,ButtonTheme1,ButtonTheme2,Container,Div,DivMenu,FlexContainer,Form,Image, Input,Section,Text,TextArea,Title3, Title4, Wrapper} from "../Global/GlobalStyle";
+import {IconAiOutlineClose, IconIoIosImages } from "../Global/Icons";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../utils/Spinner";
+import {useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Spinner2 from "../../utils/Spinner2";
 
@@ -33,7 +15,7 @@ const PostModal = ({ setShowModal }) => {
   const [loading, setLoading] = useState(false);
 
   const {authentication: { id, username, profilePic }} = useSelector((state) => state.auth);
-  const { posts } = useSelector((state) => state.posts);
+  // const { posts } = useSelector((state) => state.posts);
 
   useEffect(() => {
     const keypress = (e) => {

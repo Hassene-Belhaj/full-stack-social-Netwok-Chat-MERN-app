@@ -9,14 +9,16 @@ const newPost  = Asyncwrapper(async(req,res,next) => {
     const {postedBy , text } = req.body ;
     let {image } = req.body ;
     if(!postedBy || !text) return next(createCustomError('please fill all required fields',400))
-    if(!image) return next(createCustomError('please upload Image',400))
+    // if(!image) return next(createCustomError('please upload Image',400))
     const user = await userModel.findById(postedBy)   
     if(String(user._id) !== userID) return next(createCustomError('unauthorized' , 401))
     const maxLength = 500
     if(text.length > maxLength) return next(createCustomError(`text should be less than ${maxLength}`,400))
     
-    const respUpload = await cloudinary.uploader.upload(image) ;
-    image = respUpload.secure_url ;
+    if(image) {
+        const respUpload = await cloudinary.uploader.upload(image) ;
+        image = respUpload.secure_url ;
+    }
 
     const newPost = await postModel.create({
      postedBy,

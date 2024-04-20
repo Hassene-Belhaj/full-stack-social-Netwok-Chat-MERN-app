@@ -14,16 +14,11 @@ import { BsThreeDots } from "react-icons/bs";
 import MenuList from "../MenuList/MenuPost";
 import { useState } from "react";
 import ButtonsGroup from "../ButtonsGroup/ButtonsGroup";
+import moment from 'moment'
+import verified from '/verified.png'
 
-const PostPage = ({
-  avatar,
-  verified,
-  postTitle,
-  postImage,
-  likes,
-  replies,
-  username
-}) => {
+
+const PostPage = ({id,postedBy,avatar,text,image,likes,replies ,createdAt }) => {
   const [like, setLike] = useState(false);
   const [menuList, setMenuList] = useState(false);
 
@@ -56,7 +51,7 @@ const PostPage = ({
           </Div>
 
           <Div $display="flex" $ai="center" $gap=".5rem">
-            <Title4>{username}</Title4>
+            <Title4>{postedBy?.username}</Title4>
             <Div 
               $width="1.3rem" 
               $display="flex"
@@ -69,7 +64,7 @@ const PostPage = ({
 
         <FlexContainer $display="flex" $position="relative">
           <Div $display="flex" $ai="center" $gap="1rem">
-            <Title5 $color="gray">1d</Title5>
+            <Title5 $color="gray" $tt='capitalize'>{moment(createdAt).startOf('day').fromNow()}</Title5>
             <ButtonScaleEffect
               onClick={() => setMenuList(!menuList)}
               onBlur={handleBlur}
@@ -88,12 +83,12 @@ const PostPage = ({
       </FlexContainer>
 
       <FlexContainer $display="flex" $fd="column" $gap="1rem">
-        <Text $padding="1rem 0 0 0">{postTitle}</Text>
+        <Text $padding="1rem 0 0 0">{text}</Text>
             <Div $width="100%">
               <Image 
                 $width="100%" 
                 $br="15px" 
-                src={postImage} 
+                src={image} 
                 />
             </Div>
         <ButtonsGroup like={like} handleClickLike={handleClickLike} />
@@ -102,8 +97,8 @@ const PostPage = ({
       <FlexContainer $display="flex" $gap="1rem" $padding="1rem 0 0 0">
         <Div $display="flex" $ai="center">
           <Text $color="gray">
-            {replies} replies <Span $margin="0 .5rem"> &#x2022; </Span>
-            {likes} likes
+            {replies?.length} replies <Span $margin="0 .5rem"> &#x2022; </Span>
+            {likes?.length} likes
           </Text>
         </Div>
       </FlexContainer>
