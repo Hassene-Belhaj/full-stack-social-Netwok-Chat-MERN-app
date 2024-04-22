@@ -8,6 +8,9 @@ export const GetProfile = (username) => axios.get(`/user/profile/${username}`)
 
 //feed posts
 export const GetFeedPost = () => axios.get('/posts/post/feed') 
+export const GetSinglePost = (id) => axios.get(`/posts/${id}`) 
 
 
 // export const followUnfollow = (id) => axios.get(`/user/follow/${id}`)
+
+

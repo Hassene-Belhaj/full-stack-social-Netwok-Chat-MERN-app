@@ -93,7 +93,7 @@ const Navbar = ({ theme, setTheme, setShowModal }) => {
     >
       {showMenu && (
         <Div ref={menuRef}>
-          <MenuNavbar
+          <MenuNavbar 
             theme={theme}
             setTheme={setTheme}
             type="navbar"

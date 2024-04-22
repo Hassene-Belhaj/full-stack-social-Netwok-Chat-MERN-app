@@ -1,8 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import {Button,ButtonTheme1,ButtonTheme2,Container,Div,DivMenu,FlexContainer,Form,Image, Input,Section,Text,TextArea,Title3, Title4, Wrapper} from "../Global/GlobalStyle";
-import {IconAiOutlineClose, IconIoIosImages } from "../Global/Icons";
+import {
+  Button,
+  ButtonTheme1,
+  ButtonTheme2,
+  Container,
+  Div,
+  DivMenu,
+  FlexContainer,
+  Form,
+  Image,
+  Input,
+  Navlink,
+  Section,
+  Text,
+  TextArea,
+  Title3,
+  Title4,
+  Wrapper,
+} from "../Global/GlobalStyle";
+import { IconAiOutlineClose, IconIoIosImages } from "../Global/Icons";
 import toast from "react-hot-toast";
-import {useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Spinner2 from "../../utils/Spinner2";
 
@@ -14,7 +32,9 @@ const PostModal = ({ setShowModal }) => {
   const [imagePost, setImagePost] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const {authentication: { id, username, profilePic }} = useSelector((state) => state.auth);
+  const {
+    authentication: { id, username, profilePic },
+  } = useSelector((state) => state.auth);
   // const { posts } = useSelector((state) => state.posts);
 
   useEffect(() => {
@@ -76,10 +96,10 @@ const PostModal = ({ setShowModal }) => {
     }
   };
 
-  console.log(profilePic)
+  console.log(profilePic);
 
   return (
-    <Container $position="absolute" $inset="0" $bg="rgba(0,0,0,0.8)">
+    <Container $position="fixed" $inset="0" $bg="rgba(0,0,0,0.8)">
       <Wrapper
         $width="620px"
         $display="flex"
@@ -208,7 +228,6 @@ const PostModal = ({ setShowModal }) => {
                   {MaxLength - postMessage.length}
                 </Text>
               </Div>
-
               <Div $padding="1rem" $display="flex" $gap="2rem">
                 <ButtonTheme2
                   onClick={() => setShowModal(false)}
@@ -216,12 +235,13 @@ const PostModal = ({ setShowModal }) => {
                 >
                   Close
                 </ButtonTheme2>
+
                 <ButtonTheme1 type="submit" $padding=".5rem 2rem">
-                    {loading ? (
-                        <Spinner2 width={"1.5rem"} height={"1.5rem"} />
-                    ) : (
-                        "Submit"
-                    )}
+                  {loading ? (
+                    <Spinner2 width={"1.5rem"} height={"1.5rem"} />
+                  ) : (
+                    "Submit"
+                  )}
                 </ButtonTheme1>
               </Div>
             </Form>

@@ -14,11 +14,11 @@ import { useNavigate } from 'react-router-dom'
 
 const UserHeader = ({user,authentication}) => {
 
-
-     
     const [menuList , setMenuList] = useState(false)
     const [active , setActive] = useState('Threads')
     
+    // console.log(active)
+
     const [follow , setFollow] = useState(!user?.followers?.includes(authentication?.id))
     const [followersNbr , _setFollowersNbr] = useState([...user.followers])
     const navigate = useNavigate()
@@ -57,8 +57,8 @@ const UserHeader = ({user,authentication}) => {
              }, 3000)
             console.log(error)
         }
-
     }
+    
       return (
           <Section>
                 <FlexContainer  $width='100%' $display='flex' $jc='space-between'  $padding='4rem 0 0 0' >

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { newPost  , getPost , deletePost , like_Unlike , replyPost , getFeedPost} = require('../Controllers/post');
+const { newPost  , getPost , deletePost , like_Unlike , replyPost , getFeedPost , getallPostsUser} = require('../Controllers/post');
 const { VerifyToken } = require('../token/verifyToken');
 
 
@@ -9,6 +9,7 @@ router.route('/:id').delete(VerifyToken,deletePost)
 router.route('/post/like/:id').post(VerifyToken,like_Unlike)
 router.route('/post/reply/:id').post(VerifyToken,replyPost)
 router.route('/post/feed').get(VerifyToken,getFeedPost)
+router.route('/post/:username').get(VerifyToken,getallPostsUser)
 
 
 

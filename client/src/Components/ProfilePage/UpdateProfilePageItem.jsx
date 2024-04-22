@@ -1,11 +1,12 @@
 import React from "react";
-import {ButtonTheme1,ButtonTheme2,Div,DivMenu,Form,Image,Input,InputEditProfile,Title3} from "../Global/GlobalStyle";
+import {ButtonTheme1,ButtonTheme2,Div,DivMenu,Form,Image,Input,InputEditProfile,Navlink,Title3} from "../Global/GlobalStyle";
 import { useState } from "react";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Spinner2 from "../../utils/Spinner2";
 import { IconFaEye, IconFaEyeSlash, IconIoIosInformationCircleOutline, IconIoKeyOutline, IconLuUser2, IconOutlineEmail } from "../Global/Icons";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,6 +17,7 @@ const UpdateProfilePageItem = ({ userProfile }) => {
   const [preview, setPreview] = useState(null);
   const [userInfo, setUserInfo] = useState(userProfile);
   const inputRef = useRef(null);
+  const navigate = useNavigate()
 
   const ImageHandler = (e) => {
     let File = e.target.files[0];
@@ -57,6 +59,10 @@ const UpdateProfilePageItem = ({ userProfile }) => {
     }
   };
 
+const handleClick = () => {
+  navigate(`/${userInfo.username}`)
+}
+
   return (
     <DivMenu $padding="2rem" $width="500px">
       <Title3 $margin="0 0 2rem 0" $ta="center">
@@ -65,11 +71,11 @@ const UpdateProfilePageItem = ({ userProfile }) => {
       <Div $display="flex" $jc="center" $ai="center" $gap="1rem">
         <Div $flex="1">
           <Image
-            $width="8rem"
-            $height="8rem"
-            src={preview || userInfo.profilePic}
-            $objectfit="cover"
-            $br="50%"
+          $width="8rem"
+          $height="8rem"
+          src={preview || userInfo.profilePic}
+          $objectfit="cover"
+          $br="50%"
           />
         </Div>
 
@@ -92,9 +98,8 @@ const UpdateProfilePageItem = ({ userProfile }) => {
            $ai='start'
            $margin='auto'
            $gap='2rem'
-        
-        
            onSubmit={handleUpdateUser}>
+            
         <Div $width="100%" $position="relative">
           <InputEditProfile
             value={userInfo.name}
@@ -161,9 +166,10 @@ const UpdateProfilePageItem = ({ userProfile }) => {
         </Div>
 
         <Div $display="flex" $width="100%" $gap="1rem">
-          <ButtonTheme2 type="reset" $flex="1">
-            Close
-          </ButtonTheme2>
+              <ButtonTheme2 type="reset" $flex="1" onClick={handleClick}>
+                        Close
+              </ButtonTheme2>
+
           <ButtonTheme1 type="submit" $flex="1">
             {loadingData ? (
               <Spinner2 width={"1.5rem"} height={"1.5rem"} />

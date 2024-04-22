@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { ButtonScaleEffect,ContainerBorderBottom,Div, FlexContainer, Image, Image2, Navlink, Span, Text,Title4,Title5 } from '../Global/GlobalStyle'
 import { BsThreeDots } from "react-icons/bs";
-import MenuList from '../MenuList/MenuPost';
 import ButtonsGroup from '../ButtonsGroup/ButtonsGroup';
 import verified from '/verified.png'
 import moment from 'moment'
+import emoji from '/boredEmoji.png'
+import MenuPost from '../MenuList/MenuPost';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 
-const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,createdAt}) => {
+const UserPosts = ({confirmModal,setConfirmModal,id,avatar,postTitle,postImage,username,likes=5,replies,createdAt}) => {
   // console.log(replies[1]?.userProfilePic)
-  
+  const RefDivClick = useRef(null)
   const height = `calc(100% - 4rem)`
 
   const [like , setLike] =  useState(false)
@@ -24,6 +26,7 @@ const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,creat
       setMenuList(false)
      }, 300)
   }
+
   return (
     <ContainerBorderBottom $padding='2rem 0' >
       <FlexContainer $display='flex' $gap='1rem'>
@@ -43,7 +46,7 @@ const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,creat
 
                 <Div $display='flex' $ai='center' $gap='.5rem' >
                    <Navlink to={`/${username}`} $td='none'>
-                      <Title4>{username}</Title4>
+                          <Title4>{username}</Title4>
                    </Navlink>
                     <Div $width='1.3rem' $display='flex' $jc='center' $ai='center' >
                         <Image  $width='100%' src={verified} $br='15px' />
@@ -58,15 +61,20 @@ const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,creat
                 </Div>
                 
               {menuList && (
-                    <MenuList />
+                    <MenuPost confirmModal={confirmModal} setConfirmModal={setConfirmModal} postID={id} username={username} />
               )}
+
+              {confirmModal && (
+                    <ConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} postID={id} />
+                  
+             )}
 
             </FlexContainer>
               
 
              <Text>{postTitle}</Text>
 
-              <Div $maxWidth='620px'>
+              <Div $maxWidth='620px' ref={RefDivClick}>
                 <Navlink to={`/${username}/post/${id}`}>
                     <Image2 $width='100%' $br='15px' $objectfit='cover' src={postImage} />
                 </Navlink>
@@ -85,8 +93,8 @@ const UserPosts = ({id,avatar,postTitle,postImage,username,likes=5,replies,creat
                {replies[0] ?  
                  <Div $position='absolute' $top='34px' $right='50%' $transform='translate(50%)'  $width='1.8rem' $height='1.8rem' ><Image $br='50%' $width='100%'$height='100%' $objectfit='cover' src={replies[0].userProfilePic}/></Div>
                 : 
-                  <Div $position='absolute' $top='8px' $right='50%' $transform='translate(50%)'  $width='1.8rem' $height='1.8rem' $display='flex' $jc='center' $ai='center' >
-                    🥱
+                  <Div $position='absolute' $top='8px' $right='50%' $transform='translate(50%)'  $width='2.4rem' $height='2.4rem' $display='flex' $jc='center' $ai='center' >
+                    <Image $width='100%' $bg='transparent' src={emoji} />
                   </Div> 
                    }
                 {replies[1] && (

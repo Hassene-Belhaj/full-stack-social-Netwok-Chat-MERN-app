@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes , Route , Navigate } from 'react-router-dom'
 import { Container } from '../Global/GlobalStyle'
 import UserPage from '../UserPage/UserPage'
@@ -8,12 +8,12 @@ import Home from '../Home/Home'
 import { useSelector } from 'react-redux'
 import UpdateProfilePage from '../ProfilePage/UpdateProfilePage'
 import Spinner from '../../utils/Spinner'
+import ConfirmModal from '../ConfirmModal/ConfirmModal'
 
 
 
-const Navigation = ({showModal}) => {
-   
-   
+const Navigation = ({showModal,confirmModal,setConfirmModal}) => {
+    
    const {isLoggedIn , loading} = useSelector(state=>state.auth)
   //  console.log(isLoggedIn)  
   
@@ -21,16 +21,16 @@ const Navigation = ({showModal}) => {
    else {
      return (
        <>
-          <Container $margin='auto' $height={showModal ? '96vh' : '100%'} $overflowY={showModal ? 'hidden' : 'auto'}>
+          <Container $margin='auto' $height={showModal ? '100vh' : '100%'} $overflowY={showModal ? 'hidden' : 'auto'}>
             <Routes>
-                <Route path='signup'  element={!isLoggedIn?  <Auth type='signup'/> : <Navigate  to='/' /> } />
-                <Route path='signin'  element={!isLoggedIn?  <Auth type='signin' /> : <Navigate  to='/' /> } />
-                <Route path=':username' element={<UserPage />} />
-                <Route path=':username/post/:id' element={<PostPage />} />
-                <Route path='update/:username' element={isLoggedIn?  <UpdateProfilePage /> : <Navigate  to='/signin' /> } />
-                <Route path='' element={<Home/>} />
-                <Route path='*'  element={<h2>page error</h2>} />
-              </Routes>
+                  <Route path='signup'  element={!isLoggedIn?  <Auth type='signup'/> : <Navigate  to='/' /> } />
+                  <Route path='signin'  element={!isLoggedIn?  <Auth type='signin' /> : <Navigate  to='/' /> } />
+                  <Route path=':username' element={<UserPage  confirmModal={confirmModal} setConfirmModal={setConfirmModal}/>} />
+                  <Route path=':username/post/:id' element={<PostPage confirmModal={confirmModal} setConfirmModal={setConfirmModal} />} />
+                  <Route path='update/:username' element={isLoggedIn?  <UpdateProfilePage /> : <Navigate  to='/signin' /> } />
+                  <Route path='' element={<Home/>} />
+                  <Route path='*'  element={<h2>page error</h2>} />
+            </Routes>
           </Container>  
           </>
       

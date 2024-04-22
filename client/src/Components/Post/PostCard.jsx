@@ -1,24 +1,15 @@
 import React from "react";
-import {
-  ButtonScaleEffect,
-  ContainerBorderBottom,
-  Div,
-  FlexContainer,
-  Image,
-  Span,
-  Text,
-  Title4,
-  Title5,
-} from "../Global/GlobalStyle";
+import {ButtonScaleEffect,ContainerBorderBottom,Div,FlexContainer,Image,Span,Text,Title4,Title5} from "../Global/GlobalStyle";
 import { BsThreeDots } from "react-icons/bs";
-import MenuList from "../MenuList/MenuPost";
 import { useState } from "react";
 import ButtonsGroup from "../ButtonsGroup/ButtonsGroup";
 import moment from 'moment'
 import verified from '/verified.png'
+import MenuPost from "../MenuList/MenuPost";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 
-const PostPage = ({id,postedBy,avatar,text,image,likes,replies ,createdAt }) => {
+const PostPage = ({confirmModal , setConfirmModal , id,postedBy,avatar,text,image,likes,replies ,createdAt }) => {
   const [like, setLike] = useState(false);
   const [menuList, setMenuList] = useState(false);
 
@@ -32,6 +23,7 @@ const PostPage = ({id,postedBy,avatar,text,image,likes,replies ,createdAt }) => 
   };
 
   return (
+
     <ContainerBorderBottom $padding="1rem 0">
       <FlexContainer
         $display="flex"
@@ -78,12 +70,12 @@ const PostPage = ({id,postedBy,avatar,text,image,likes,replies ,createdAt }) => 
               <BsThreeDots size={15} color="gray" />
             </ButtonScaleEffect>
           </Div>
-          {menuList && <MenuList />}
+          {menuList && <MenuPost confirmModal={confirmModal} setConfirmModal={setConfirmModal}  />}
         </FlexContainer>
       </FlexContainer>
 
       <FlexContainer $display="flex" $fd="column" $gap="1rem">
-        <Text $padding="1rem 0 0 0">{text}</Text>
+        <Text $padding="1rem 0 0 .5rem">{text}</Text>
             <Div $width="100%">
               <Image 
                 $width="100%" 

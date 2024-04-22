@@ -38,12 +38,17 @@ const getPost = Asyncwrapper(async(req,res,next) => {
 
 })
 
+
+
 const deletePost = Asyncwrapper(async(req,res,next) => {
-    const {id} = req.params ;
+    const {id} = req.params ; 
     const userID = req.user.id ;
     const resp = await postModel.findById(id) 
     if(!resp) return next(createCustomError('post not found' , 404))
     if(userID !== String(resp.postedBy._id)) return next(createCustomError('unauthorized to delete this Post',401))
+    if(resp.image) {
+        await cloudinary.uploader.destroy(resp.image.split('/').pop().split('.')[0])
+    }
      await postModel.findByIdAndDelete(id)
     res.status(200).json({success : true , msg : 'posts deleted successfully'})
  })
@@ -88,10 +93,22 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     const checkuser = await userModel.findById(userID)
     if(!checkuser) return next(createCustomError('user not found' , 404))
     const followedUser = checkuser.following ;
-    const posts = await postModel.find({postedBy : {$in : followedUser}}).sort({"text" : -1}).populate("postedBy","-updatedAt -__v -email -name -bio -password -followers -following" )
+    const posts = await postModel.find({postedBy : {$in : followedUser}}).sort({"createdAt" : -1}).populate("postedBy","-updatedAt -__v -email -name -bio -password -followers -following" )
     res.status(200).json({success : true , nbr  : posts?.length , posts})   
 })
 
+const getallPostsUser= Asyncwrapper(async(req,res,next)=> {
+    const {username} = req.params ; 
+    const findUser = await userModel.findOne({username})
+    if(!findUser) return next(createCustomError('user does not exist' , 404))
+    const resp = await postModel.find({}).populate("postedBy")
+    if(!resp) return next(createCustomError('post not found' , 404)) 
+    const result = resp.filter((item)=>item.postedBy.username === username)
+    if(!result) return next(createCustomError('post not found' , 404))
+    result.sort((a,b)=>b.createdAt-a.createdAt)
+    res.status(200).json({success :true,nbr : result.length , result})
+})
+
 module.exports = {
-    newPost , getPost ,deletePost , like_Unlike ,replyPost ,getFeedPost
+    newPost , getPost ,deletePost , like_Unlike ,replyPost ,getFeedPost , getallPostsUser
 };

@@ -12,6 +12,7 @@ import { toast } from 'react-hot-toast'
 import { verifyAuthAction } from './redux/actions/actions'
 import PostModal from './Components/Post/PostModal'
 import { dark, light } from './utils/ThemeColors'
+import ConfirmModal from './Components/ConfirmModal/ConfirmModal'
 
 
 
@@ -19,6 +20,8 @@ import { dark, light } from './utils/ThemeColors'
 const App = () => {
   const dispatch = useDispatch() 
   const [showModal , setShowModal] = useState(false)
+  const [confirmModal , setConfirmModal] = useState(false)
+
 
 
   
@@ -79,11 +82,12 @@ useEffect(() => {
             :
             null
           }
-              <Navigation showModal={showModal} theme={theme} setTheme={setTheme}/>
+              <Navigation showModal={showModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} theme={theme} setTheme={setTheme}/>
 
               {showModal && (
                  <PostModal showModal={showModal} setShowModal={setShowModal} />
               )}
+    
           </Container>
       </ThemeProvider>
   )

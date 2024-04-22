@@ -9,60 +9,7 @@ export const GlobalStyleCss = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: "poppins", sans-serif;
-    &::-webkit-scrollbar {
-    width: 1.2em;
-    height: auto;
-}
-&::-webkit-scrollbar-track {
-    background: ${({theme})=>theme.background === dark.background ? '#1e1e1e' : '#f3f5f9'} ;
-
-}
-&::-webkit-scrollbar-button {
-    background: ${({theme})=>theme.color === dark.color ? '#101010' : '#d5d5d5'} ;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
-    
-}
-&::-webkit-scrollbar-button:single-button:vertical:decrement {
-    height: auto;
-    width: 8px;
-    background-position: center 8px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='gray'><polygon points='50,00 0,50 100,50'/></svg>");
-    background-repeat: no-repeat;
-    background-size: 12px;
-}
-&::-webkit-scrollbar-button:single-button:vertical:increment {
-    height: auto;
-    width: 8px;
-    background-position: center 8px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='gray'><polygon points='0,0 100,0 50,50'/></svg>");
-    background-repeat: no-repeat;
-    background-size: 12px;
-    cursor: pointer;
-    
-}
-&::-webkit-scrollbar-button:single-button:vertical:decrement:active {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255, 255, 255)'><polygon points='50,00 0,50 100,50'/></svg>");
-    background-color: rgb(128, 128, 128);
-
-}
-&::-webkit-scrollbar-button:single-button:vertical:increment:active {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='0,0 100,0 50,50'/></svg>");
-    background-color: rgb(128, 128, 128);
-}
-&::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(255,255,255)'><polygon points='50,00 0,50 100,50'/></svg>");
-    cursor: pointer;
-
-} 
-&::-webkit-scrollbar-thumb:active {
-    background-color: rgb(128, 128, 128);
-}
-&::-webkit-scrollbar-thumb {
-    background: ${({theme})=>theme.color === dark.color ? '#585858' : '#d5d5d5'} ;
-    border-top: .5px solid ${({theme})=>theme.background};
-    border-bottom: .5px solid ${({theme})=>theme.background};
-    cursor: pointer;
-}
+    scrollbar-color: ${({theme})=>theme.background === dark.background ? '#78716c #181818' : '#181818 : #78716c'} ;
 }
 
 html {
@@ -70,8 +17,6 @@ html {
     overflow-y: scroll;
     background: ${({theme})=>theme.background};
     color: ${({theme})=>theme.color};
-
-
 }
 `
 export const dark = {
@@ -212,12 +157,18 @@ ${sharedProps};
 export const Navlink = styled(Link)`
 ${sharedProps};
 color: ${({theme})=>theme.color};
+&:hover{
+    text-decoration: underline;
+    text-underline-offset: 10px;
+}
+
 `
 export const Hr = styled.hr`
 ${sharedProps};
 `
 export const Video = styled.video`
 ${sharedProps}
+
 `
 
 export const Button = styled.button`
@@ -314,9 +265,10 @@ export const ButtonTheme1 = styled.button`
 position: relative;
 width: 100%;
 height: 2.5rem;
+padding: 8px;
 font-weight: 600;
-background-color: ${({theme})=>theme.background === dark.background ? '#f1f5f9' : '#101010'} ;
-color: ${({theme})=>theme.background === dark.background ? '#0A0A0A' : '#f1f5f9' } ;
+background-color: ${({theme})=>theme.background === dark.background ?  '#f1f5f9' : '#101010'} ;
+color: ${({theme})=>theme.background === dark.background ?  '#0A0A0A' : '#f1f5f9'} ;
 border-radius: 10px;
 cursor: pointer;
 outline: none;
@@ -334,6 +286,7 @@ export const ButtonTheme2 = styled.button`
 position: relative;
 width: 100%;
 height: 2.5rem;
+padding: 8px;
 font-weight: 600;
 background-color: ${({theme})=>theme.background === dark.background ? '#101010' : '#f1f5f9'} ;
 color: ${({theme})=>theme.background === dark.background ?  '#f1f5f9' : '#0A0A0A'} ;

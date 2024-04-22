@@ -1,47 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import PostCard from './PostCard'
-import avatar from '/zuck-avatar.png'
-import postImage from '/post3.png'
 import verified from '/verified.png'
 import UserComments from '../Comments/UserComments'
 import { Container } from '../Global/GlobalStyle'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import Spinner from '../../utils/Spinner'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSinglePostAction } from '../../redux/actions/actions'
+import ConfirmModal from '../ConfirmModal/ConfirmModal'
 
-const PostPage = () => {
-    const [loading , setLoading] = useState(true)
-    const [Data , setData] = useState(null)
+const PostPage = ({confirmModal , setConfirmModal}) => {
+     const dispatch = useDispatch()
+     const {posts,loading,error} = useSelector(state=>state.posts)
+   
     const {id} = useParams()
-    console.log(id)
-
-  const getPost = async() => {
-    try {
-      setLoading(true)
-      const {data} = await axios.get(`/posts/${id}`)
-      console.log(data.resp)
-      setData(data.resp)
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(()=>{
-    getPost()
+  dispatch(getSinglePostAction(id))
   },[])
-
+     
+   console.log(posts)
   
-  if(loading) return <Spinner />
+  if(loading) return <Container $height='95vh' $display='flex' $ai='center' $jc='center'><Spinner Size={'8px'} /></Container> 
   else {
   return (
     <Container $maxWidth='620px' $margin='auto'>
-        <PostCard id={Data._id} postedBy={Data.postedBy} avatar={Data.postedBy.profilePic} verified={verified}  text={Data.text} image={Data.image} likes={Data.likes} replies={Data.replies} createdAt={Data.createdAt}  />
-        {Data.replies.map(({_id,userID,text,userProfilePic,username},i) => {
+        <PostCard confirmModal={confirmModal} setConfirmModal={setConfirmModal} id={posts._id} postedBy={posts.postedBy} avatar={posts?.postedBy?.profilePic} verified={verified}  text={posts.text} image={posts.image} likes={posts.likes} replies={posts.replies} createdAt={posts.createdAt}  />
+        {posts?.replies?.map(({_id,userID,text,userProfilePic,username},i) => {
           return (
-            <UserComments key={i} userProfilePic={userProfilePic} createdAt={'2d'} comment={'nice post i like it'} username={'Zuck'} likes={'62'} />
+            <>
+            <UserComments key={i} userProfilePic={userProfilePic} createdAt={'2d'} text={text} username={username} likes={'62'} />
+            </>
           )
         })}
+
+
     </Container>
   )
 }
