@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const initialState = {
   authentication: null ,
   isLoggedIn : false ,
@@ -41,6 +39,10 @@ const auth = createSlice({
       state.loading_profile = false ;
       return ;
      },
+     loading_profile_failure : (state,action) => {
+     state.loading_profile = false ;
+     state.error = action.payload ;
+     },
     Log_Out : (state) => {
       state.authentication = null ;
       return ;
@@ -60,5 +62,5 @@ const auth = createSlice({
  
 
 export default auth.reducer;
-export const {isLoggedIn_start , isLoggedIn_end , Log_Out ,get_profile , start_loading_auth , end_loading_auth , start_loading_profile , end_loading_profile , sign_in_start , sign_in_success , sign_in_failure } = auth.actions;
+export const {isLoggedIn_start , isLoggedIn_end , Log_Out ,get_profile , start_loading_auth , end_loading_auth , start_loading_profile , end_loading_profile , loading_profile_failure , sign_in_start , sign_in_success , sign_in_failure } = auth.actions;
 

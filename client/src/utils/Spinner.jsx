@@ -1,11 +1,11 @@
 import PulseLoader  from "react-spinners/PulseLoader";
-import {Div } from "../Components/Global/GlobalStyle";
+import styled from "styled-components";
 
 
 
 function Spinner({Size}) {
   return (
-          <Div  $display='flex' $jc='center' >
+          <Div >
                 <PulseLoader 
                     loading='true'
                     color="rgba(198, 198, 198, 1)"
@@ -17,3 +17,8 @@ function Spinner({Size}) {
 }
 
 export default Spinner;
+
+const Div = styled.div`
+display: flex;
+justify-content: center;
+`

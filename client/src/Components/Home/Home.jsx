@@ -1,52 +1,62 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Title3 } from '../Global/GlobalStyle'
 import { useEffect } from 'react'
 import Spinner from '../../utils/Spinner'
-import UserComments from '../Comments/UserComments'
 import { FeedPostAction } from '../../redux/actions/actions'
-import UserPosts from '../UserPage/UserPosts'
-
+import FollowedUserPosts from '../UserPage/FollowedUserPosts'
+import styled from 'styled-components'
 
 
 const Home = () => {
   const dispatch = useDispatch()
- const {authentication , isLoggedIn} = useSelector(state=>state.auth)
- const {posts,loading,error} = useSelector(state=>state.posts)
+  const {isLoggedIn} = useSelector(state=>state.auth)
+  const {posts,loading,error} = useSelector(state=>state.posts)
 
- console.log(posts)
  
  
  useEffect(()=>{
   dispatch(FeedPostAction())
 },[])
 
-       if(loading) return <Container $height='95vh' $display='flex' $ai='center' $jc='center'><Spinner Size={'8px'} /></Container> 
-       else if(!posts?.length && isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 $fs='1.2rem' $tt='capitalize' $fw='400' $ta="center">follow some users to see the feed</Title3></Container>
-       else if(!isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 $fs='1.2rem' $tt='capitalize' $fw='400' $ta="center">{error}</Title3></Container>
+
+       if(loading) return <FlexContainer><Spinner Size={'8px'} /></FlexContainer> 
+       else if(!posts?.length && isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 >follow some users to see the feed</Title3></Container>
+       else if(!isLoggedIn) return <Container $padding='8rem 0 0 0'  $margin='auto'><Title3 >{error}</Title3></Container>
        else {
          return (
-           <Container $maxWidth='620px' $height='100%' $margin='auto'>
-            {posts.map(({_id , image,text,followers,following,username,postedBy,createdAt,replies},i)=>{
-              return (
-                 <UserPosts 
-                    key={i}
-                    id={_id}
-                    avatar={postedBy.profilePic} 
-                    username={postedBy.username}
-                    postTitle={text}
-                    postImage={image}  
-                    createdAt={createdAt}
-                    replies={replies}
-                    />
-                  )
+           <Div>
+            {posts?.map(({_id , image,text,followers,following,username,postedBy,createdAt,likes,replies},i)=>{
+                return (
+                  <FollowedUserPosts key={i} id={_id} avatar={postedBy.profilePic} username={postedBy.username} postTitle={text} postImage={image} createdAt={createdAt} likes={likes} replies={replies} />
+                ) 
                 })}
-  
-                {/* <UserComments  avatar={postedBy} createdAt={'2d'} comment={'nice post i like it'} username={'Zuck'} likes={'62'}  /> */}
-        </Container>
+           </Div>
   )
 }
 }
 
 
 export default Home
+
+
+const FlexContainer = styled.div`
+height: calc(100vh - 80px);
+display: flex;
+align-items: center;
+justify-content: center;
+`
+const Container = styled.div`
+padding: 8rem 0 0 0 ;
+margin: auto;
+`
+const Div = styled.div`
+max-width: 620px;
+height: 100%;
+margin: auto;
+`
+const Title3 = styled.h3`
+font-size: 1.2rem;
+text-transform: capitalize;
+font-weight: 400;
+text-align: center;
+`
