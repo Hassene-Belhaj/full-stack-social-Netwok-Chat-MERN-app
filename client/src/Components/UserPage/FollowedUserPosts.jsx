@@ -9,10 +9,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { dark } from "../../utils/ThemeColors";
 
-const FollowedUserPosts = ({ confirmModal, setConfirmModal, id, avatar, postTitle, postImage, username, likes, replies, createdAt }) => {
+const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfirmModal, id, avatar, postTitle, postImage, username, likes, replies, createdAt }) => {
   const RefDivClick = useRef(null);
   const [userLikes , setUserLikes] = useState(likes)
-
 
   const [menuList, setMenuList] = useState(false);
 
@@ -22,10 +21,10 @@ const FollowedUserPosts = ({ confirmModal, setConfirmModal, id, avatar, postTitl
     }, 300);
   };
 
-  // console.log(likes);
 
   return (
-    <Container $padding="2rem 0" $active>
+    <>
+    <Container>
       <FlexContainer $display="flex" $gap="1rem">
         <Div $width="4rem" $position="relative">
           <Navlink to={`/${username}`}>
@@ -65,7 +64,7 @@ const FollowedUserPosts = ({ confirmModal, setConfirmModal, id, avatar, postTitl
               </Navlink>
             </Div>
 
-            <ButtonsGroup likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes}/>
+            <ButtonsGroup commentModal={commentModal} setCommentModal={setCommentModal} likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes}/>
           </FlexContainer>
         </FlexContainer>
       </FlexContainer>
@@ -111,6 +110,7 @@ const FollowedUserPosts = ({ confirmModal, setConfirmModal, id, avatar, postTitl
         </Div>
       </FlexContainer>
     </Container>
+</>
   );
 };
 

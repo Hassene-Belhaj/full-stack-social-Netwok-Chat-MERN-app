@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 
 
-const UserPage = ({ confirmModal, setConfirmModal }) => {
+const UserPage = ({commentModal,setCommentModal ,confirmModal, setConfirmModal }) => {
   const dispatch = useDispatch();
   const { userProfile, authentication, loading_profile } = useSelector((state) => state.auth);
   const { posts, loading, error, isAdded, isDeleted } = useSelector((state) => state.posts);

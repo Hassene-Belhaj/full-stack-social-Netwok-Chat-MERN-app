@@ -121,6 +121,7 @@ export default Navbar;
 
 
 const Nav = styled.nav`
+
 position: relative;
 max-width: 1200px;
 height: 80px;

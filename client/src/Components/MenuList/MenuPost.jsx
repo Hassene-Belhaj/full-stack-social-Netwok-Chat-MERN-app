@@ -9,6 +9,10 @@ const MenuPost = ({setConfirmModal, postID, username }) => {
   console.log(postID);
   console.log(username);
 
+//   if (typeof window != 'undefined' && window.document) {
+//     document.body.style.overflow = 'hidden';
+// }
+
   const handleClickModal = () => {
     setTimeout(() => {
       setConfirmModal({ type: "delete", show: true, postId: postID });

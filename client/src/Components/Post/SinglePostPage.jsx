@@ -7,11 +7,10 @@ import Spinner from '../../utils/Spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSinglePostAction } from '../../redux/actions/actions'
 import styled from 'styled-components'
-import FormAddComment from '../Comments/FormAddComment'
 
 const SinglePostPage = ({confirmModal , setConfirmModal}) => {
     const dispatch = useDispatch()
-    const {posts,loading} = useSelector(state=>state.posts)
+    const {singlePost,loading} = useSelector(state=>state.posts)
     const {id} = useParams()
 
   useEffect(()=>{
@@ -23,10 +22,10 @@ const SinglePostPage = ({confirmModal , setConfirmModal}) => {
   else {
   return (
     <Container $maxWidth='620px' $padding='0 1rem 4rem 1rem' $margin='auto'>
-        <PostCard confirmModal={confirmModal} setConfirmModal={setConfirmModal} id={posts._id} username={posts?.postedBy?.username} postedBy={posts.postedBy} avatar={posts?.postedBy?.profilePic} verified={verified}  text={posts.text} image={posts.image} likes={posts.likes} replies={posts.replies} createdAt={posts.createdAt}  />
-        {posts?.replies?.map(({_id,userID,text,userProfilePic,username},i) => {
+        <PostCard confirmModal={confirmModal} setConfirmModal={setConfirmModal} id={singlePost._id} username={singlePost?.postedBy?.username} postedBy={singlePost.postedBy} avatar={singlePost?.postedBy?.profilePic} verified={verified}  text={singlePost.text} image={singlePost.image} likes={singlePost.likes} replies={singlePost.replies} createdAt={singlePost.createdAt}  />
+        {singlePost?.replies?.map(({_id,userID,text,userProfilePic,username},i) => {
           return (
-            <UserComments key={i}  id={_id} userProfilePic={userProfilePic} createdAt={'2d'} text={text} username={username} likes={'62'}  lastPost={posts.replies[posts.replies.length-1]._id}/>
+            <UserComments key={i}  id={_id} userProfilePic={userProfilePic} createdAt={'2d'} text={text} username={username} likes={'62'}  lastPost={singlePost.replies[singlePost.replies.length-1]._id}/>
           )
         })}
 

@@ -9,16 +9,18 @@ export const GlobalStyleCss = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: "poppins", sans-serif;
-    scrollbar-color: ${({ theme }) => (theme.background === dark.background ? "#78716c #181818" : "#181818 : #78716c")} ;
+    scrollbar-color: ${({ theme }) => (theme.background === dark.background ? "#78716c #181818" : '' )} ;
   }
   
   html {
+    max-width: 100vw;
+    overflow-y: ${({confirmModal})=>confirmModal ? "hidden" : "scroll"};
     overflow-x:hidden ;
-    overflow-y: scroll;
     background: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.color};
-}
-`;
+  }
+  `;
+
 
 
 // const sharedProps = css`

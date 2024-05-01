@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = ({
     posts  : [] ,
+    singlePost : [],
     loading : true ,
     error : null ,
     isAdded : false,
@@ -31,6 +32,12 @@ const posts  = createSlice({
     state.isDeleted = false ;
     return ;
     },
+    get_single_post : (state,action) => {
+    state.singlePost = action.payload ;
+    state.isAdded = false ;
+    state.isDeleted = false ;
+    return ;
+    },
     create_new_post : (state,action) => {
     state.posts = [...state.posts , action.payload] ;
     state.isAdded  = true ;
@@ -49,4 +56,4 @@ const posts  = createSlice({
 
 
 export default posts.reducer ;
-export const {start_post_loading , end_post_loading , error_loading , get_posts , create_new_post , delete_post} = posts.actions ;
+export const {start_post_loading , end_post_loading , error_loading , get_posts ,get_single_post, create_new_post , delete_post} = posts.actions ;

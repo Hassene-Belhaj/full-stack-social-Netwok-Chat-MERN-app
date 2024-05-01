@@ -8,10 +8,15 @@ import axios from "axios";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
 
-const ButtonsGroup = ({ likes, padding, id, userLikes, setUserLikes }) => {
+const ButtonsGroup = ({ commentModal , setCommentModal, likes, padding, id, userLikes, setUserLikes }) => {
   const { authentication } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.posts);
   // console.log(authentication.id)
+  // console.log(commentModal)
+
+  const handleOpenCommentModal = (e) => {
+    setCommentModal({...commentModal,show : true , postId : id})
+  }
 
   const likeunlike = async () => {
     try {
@@ -28,11 +33,13 @@ const ButtonsGroup = ({ likes, padding, id, userLikes, setUserLikes }) => {
     }
   };
 
+  
+
   return (
     <FlexContainer $padding={padding ? padding : null}>
       <ButtonScaleEffect onClick={likeunlike}>{!userLikes?.includes(authentication.id) ? <FaRegHeart size={25} /> : <FaHeart color="#ef4444" size={25} />}</ButtonScaleEffect>
 
-      <ButtonScaleEffect>
+      <ButtonScaleEffect onClick={handleOpenCommentModal}>
         <TbMessageCircle size={25} />
       </ButtonScaleEffect>
 

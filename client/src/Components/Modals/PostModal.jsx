@@ -128,7 +128,7 @@ const PostModal = ({ postModel, setPostModal }) => {
               <TextArea name="post" placeholder="Start A New Thread" value={postMessage} onChange={handleChangePostMessage} />
 
               <Div $padding=".5rem 2rem" $width="100%" $ta="right" $margin="auto">
-                <Text $color={MaxLength - postMessage.length < 0 ? "red" : ""}>{MaxLength - postMessage.length}</Text>
+                <Text $color={MaxLength - postMessage.length < 0 ? "red" : "gray"}>{MaxLength - postMessage.length}</Text>
               </Div>
               <Div $padding="1rem" $display="flex" $gap="2rem">
                 <ButtonTheme2 onClick={() => setPostModal(false)} $padding=".5rem 2rem">
@@ -229,19 +229,15 @@ const Title3 = styled.h3`
 const ButtonTheme2 = styled.button`
   position: relative;
   width: 100%;
-  height: 2.5rem;
+  height: 3rem;
   padding: 8px;
   font-weight: 600;
   background-color: ${({ theme }) => (theme.background === dark.background ? "#101010" : "#f1f5f9")};
   color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#0A0A0A")};
-  border-radius: 10px;
+  border-radius: 25px;
   cursor: pointer;
   outline: none;
   border: none;
-  border-top-left-radius: ${({ $right }) => ($right ? "15px" : "none")};
-  border-bottom-left-radius: ${({ $right }) => ($right ? "15px" : "none")};
-  border-top-right-radius: ${({ $left }) => ($left ? "15px" : "none")};
-  border-bottom-right-radius: ${({ $left }) => ($left ? "15px" : "none")};
   &:hover {
     opacity: 0.8;
   }
@@ -249,19 +245,15 @@ const ButtonTheme2 = styled.button`
 const ButtonTheme1 = styled.button`
   position: relative;
   width: 100%;
-  height: 2.5rem;
+  height: 3rem;
   padding: 8px;
   font-weight: 600;
   background-color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#101010")};
   color: ${({ theme }) => (theme.background === dark.background ? "#0A0A0A" : "#f1f5f9")};
-  border-radius: 10px;
+  border-radius: 25px;
   cursor: pointer;
   outline: none;
   border: none;
-  border-top-left-radius: ${({ $right }) => ($right ? "15px" : "none")};
-  border-bottom-left-radius: ${({ $right }) => ($right ? "15px" : "none")};
-  border-top-right-radius: ${({ $left }) => ($left ? "15px" : "none")};
-  border-bottom-right-radius: ${({ $left }) => ($left ? "15px" : "none")};
   &:hover {
     opacity: 0.8;
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useState } from "react";
 import ButtonsGroup from "../ButtonsGroup/ButtonsGroup";
@@ -7,6 +7,7 @@ import verified from "/verified.png";
 import MenuPost from "../MenuList/MenuPost";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 const PostPage = ({ confirmModal, setConfirmModal, id, username, postedBy, avatar, text, image, likes, replies, createdAt }) => {
   const [menuList, setMenuList] = useState(false);
@@ -19,6 +20,8 @@ const PostPage = ({ confirmModal, setConfirmModal, id, username, postedBy, avata
       setMenuList(false);
     }, 300);
   };
+
+
 
   return (
     <ContainerBorderBottom $active>

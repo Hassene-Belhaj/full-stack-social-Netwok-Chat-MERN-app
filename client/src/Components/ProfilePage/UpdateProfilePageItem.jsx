@@ -148,12 +148,12 @@ const DivMenu = styled.span`
 const ButtonTheme1 = styled.button`
   position: relative;
   width: 100%;
-  height: 2.5rem;
+  height: 3rem;
   padding: 8px;
   font-weight: 600;
   background-color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#101010")};
   color: ${({ theme }) => (theme.background === dark.background ? "#0A0A0A" : "#f1f5f9")};
-  border-radius: 10px;
+  border-radius: 25px;
   cursor: pointer;
   outline: none;
   border: none;
@@ -164,12 +164,12 @@ const ButtonTheme1 = styled.button`
 const ButtonTheme2 = styled.button`
   position: relative;
   width: 100%;
-  height: 2.5rem;
+  height: 3rem;
   padding: 8px;
   font-weight: 600;
   background-color: ${({ theme }) => (theme.background === dark.background ? "#101010" : "#f1f5f9")};
   color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#0A0A0A")};
-  border-radius: 10px;
+  border-radius: 25px;
   cursor: pointer;
   outline: none;
   border: none;
