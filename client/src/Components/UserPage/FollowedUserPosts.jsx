@@ -6,7 +6,7 @@ import moment from "moment";
 import emoji from "/boredEmoji.png";
 import MenuPost from "../MenuList/MenuPost";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { dark } from "../../utils/ThemeColors";
 
 const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfirmModal, id, avatar, postTitle, postImage, username, likes, replies, createdAt }) => {
@@ -23,7 +23,6 @@ const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfi
 
 
   return (
-    <>
     <Container>
       <FlexContainer $display="flex" $gap="1rem">
         <Div $width="4rem" $position="relative">
@@ -110,7 +109,6 @@ const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfi
         </Div>
       </FlexContainer>
     </Container>
-</>
   );
 };
 

@@ -7,21 +7,24 @@ import { GetAllPostsProfileAction, getProfileAction } from "../../redux/actions/
 import { useParams } from "react-router-dom";
 import Spinner from "../../utils/Spinner";
 import styled from "styled-components";
+import RepliesUser from "../Replies/RepliesUser";
 
 
 
 const UserPage = ({commentModal,setCommentModal ,confirmModal, setConfirmModal }) => {
   const dispatch = useDispatch();
+  const [active, setActive] = useState("Threads");  // userHeader sections theads and replies
   const { userProfile, authentication, loading_profile } = useSelector((state) => state.auth);
   const { posts, loading, error, isAdded, isDeleted } = useSelector((state) => state.posts);
   const { username } = useParams();
+
 
   useEffect(() => {
     dispatch(getProfileAction(username));
     dispatch(GetAllPostsProfileAction(username));
   }, [username, isDeleted, isAdded]);
 
-  // console.log(posts);
+  console.log(posts);
 
   if (loading_profile | loading)
     return (
@@ -40,7 +43,7 @@ const UserPage = ({commentModal,setCommentModal ,confirmModal, setConfirmModal }
   else {
     return (
       <Container $maxWidth="620px" $margin="auto">
-        <UserHeader user={userProfile} authentication={authentication} />
+        <UserHeader user={userProfile} authentication={authentication} active={active} setActive={setActive} />
         {!posts.length ? (
           <Container $padding="1rem 0 0 0" $margin="auto">
             <Title4 $fs="1rem" $fw="400" $ta="left">
@@ -49,10 +52,20 @@ const UserPage = ({commentModal,setCommentModal ,confirmModal, setConfirmModal }
           </Container>
         ) : (
           <>
-            {posts.map(({ _id, postedBy, image, text, likes , createdAt, replies }, i) => {
-              return <UserPosts confirmModal={confirmModal} setConfirmModal={setConfirmModal} key={i} id={_id} avatar={postedBy.profilePic} username={postedBy.username} verified={verified} postTitle={text} postImage={image} likes={likes} replies={replies} createdAt={createdAt} />;
-            })}
-          </>
+            {active === 'Threads' ? (
+            <>
+              {posts.map(({ _id, postedBy, image, text, likes , createdAt, replies }, i) => {
+                return <UserPosts confirmModal={confirmModal} setConfirmModal={setConfirmModal} key={i} id={_id} avatar={postedBy.profilePic} username={postedBy.username} verified={verified} postTitle={text} postImage={image} likes={likes} replies={replies} createdAt={createdAt} />;
+              })}
+            </>
+              
+            )
+            :
+            <>
+               <RepliesUser />
+            </>
+          }
+        </>
         )}
       </Container>
     );

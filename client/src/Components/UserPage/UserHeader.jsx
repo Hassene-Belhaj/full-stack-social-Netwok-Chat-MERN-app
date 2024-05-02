@@ -3,16 +3,14 @@ import { FaInstagram } from "react-icons/fa";
 import { PiDotsThreeCircle } from "react-icons/pi";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
 
-const UserHeader = ({ user, authentication }) => {
+const UserHeader = ({ user, authentication, active, setActive }) => {
   const [menuList, setMenuList] = useState(false);
-  const [active, setActive] = useState("Threads");
-
   const [follow, setFollow] = useState(!user?.followers?.includes(authentication?.id));
   const [followersNbr, _setFollowersNbr] = useState([...user.followers]);
   const navigate = useNavigate();
@@ -113,12 +111,16 @@ const UserHeader = ({ user, authentication }) => {
       )}
 
       <ContainerBorderBottom $height="2.5rem" $display="flex" $gap=".5rem" $active>
-        <ButtonUserHeaderSection $active={active === "Threads" ? true : false} onClick={() => setActive("Threads")}>
-          Threads
-        </ButtonUserHeaderSection>
-        <ButtonUserHeaderSection $active={active === "Replies" ? true : false} onClick={() => setActive("Replies")}>
-          Replies
-        </ButtonUserHeaderSection>
+        <Navlink to="threads">
+          <ButtonUserHeaderSection $active={active === "Threads" ? true : false} onClick={() => setActive("Threads")}>
+            Threads
+          </ButtonUserHeaderSection>
+        </Navlink>
+        <Navlink to="replies">
+          <ButtonUserHeaderSection $active={active === "Replies" ? true : false} onClick={() => setActive("Replies")}>
+            Replies
+          </ButtonUserHeaderSection>
+        </Navlink>
       </ContainerBorderBottom>
     </Section>
   );
@@ -195,6 +197,8 @@ const Image = styled.img`
   object-fit: cover;
 `;
 const ButtonUserHeaderSection = styled.button`
+  height: 100%;
+  width: 100%;
   flex: 1;
   border: ${({ theme }) => `1px solid ${theme.background}`};
   cursor: pointer;
@@ -259,4 +263,7 @@ const Span = styled.span`
   height: 3rem;
 `;
 const Navlink = styled(Link)`
-`
+  width: 100%;
+  text-decoration: none;
+  color: ${({ theme }) => theme.color};
+`;

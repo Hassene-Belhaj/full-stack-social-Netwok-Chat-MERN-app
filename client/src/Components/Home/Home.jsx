@@ -12,7 +12,7 @@ const Home = ({commentModal,setCommentModal}) => {
   const {isLoggedIn} = useSelector(state=>state.auth)
   const {posts,loading,error} = useSelector(state=>state.posts)
 
-//  console.log(commentModal)
+  console.log(posts[0]?.replies)
  
  useEffect(()=>{
   dispatch(FeedPostAction())

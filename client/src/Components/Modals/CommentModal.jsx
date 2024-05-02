@@ -44,8 +44,10 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
   }, []);
 
   useEffect(() => {
-    refScroll?.current?.scrollIntoView();
-  }, [commentModal.show]);
+    if(refScroll.current) {
+      refScroll.current.scrollIntoView();
+    }
+  }, [commentModal.show,!loading]); // if showModal.show is true and loading is finished
 
   const maxLength = 500;
 
@@ -109,7 +111,7 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
                 </Div>
               </Div>
               <Div $padding=".5rem 0">
-                <TextArea name='Textarea' placeholder={`answer to ${singlePost?.postedBy?.username}`} autoComplete="off" value={postComment} onChange={handleChangeComment} />
+                <TextArea name='Textarea' placeholder={`reply to ${singlePost?.postedBy?.username}`} autoComplete="off" value={postComment} onChange={handleChangeComment} />
                 <Text $ta="right" $color={maxLength - postComment.length > 0 ? "gray" : "red"}>
                   {maxLength - postComment.length}
                 </Text>

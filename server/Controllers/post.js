@@ -35,7 +35,6 @@ const getPost = Asyncwrapper(async(req,res,next) => {
     if(!resp) return next(createCustomError('post not found' , 404))
     if(!id) return next(createCustomError('post not found',404))
     res.status(200).json({success : true , resp})
-
 })
 
 
@@ -77,7 +76,7 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     const {text} = req.body ;
     const userID = req.user.id ;
     const userProfilePic = req.user.profilePic;
-    const  {username} = req.user ;
+    const {username} = req.user ;
     if(!text) return next(createCustomError('text field is required',400))
     const postFind = await postModel.findById(id)
     if(!postFind) return next(createCustomError('post not found' , 404))
@@ -86,6 +85,13 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     await postFind.save() ;
     res.status(200).json({success : true , postFind})
 
+ })
+
+ const getYourReplies = Asyncwrapper(async(req,res,next)=> {
+    const userid = req.user.id
+    const resp = await postModel.find({"replies.userID" : userid})
+    if(!resp) return next(createCustomError('no replies' , 404))
+    res.status(200).json({success : true , nbr : resp.length , resp})
  })
 
  const getFeedPost = Asyncwrapper(async(req,res,next) => {
@@ -110,5 +116,6 @@ const getallPostsUser= Asyncwrapper(async(req,res,next)=> {
 })
 
 module.exports = {
-    newPost , getPost ,deletePost , like_Unlike ,replyPost ,getFeedPost , getallPostsUser
+    newPost , getPost ,deletePost , like_Unlike ,replyPost ,getFeedPost , getallPostsUser ,
+    getYourReplies
 };
