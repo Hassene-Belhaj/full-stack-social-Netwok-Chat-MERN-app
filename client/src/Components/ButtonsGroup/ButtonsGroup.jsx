@@ -8,14 +8,14 @@ import axios from "axios";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
 
-const ButtonsGroup = ({ commentModal , setCommentModal, likes, padding, id, userLikes, setUserLikes }) => {
+const ButtonsGroup = ({ replyModal , setReplyModal, likes, padding, id, userLikes, setUserLikes }) => {
   const { authentication } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.posts);
   // console.log(authentication.id)
   // console.log(commentModal)
 
   const handleOpenCommentModal = (e) => {
-    setCommentModal({...commentModal,show : true , postId : id})
+    setReplyModal({...replyModal,show : true , postId : id})
   }
 
   const likeunlike = async () => {

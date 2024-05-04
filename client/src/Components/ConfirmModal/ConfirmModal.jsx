@@ -37,13 +37,14 @@ const ConfirmModal = ({ confirmModal, setConfirmModal }) => {
 
   const handleDeletePost = () => {
     dispatch(DeletePostAction(confirmModal?.postId));
+    setConfirmModal({ type: "", show: false, postedId: null });
   };
 
-  useEffect(() => {
-    if (isDeleted) {
-      setConfirmModal({ type: "", show: false, postedId: null });
-    }
-  }, [isDeleted]);
+  // useEffect(() => {
+  //   if (isDeleted) {
+  //     setConfirmModal({ type: "", show: false, postedId: null });
+  //   }
+  // }, [isDeleted]);
 
 
 

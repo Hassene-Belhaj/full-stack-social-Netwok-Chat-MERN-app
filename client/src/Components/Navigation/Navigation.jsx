@@ -14,7 +14,7 @@ import RepliesUser from '../Replies/RepliesUser'
 
 
 
-const Navigation = ({postModal,commentModal,setCommentModal,confirmModal,setConfirmModal}) => {
+const Navigation = ({postModal,replyModal,setReplyModal,confirmModal,setConfirmModal}) => {
 
    const {isLoggedIn , loading} = useSelector(state=>state.auth)
   
@@ -26,16 +26,15 @@ const Navigation = ({postModal,commentModal,setCommentModal,confirmModal,setConf
                   <Route path='signup'  element={!isLoggedIn?  <Auth type='signup'/> : <Navigate  to='/' /> } />
                   <Route path='signin'  element={!isLoggedIn?  <Auth type='signin' /> : <Navigate  to='/' /> } />
                 
-                  <Route path='/:username' element={<UserPage commentModal={commentModal} setCommentModal={setCommentModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal}/>} > 
-                   <Route path='threads' element={<FollowedUserPosts/>} />
-                   <Route path='replies' element={<RepliesUser />}/>
-                  
+                  <Route path='/:username' element={<UserPage replyModal={replyModal} setReplyModal={setReplyModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal}/>} > 
+                      <Route path='threads' element={<FollowedUserPosts/>} />
+                      <Route path='replies' element={<RepliesUser />}/>                  
                   </Route>
                  
-                  <Route path=':username/post/:id' element={<SinglePostPage commentModal={commentModal} setCommentModal={setCommentModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} />} />
+                  <Route path=':username/post/:id' element={<SinglePostPage replyModal={replyModal} setReplyModal={setReplyModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} />} />
                   <Route path='update/:username' element={isLoggedIn?  <UpdateProfilePage /> : <Navigate  to='/signin' /> } />
                   
-                  <Route path='' element={<Home commentModal={commentModal} setCommentModal={setCommentModal} />} />
+                  <Route path='' element={<Home replyModal={replyModal} setReplyModal={setReplyModal} />} />
                   <Route path='*' element={<h2 style={{padding:'4rem 0',textAlign:'center' ,fontSize:'1rem'}}>Error</h2>} />
             </Routes>
           </Container>  

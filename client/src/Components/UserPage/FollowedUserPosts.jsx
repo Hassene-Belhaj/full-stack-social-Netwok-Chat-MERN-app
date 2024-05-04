@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { Link, Outlet } from "react-router-dom";
 import { dark } from "../../utils/ThemeColors";
 
-const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfirmModal, id, avatar, postTitle, postImage, username, likes, replies, createdAt }) => {
+const FollowedUserPosts = ({replyModal,setReplyModal, confirmModal, setConfirmModal, id, avatar, postTitle, postImage, username, likes, replies, createdAt }) => {
   const RefDivClick = useRef(null);
   const [userLikes , setUserLikes] = useState(likes)
 
@@ -20,7 +20,6 @@ const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfi
       setMenuList(false);
     }, 300);
   };
-
 
   return (
     <Container>
@@ -33,11 +32,11 @@ const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfi
           <Div $position="absolute" $top="5rem" $left="50%" $transform="translateX(-50%)" $width="1px" $height="calc(100% - 5rem)" $bg="gray"></Div>
         </Div>
 
-        <FlexContainer $display="flex" $gap="1rem">
-          <FlexContainer $display="flex" $fd="column" $gap="1rem">
+        <FlexContainer  $width='100%' $display="flex"   $gap="1rem" >
+          <FlexContainer $width='100%' $display="flex" $fd="column" $gap="1rem">
             <FlexContainer $display="flex" $jc="space-between" $position="relative">
               <Div $display="flex" $ai="center" $gap=".5rem">
-                <Navlink to={`/${username}`} $td="none">
+                <Navlink to={`/${username}`} $td="none" $underline>
                   <Title4>{username}</Title4>
                 </Navlink>
                 <Div $width="1.3rem" $display="flex" $jc="center" $ai="center">
@@ -55,15 +54,17 @@ const FollowedUserPosts = ({commentModal,setCommentModal, confirmModal, setConfi
               {menuList && <MenuPost confirmModal={confirmModal} setConfirmModal={setConfirmModal} postID={id} username={username} />}
             </FlexContainer>
 
-            <Text>{postTitle}</Text>
-
+             <Navlink to={`/${username}/post/${id}`} $td='none'>
+                 <Text>{postTitle}</Text>
+              </Navlink>
+  
             <Div $width="100%" $height="100%" ref={RefDivClick}>
               <Navlink to={`/${username}/post/${id}`}>
                 <Image $width='100%' $height='100%' $display='flex' $br='15px' $objectfit='cover' src={postImage} />
               </Navlink>
             </Div>
 
-            <ButtonsGroup commentModal={commentModal} setCommentModal={setCommentModal} likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes}/>
+            <ButtonsGroup replyModal={replyModal} setReplyModal={setReplyModal} likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes}/>
           </FlexContainer>
         </FlexContainer>
       </FlexContainer>
@@ -117,14 +118,16 @@ export default FollowedUserPosts;
 const Container = styled.div`
   padding: 2rem 0;
   border-bottom: ${({ theme, $active }) => ($active ? `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"}` : "")};
-`
+  `
 const FlexContainer = styled.div`
+  width: ${({$width})=>$width};
   display: ${({ $display }) => $display};
   justify-content: ${({ $jc }) => $jc};
   align-items: ${({ $ai }) => $ai};
   flex-direction: ${({ $fd }) => $fd};
   gap: ${({ $gap }) => $gap};
   position: ${({ $position }) => $position};
+  background-color: ${({$bg})=>$bg};
 `;
 const Div = styled.div`
   width: ${({ $width }) => $width};
@@ -151,8 +154,8 @@ const Navlink = styled(Link)`
   text-decoration: ${({ $td }) => $td};
   color: ${({ theme,$selectedColor }) => $selectedColor ? $selectedColor :  theme.color };
   &:hover {
-    text-decoration: underline;
-    text-underline-offset: 10px;
+    text-decoration: ${({$underline})=>$underline ? 'underline' : null};
+    text-underline-offset: 4px;
   }
 `;
 const Text = styled.p`

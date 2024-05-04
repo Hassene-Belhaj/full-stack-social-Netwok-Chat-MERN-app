@@ -31,7 +31,7 @@ const newPost  = Asyncwrapper(async(req,res,next) => {
 
 const getPost = Asyncwrapper(async(req,res,next) => {
     const {id} = req.params ;
-    const resp = await postModel.findById(id).populate('postedBy','-password -bio -followers -following  -createdAt -updatedAt -__v')
+    const resp = await postModel.findById(id).populate("postedBy","-password -bio -followers -following  -createdAt -updatedAt -__v")
     if(!resp) return next(createCustomError('post not found' , 404))
     if(!id) return next(createCustomError('post not found',404))
     res.status(200).json({success : true , resp})
@@ -61,12 +61,12 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     if(isAlreadyliked) {
         const resp = await postModel.findByIdAndUpdate(id , {
             $pull : {'likes' : userID} 
-        } , {new : true}).populate('likes','-password -profilePic -followers -following -bio -createdAt -updatedAt -__v')
+        } , {new : true}).populate("likes","-password -profilePic -followers -following -bio -createdAt -updatedAt -__v")
        return  res.status(200).json({success : true , msg : 'unliked' , resp})
     } else {
         const resp = await postModel.findByIdAndUpdate(id , {
             $push : {'likes'  : userID}
-        },{new : true}).populate('likes','-password -profilePic -followers -following -bio -createdAt -updatedAt -__v')
+        },{new : true}).populate("likes","-password -profilePic -followers -following -bio -createdAt -updatedAt -__v")
       return  res.status(200).json({success : true , msg : 'liked' , resp})
     }
  })
@@ -83,15 +83,16 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     const reply = {text , userID , userProfilePic , username } 
     postFind.replies.push(reply) ;
     await postFind.save() ;
-    res.status(200).json({success : true , postFind})
-
+    res.status(200).json({success : true , msg : 'replied successfully' , postFind})
  })
 
  const getYourReplies = Asyncwrapper(async(req,res,next)=> {
-    const userid = req.user.id
-    const resp = await postModel.find({"replies.userID" : userid})
-    if(!resp) return next(createCustomError('no replies' , 404))
-    res.status(200).json({success : true , nbr : resp.length , resp})
+    const {username} = req.body ;
+    const findUser = await userModel.findOne({username})
+    if(!findUser) return next(createCustomError('user not found',404))
+    const userid = findUser.id   
+    const resp = await postModel.find({"replies.username" : username}).populate("postedBy" , "-password").sort({updatedAt : -1})
+    res.status(200).json({success : true , nbr : resp?.length , resp})
  })
 
  const getFeedPost = Asyncwrapper(async(req,res,next) => {
@@ -107,7 +108,7 @@ const getallPostsUser= Asyncwrapper(async(req,res,next)=> {
     const {username} = req.params ; 
     const findUser = await userModel.findOne({username})
     if(!findUser) return next(createCustomError('user does not exist' , 404))
-    const resp = await postModel.find({}).populate("postedBy")
+    const resp = await postModel.find({}).populate("postedBy","-password -__v -updatedAt")
     if(!resp) return next(createCustomError('post not found' , 404)) 
     const result = resp.filter((item)=>item.postedBy.username === username)
     if(!result) return next(createCustomError('post not found' , 404))

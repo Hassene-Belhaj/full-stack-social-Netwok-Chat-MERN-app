@@ -13,6 +13,9 @@ export const CreateNewPost = ({postedBy,text,image,fn}) => axios.post('/posts/ne
 export const GetAllPostProfile = (username) =>axios.get(`/posts/post/${username}`)
 export const DeletePost = (id) => axios.delete(`/posts/${id}`)
 export const RepliyPost = (id,text) => axios.post(`/posts/post/${id}` , text)
+export const GetAllRepliesUser = (username) => axios.post("/posts/post/replies",{username})
+export const ReplyPost = ({id,text}) => axios.post(`/posts/post/reply/${id}` , {text})
+
 
 
 // export const followUnfollow = (id) => axios.get(`/user/follow/${id}`)

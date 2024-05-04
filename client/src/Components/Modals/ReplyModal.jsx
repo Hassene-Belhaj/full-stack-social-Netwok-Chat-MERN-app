@@ -3,14 +3,14 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
-import { getSinglePostAction } from "../../redux/actions/actions";
+import { ReplyPostAction, getSinglePostAction } from "../../redux/actions/actions";
 import { useState } from "react";
 import Spinner from "../../utils/Spinner";
 import verified from "/verified.png";
 import moment from "moment";
 
-const CommentModal = ({ commentModal, setCommentModal }) => {
-  const [postComment, setPostComment] = useState("");
+const ReplyModal = ({ replyModal, setReplyModal }) => {
+  const [replyText, setReplyText] = useState("");
 
   const dispatch = useDispatch();
   const refModal = useRef(null);
@@ -19,10 +19,12 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
   const { singlePost, loading } = useSelector((state) => state.posts);
   const { authentication } = useSelector((state) => state.auth);
 
+  console.log(replyModal.postId)
+
   useEffect(() => {
     const handler = (e) => {
       if (!refModal.current.contains(e.target)) {
-        setCommentModal(false);
+        setReplyModal(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -32,7 +34,7 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
   useEffect(() => {
     const keypress = (e) => {
       if (e.key === "Escape") {
-        setCommentModal({ ...commentModal, show: false });
+        setReplyModal({ ...replyModal, show: false });
       }
     };
     document.addEventListener("keydown", keypress);
@@ -40,28 +42,34 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
   }, []);
 
   useEffect(() => {
-    dispatch(getSinglePostAction(commentModal.postId));
+    dispatch(getSinglePostAction(replyModal.postId));
   }, []);
 
   useEffect(() => {
-    if(refScroll.current) {
+    if (refScroll.current) {
       refScroll.current.scrollIntoView();
     }
-  }, [commentModal.show,!loading]); // if showModal.show is true and loading is finished
+  }, [replyModal.show, !loading]); // if showModal.show is true and loading is finished
 
   const maxLength = 500;
 
   const handleChangeComment = (e) => {
-    if (postComment.length > maxLength) {
+    if (replyText.length > maxLength) {
       let text = e.target.value;
-      return setPostComment(text.slice(0, maxLength));
+      return setReplyText(text.slice(0, maxLength));
     } else {
-      setPostComment(e.target.value);
+      setReplyText(e.target.value);
     }
   };
+  // reply post
+  const handleSubmitReplyPost = (e) => {
+   e.preventDefault()
+   dispatch(ReplyPostAction({
+    id : replyModal.postId,
+    text : replyText
+   }))
+  };
 
-  //   if(loading) return <Fixed><Container><DivMenu $jc='center' $ai='center'><Spinner Size={'8px'}/></DivMenu></Container></Fixed>
-  // else {
   return (
     <Fixed>
       <Container>
@@ -97,25 +105,27 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
 
           <Section $display="flex" $padding="2rem">
             <FlexContainer $position="relative">
-              <DivLine2></DivLine2> 
+              <DivLine2></DivLine2>
               <DivLine3></DivLine3>
               <Div $width="5rem" $height="5rem" $position="relative">
                 <Image $width="5rem" $height="5rem" $br="50%" $objectfit="cover" src={authentication?.profilePic} />
               </Div>
             </FlexContainer>
             <Div $width="100%" $margin="0 0 0 1rem">
-              <Div $display='flex'>
-              <Title4>{authentication?.username}</Title4>
-               <Div $width="1.3rem" $display="flex" $jc="center" $ai="center" $margin="0 0 0 .5rem">
-                    <Image $width="100%" src={verified} $br="15px" />
+              <Div $display="flex">
+                <Title4>{authentication?.username}</Title4>
+                <Div $width="1.3rem" $display="flex" $jc="center" $ai="center" $margin="0 0 0 .5rem">
+                  <Image $width="100%" src={verified} $br="15px" />
                 </Div>
               </Div>
               <Div $padding=".5rem 0">
-                <TextArea name='Textarea' placeholder={`reply to ${singlePost?.postedBy?.username}`} autoComplete="off" value={postComment} onChange={handleChangeComment} />
-                <Text $ta="right" $color={maxLength - postComment.length > 0 ? "gray" : "red"}>
-                  {maxLength - postComment.length}
-                </Text>
-                <ButtonTheme2>Publish</ButtonTheme2>
+                <Form onSubmit={handleSubmitReplyPost}>
+                  <TextArea name="Textarea" placeholder={`reply to ${singlePost?.postedBy?.username}`} autoComplete="off" value={replyText} onChange={handleChangeComment} />
+                  <Text $ta="right" $color={maxLength - replyText.length > 0 ? "gray" : "red"}>
+                    {maxLength - replyText.length}
+                  </Text>
+                  <ButtonTheme2 type="submit">Reply</ButtonTheme2>
+                </Form>
               </Div>
             </Div>
           </Section>
@@ -125,9 +135,8 @@ const CommentModal = ({ commentModal, setCommentModal }) => {
     </Fixed>
   );
 };
-// }
 
-export default CommentModal;
+export default ReplyModal;
 
 const Fixed = styled.div`
   position: fixed;
@@ -208,14 +217,14 @@ const DivLine2 = styled.div`
   height: calc(100% - 8rem);
   width: 0.5px;
   background: gray;
-  `;
+`;
 
 const DivLine3 = styled.div`
   position: absolute;
   bottom: 2rem;
   right: 50%;
   transform: translate(100%);
-  height: .5px;
+  height: 0.5px;
   width: 3rem;
   background: gray;
 `;

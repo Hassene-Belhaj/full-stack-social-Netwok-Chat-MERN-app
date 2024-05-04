@@ -1,7 +1,7 @@
-import {GetFeedPost, GetProfile, GetSinglePost, LogOut,GetAllPostProfile,verifyAuth, CreateNewPost, DeletePost } from "../api/Api_call";
+import {GetFeedPost, GetProfile, GetSinglePost, LogOut,GetAllPostProfile,verifyAuth, CreateNewPost, DeletePost, GetAllRepliesUser, ReplyPost } from "../api/Api_call";
 import {Log_Out,get_profile,start_loading_profile,end_loading_profile,sign_in_failure,sign_in_success, end_loading_auth, loading_profile_failure} from "../Slices/auth";
 import { toast } from "react-hot-toast";
-import { create_new_post, delete_post, end_post_loading, error_loading, get_posts, get_single_post, start_post_loading } from "../Slices/posts";
+import { add_reply, create_new_post, delete_post, end_post_loading, error_loading, get_posts, get_single_post, get_user_replies, start_post_loading } from "../Slices/posts";
 
 export const verifyAuthAction = () => async (dispatch) => {
   try {
@@ -99,7 +99,7 @@ export const CreateNewPostAction = ({postedBy,text,image,fn}) => async(dispatch)
     const {data} = await CreateNewPost({postedBy,text,image}) 
     console.log(data)
     if(data.success) {
-      toast.success('post created successfully') ;
+      toast.success(data.msg) ;
     } 
     dispatch(create_new_post(data.newPost))
     dispatch(end_post_loading())
@@ -110,18 +110,43 @@ export const CreateNewPostAction = ({postedBy,text,image,fn}) => async(dispatch)
 }
 
 
-export const DeletePostAction = (id) => async(dispatch) => {
+export const DeletePostAction = (id) => async (dispatch) => {
   try {
-    dispatch(start_post_loading())
+    toast.dismiss()
+    // dispatch(start_post_loading())
     const {data} = await DeletePost(id)
     dispatch(delete_post(id))
     console.log(data.msg)
     if(data.success) {
-      toast.success('post deleted successfully')
+       toast.success(data.msg)
     } 
-    dispatch(end_post_loading())
+    // dispatch(end_post_loading())
   } catch (error) {
     console.log(error)
-    dispatch(error_loading(error.response.data.msg))
+    // dispatch(error_loading(error.response.data.msg))
+  }
+}
+
+export const GetUserRepliesAction = (username) => async (dispatch) => {
+  try {
+    dispatch(start_post_loading())
+    const {data} = await GetAllRepliesUser(username)
+    dispatch(get_user_replies(data.resp))
+    dispatch(end_post_loading())
+  } catch (error) {
+    console.log(error) 
+  } 
+}
+
+export const ReplyPostAction = ({id,text}) => async(dispatch) => {
+  try {
+    const {data} = await ReplyPost({id,text})
+    console.log(data)
+    // dispatch(add_reply(data.postFind))
+    if(data.success) {
+      toast.success(data.msg)
+    } 
+  } catch (error) {
+    console.log(error)
   }
 }

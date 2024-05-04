@@ -13,12 +13,12 @@ import { verifyAuthAction } from "./redux/actions/actions";
 import { dark, light } from "./utils/ThemeColors";
 import ConfirmModal from "./Components/ConfirmModal/ConfirmModal";
 import PostModal from "./Components/Modals/PostModal";
-import CommentModal from "./Components/Modals/CommentModal";
+import ReplyModal from "./Components/Modals/ReplyModal";
 
 const App = () => {
   const dispatch = useDispatch();
   const [postModal, setPostModal] = useState(false); // modal add post
-  const [commentModal, setCommentModal] = useState({ type: "", show: false, postId: null }); // modal add comment
+  const [replyModal, setReplyModal] = useState({ type: "", show: false, postId: null }); // modal add comment
   const [confirmModal, setConfirmModal] = useState({ type: "", show: false, postId: null }); // modal delete post confirm
 
   const [theme, setTheme] = useState(undefined);
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme === "dark" ? dark : light}>
-      <GlobalStyleCss confirmModal={confirmModal.show | commentModal.show} />
+      <GlobalStyleCss confirmModal={confirmModal.show | replyModal.show} />
         <Toaster
           reverseOrder="true"
           toastOptions={{
@@ -55,6 +55,7 @@ const App = () => {
               iconTheme: {
                 primary: "black",
                 secondary: "white",
+              
               },
             },
             error: {
@@ -67,10 +68,10 @@ const App = () => {
         />
       <Container>
           {!pathname.includes("sign") ? <Navbar theme={theme} setTheme={setTheme} postModal={postModal} setPostModal={setPostModal} /> : null}
-          <Navigation postModal={postModal} setPostModal={postModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} commentModal={commentModal} setCommentModal={setCommentModal}  theme={theme} setTheme={setTheme} />
+          <Navigation postModal={postModal} setPostModal={postModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} replyModal={replyModal} setReplyModal={setReplyModal}  theme={theme} setTheme={setTheme} />
           {postModal && <PostModal postModal={postModal} setPostModal={setPostModal} />}
           {confirmModal.show && <ConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} />}
-          {commentModal.show && <CommentModal commentModal={commentModal} setCommentModal={setCommentModal} />}
+          {replyModal.show && <ReplyModal replyModal={replyModal} setReplyModal={setReplyModal} />}
       </Container>
     </ThemeProvider>
   );

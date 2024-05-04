@@ -3,10 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = ({
     posts  : [] ,
     singlePost : [],
+    replies : [],
     loading : true ,
     error : null ,
     isAdded : false,
-    isDeleted : false ,
+    // isDeleted : false ,
 })
 
 const posts  = createSlice({
@@ -48,12 +49,20 @@ const posts  = createSlice({
     state.posts = filter ;
     state.isDeleted = true ;
     return ;    
-    }
-
+    },
+    get_user_replies : (state,action) => {
+    state.replies = action.payload
+    return ;
+    },
+    // add_reply : (state,action) => {
+    // state.replies = [...state.replies , action.payload] ;
+    // return ;
+    // }
+    
     }
 
 })
 
 
 export default posts.reducer ;
-export const {start_post_loading , end_post_loading , error_loading , get_posts ,get_single_post, create_new_post , delete_post} = posts.actions ;
+export const {start_post_loading , end_post_loading , error_loading , get_posts ,get_single_post, create_new_post , delete_post , get_user_replies , add_reply} = posts.actions ;

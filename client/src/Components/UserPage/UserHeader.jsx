@@ -110,7 +110,7 @@ const UserHeader = ({ user, authentication, active, setActive }) => {
         </Div>
       )}
 
-      <ContainerBorderBottom $height="2.5rem" $display="flex" $gap=".5rem" $active>
+      <ContainerBorderBottom $height="2.5rem" $display="flex" $marginTop='1rem' $active>
         <Navlink to="threads">
           <ButtonUserHeaderSection $active={active === "Threads" ? true : false} onClick={() => setActive("Threads")}>
             Threads
@@ -128,8 +128,8 @@ const UserHeader = ({ user, authentication, active, setActive }) => {
 
 export default UserHeader;
 
-const Section = styled.section``;
-
+const Section = styled.section`
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -156,6 +156,7 @@ const ContainerBorderBottom = styled.div`
   display: ${({ $display }) => $display};
   border-bottom: ${({ theme, $active }) => ($active ? `solid .5px ${theme.color === dark.color ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"}` : "")};
   gap: ${({ $gap }) => $gap};
+  margin-top: ${({$marginTop})=>$marginTop} ;
 `;
 const Div = styled.div`
   width: ${({ $width }) => $width};

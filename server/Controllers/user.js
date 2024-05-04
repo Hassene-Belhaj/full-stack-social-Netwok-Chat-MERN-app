@@ -3,6 +3,7 @@ const { createCustomError } = require("../Middlewares/ErrorHandler");
 const userModel = require("../Models/userModel");
 const bcrypt = require("bcrypt");
 const {generateTokenAndSetCookie,} = require("../jwt/generateTokenAndSetCookie");
+const postModel = require("../Models/postModel");
 const cloudianry = require('cloudinary').v2;
 
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/; // regex for email
@@ -138,6 +139,17 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
   user.bio = bio || user.bio;
 
   const userUpdateInfo = await user.save();
+
+ // update also replies username | image
+    await postModel.updateMany({"replies.userID" : userID},{
+    $set : {
+      "replies.$[reply].username" : user.username ,
+      "replies.$[reply].profilePic" : user.profilePic
+    }
+  } , {arrayFilters : [{"reply.userID" : userID}]})
+
+
+
   const { password,createdAt,updatedAt, __v,followers,following, ...info } = userUpdateInfo._doc;
   res.status(200).json({ success: true, info });
 });

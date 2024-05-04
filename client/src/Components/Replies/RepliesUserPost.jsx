@@ -3,11 +3,10 @@ import styled from "styled-components";
 import verified from "/verified.png";
 import { dark } from "../../utils/ThemeColors";
 import ButtonsGroup from "../ButtonsGroup/ButtonsGroup";
-import { useSelector } from "react-redux";
+import moment from 'moment'
+import { useParams } from "react-router-dom";
 
-const RepliesUserPost = ({id,createdAt,image,likes,postedBy,replies,text}) => {
-  const {authentication } = useSelector(state=>state.auth)
-  console.log(postedBy)
+const RepliesUserPost = ({user,id,createdAt,image,likes,postedBy,replies,text}) => {
 
   return (
     <Container $active>
@@ -28,15 +27,15 @@ const RepliesUserPost = ({id,createdAt,image,likes,postedBy,replies,text}) => {
             </FlexContainer>
             <Div>
               <Title4 $color="gray" $fs="0.9rem">
-                1 day ago
-                {/* {moment(singlePost.createdAt).startOf("day").fromNow()} */}
+                {moment(createdAt).startOf("day").fromNow()}
               </Title4>
             </Div>
           </Div>
-          {/* <Text>{singlePost?.text}</Text> */}
-          <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, aperiam?</Text>
+          <Div $padding='.5rem 0'>
+              <Text>{text}</Text>
+          </Div>
           <Div $width="100%" $padding=".5rem 0">
-            <Image $width="100%" $objectfit="cover" $br="15px" src={"/post1.png"} />
+            <Image $width="100%" $objectfit="cover" $br="15px" src={image} />
             <Div $padding='.5rem 0 0 0'>
                 <ButtonsGroup />
             </Div>
@@ -45,7 +44,7 @@ const RepliesUserPost = ({id,createdAt,image,likes,postedBy,replies,text}) => {
       </Section>
 
        {replies.map(({userID,text,userProfilePic,username,_id},i) => {
-        if(userID === authentication.id) {
+        if(userID === user._id) {
           return (
         <Section key={i} $display="flex" $padding="2rem 0">
               <FlexContainer $position="relative">
@@ -159,10 +158,10 @@ const Image = styled.img`
 `;
 
 const Text = styled.p`
-  padding: 0.5rem 0;
-  font-weight: 400;
-  text-align: ${({ $ta }) => $ta};
-  color: ${({ $color }) => $color};
+    padding: 0.5rem 0;
+    font-size : 1.1rem; 
+    text-align: ${({ $ta }) => $ta};
+    color: ${({ $color }) => $color};
 `;
 
 const Title4 = styled.h4`

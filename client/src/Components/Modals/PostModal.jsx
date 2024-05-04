@@ -80,10 +80,14 @@ const PostModal = ({ postModel, setPostModal }) => {
   };
 
   useEffect(() => {
-    if (isAdded || isDeleted) {
+    if (isAdded ) {
       setPostModal(false);
+    } else {
+      setPostModal(true)
     }
-  }, [isAdded, isDeleted]);
+  }, [isAdded]);
+
+  
 
   return (
     <Container>
