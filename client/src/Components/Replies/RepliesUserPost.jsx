@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import verified from "/verified.png";
 import { dark } from "../../utils/ThemeColors";
 import ButtonsGroup from "../ButtonsGroup/ButtonsGroup";
 import moment from 'moment'
-import { useParams } from "react-router-dom";
 
 const RepliesUserPost = ({user,id,createdAt,image,likes,postedBy,replies,text}) => {
+  const [userLikes , setUserLikes] = useState(likes)
+  console.log(userLikes)
+
 
   return (
     <Container $active>
@@ -37,7 +39,7 @@ const RepliesUserPost = ({user,id,createdAt,image,likes,postedBy,replies,text}) 
           <Div $width="100%" $padding=".5rem 0">
             <Image $width="100%" $objectfit="cover" $br="15px" src={image} />
             <Div $padding='.5rem 0 0 0'>
-                <ButtonsGroup />
+                <ButtonsGroup likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes} />
             </Div>
           </Div>
         </Div>
@@ -63,9 +65,9 @@ const RepliesUserPost = ({user,id,createdAt,image,likes,postedBy,replies,text}) 
                   </Div>
                 </Div>
                 <Text>{text}</Text>
-                <Div $padding='.5rem 0 0 0'>
-                      <ButtonsGroup />
-                  </Div>
+                {/* <Div $padding='.5rem 0 0 0'>
+                      <ButtonsGroup likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes} />
+                  </Div> */}
               </Div>
             </Section>
           )

@@ -100,7 +100,7 @@ const deletePost = Asyncwrapper(async(req,res,next) => {
     const checkuser = await userModel.findById(userID)
     if(!checkuser) return next(createCustomError('user not found' , 404))
     const followedUser = checkuser.following ;
-    const posts = await postModel.find({postedBy : {$in : followedUser}}).sort({"createdAt" : -1}).populate("postedBy","-updatedAt -__v -email -name -bio -password -followers -following" )
+    const posts = await postModel.find({postedBy : {$in : followedUser}}).sort({"createdAt" : -1}).populate("postedBy","-updatedAt -__v -email -name  -password" )
     res.status(200).json({success : true , nbr  : posts?.length , posts})   
 })
 

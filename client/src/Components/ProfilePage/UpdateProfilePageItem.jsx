@@ -49,6 +49,7 @@ const UpdateProfilePageItem = ({ userProfile }) => {
         // localStorage.setItem("info",JSON.stringify(info))
         toast.success("user profile updated successfully");
         setLoadingData(false);
+        navigate(`/${userInfo.username}`);
       }
     } catch (error) {
       console.log(error);
@@ -196,7 +197,8 @@ const InputEditProfile = styled.input`
     color: gray;
   }
 `;
-const Input = styled.input``;
+const Input = styled.input`
+`;
 const Form = styled.form`
   display: ${({ $display }) => $display};
   flex-direction: ${({ $fd }) => $fd};

@@ -77,8 +77,8 @@ const ReplyModal = ({ replyModal, setReplyModal }) => {
           <Section $display="flex" $padding="2rem" $position="relative">
             <FlexContainer $position="relative">
               <DivLine></DivLine>
-              <Div $width="5rem" $height="5rem">
-                <Image $width="5rem" $height="5rem" $br="50%" $objectfit="cover" src={singlePost?.postedBy?.profilePic} />
+              <Div $width="4rem" $height="4rem">
+                <Image $width="100%" $height="100%" $br="50%" $objectfit="cover" src={singlePost?.postedBy?.profilePic} />
               </Div>
             </FlexContainer>
 
@@ -106,9 +106,9 @@ const ReplyModal = ({ replyModal, setReplyModal }) => {
           <Section $display="flex" $padding="2rem">
             <FlexContainer $position="relative">
               <DivLine2></DivLine2>
-              <DivLine3></DivLine3>
-              <Div $width="5rem" $height="5rem" $position="relative">
-                <Image $width="5rem" $height="5rem" $br="50%" $objectfit="cover" src={authentication?.profilePic} />
+              {/* <DivLine3></DivLine3> */}
+              <Div $width="4rem" $height="4rem" $position="relative">
+                <Image $width="100%" $height="100%" $br="50%" $objectfit="cover" src={authentication?.profilePic} />
               </Div>
             </FlexContainer>
             <Div $width="100%" $margin="0 0 0 1rem">
@@ -167,7 +167,7 @@ const Section = styled.section`
 
 const DivMenu = styled.div`
   max-width: 620px;
-  height: 700px;
+  max-height: 700px;
   display: flex;
   justify-content: ${({ $jc }) => $jc};
   align-items: ${({ $ai }) => $ai};
@@ -182,6 +182,7 @@ const DivMenu = styled.div`
 const Div = styled.div`
   padding: ${({ $padding }) => $padding};
   width: ${({ $width }) => $width};
+  max-width: ${({$maxWidth})=>$maxWidth};
   height: ${({ $height }) => $height};
   display: ${({ $display }) => $display};
   justify-content: ${({ $jc }) => $jc};
@@ -245,6 +246,7 @@ const FlexContainer = styled.div`
 const Image = styled.img`
   display: ${({ $display }) => $display};
   width: ${({ $width }) => $width};
+  max-width: ${({$maxWidth})=>$maxWidth};
   height: ${({ $height }) => $height};
   border-radius: ${({ $br }) => $br};
   object-fit: ${({ $objectfit }) => $objectfit};
@@ -272,39 +274,24 @@ const Title3 = styled.h3`
 `;
 
 const ButtonTheme2 = styled.button`
-  margin: 1rem 0 0 0;
+  /* margin: 1rem 0 0 0; */
   position: relative;
   width: 100%;
   height: 3rem;
   padding: 8px;
   font-weight: 600;
-  background-color: ${({ theme }) => (theme.background === dark.background ? "#101010" : "#f1f5f9")};
-  color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#0A0A0A")};
+  background-color: ${({ theme }) => (theme.background === dark.background ?  "#f1f5f9" : "#101010" )};
+  color: ${({ theme }) => (theme.background === dark.background ? "#0A0A0A" :  "#f1f5f9")};
   border-radius: 25px;
   cursor: pointer;
   outline: none;
   border: 2px solid gray;
   &:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+    transition: all ease-in-out 0.3s;
   }
 `;
 
-const ButtonTheme1 = styled.button`
-  position: relative;
-  width: 100%;
-  height: 2.5rem;
-  padding: 8px;
-  font-weight: 600;
-  background-color: ${({ theme }) => (theme.background === dark.background ? "#f1f5f9" : "#101010")};
-  color: ${({ theme }) => (theme.background === dark.background ? "#0A0A0A" : "#f1f5f9")};
-  border-radius: 10px;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
 
 const Form = styled.form`
   display: flex;

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSinglePostAction } from '../../redux/actions/actions'
 import styled from 'styled-components'
 
-const SinglePostPage = ({confirmModal , setConfirmModal}) => {
+const SinglePostPage = ({replyModal , setReplyModal , confirmModal , setConfirmModal}) => {
     const dispatch = useDispatch()
     const {singlePost,loading} = useSelector(state=>state.posts)
     const {id} = useParams()
@@ -22,10 +22,10 @@ const SinglePostPage = ({confirmModal , setConfirmModal}) => {
   else {
   return (
     <Container $maxWidth='620px' $padding='0 1rem 4rem 1rem' $margin='auto'>
-        <PostCard confirmModal={confirmModal} setConfirmModal={setConfirmModal} id={singlePost._id} username={singlePost?.postedBy?.username} postedBy={singlePost.postedBy} avatar={singlePost?.postedBy?.profilePic} verified={verified}  text={singlePost.text} image={singlePost.image} likes={singlePost.likes} replies={singlePost.replies} createdAt={singlePost.createdAt}  />
+        <PostCard  replyModal={replyModal} setReplyModal={setReplyModal}   confirmModal={confirmModal} setConfirmModal={setConfirmModal} id={singlePost._id} username={singlePost?.postedBy?.username} postedBy={singlePost.postedBy} profilePic={singlePost?.postedBy?.profilePic} verified={verified}  text={singlePost.text} image={singlePost.image} likes={singlePost.likes} replies={singlePost.replies} createdAt={singlePost.createdAt}  />
         {singlePost?.replies?.map(({_id,userID,text,userProfilePic,username},i) => {
           return (
-            <UserComments key={i}  id={_id} userProfilePic={userProfilePic} createdAt={'2d'} text={text} username={username} likes={'62'}  lastPost={singlePost.replies[singlePost.replies.length-1]._id}/>
+            <UserComments key={i}  id={_id}  userProfilePic={userProfilePic} createdAt={'2d'} text={text} username={username} likes={'62'}  lastPost={singlePost.replies[singlePost.replies.length-1]._id}/>
           )
         })}
 

@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
 
-const UserHeader = ({ user, authentication, active, setActive }) => {
+const UserHeader = ({ selected_user, authentication, active, setActive }) => {
   const [menuList, setMenuList] = useState(false);
-  const [follow, setFollow] = useState(!user?.followers?.includes(authentication?.id));
-  const [followersNbr, _setFollowersNbr] = useState([...user.followers]);
+  const [follow, setFollow] = useState(!selected_user?.followers?.includes(authentication?.id));
+  const [followersNbr, _setFollowersNbr] = useState([...selected_user.followers]);
   const navigate = useNavigate();
 
   const get_url = () => {
@@ -31,7 +31,7 @@ const UserHeader = ({ user, authentication, active, setActive }) => {
 
   const handleFollowUnfollow = async () => {
     try {
-      const { data } = await axios.post(`/user/follow/${user._id}`);
+      const { data } = await axios.post(`/user/follow/${selected_user._id}`);
       console.log(data);
       setFollow(!follow);
       if (!follow) {
@@ -54,19 +54,19 @@ const UserHeader = ({ user, authentication, active, setActive }) => {
     <Section>
       <FlexContainer $width="100%" $display="flex" $jc="space-between" $padding="4rem 0 0 0">
         <Div $display="flex" $fd="column" $flex="1">
-          <Title2>{user?.name}</Title2>
+          <Title2>{selected_user?.name}</Title2>
           <Div $display="flex" $ai="center" $padding="4px 0" $gap="1rem">
-            <Text>{user?.username}</Text>
+            <Text>{selected_user?.username}</Text>
             {/* <Button1 $border='none' $padding='4px 12px' $br='25px'>threads.net</Button1> */}
           </Div>
         </Div>
         <Div $flex="1" $display="flex" $jc="end">
-          <Image src={user.profilePic || "user.jpg"} />
+          <Image src={selected_user.profilePic || "user.jpg"} />
         </Div>
       </FlexContainer>
 
       <Container $display="flex" $fd="column" $padding="1rem 0" $gap="1rem">
-        <Text>{user?.bio}</Text>
+        <Text>{selected_user?.bio}</Text>
 
         <FlexContainer $display="flex" $jc="space-between" $ai="center">
           <Div>
@@ -95,14 +95,14 @@ const UserHeader = ({ user, authentication, active, setActive }) => {
         </FlexContainer>
       </Container>
 
-      {user._id === authentication?.id && (
-        <Navlink to={`/update/${user.username}`}>
+      {selected_user._id === authentication?.id && (
+        <Navlink to={`/update/${selected_user.username}`}>
           <Div $width="50%" $padding="1.5rem 0">
             <ButtonTheme1 type="submit"> Update Profile </ButtonTheme1>
           </Div>
         </Navlink>
       )}
-      {user._id !== authentication?.id && (
+      {selected_user._id !== authentication?.id && (
         <Div $width="50%" $padding="1.5rem 0">
           <ButtonTheme1 onClick={handleFollowUnfollow} type="submit">
             {follow ? "follow" : "Unfollow"}
@@ -261,7 +261,7 @@ const ButtonScaleEffect = styled.button`
   }
 `;
 const Span = styled.span`
-  height: 3rem;
+  height: 100%;
 `;
 const Navlink = styled(Link)`
   width: 100%;

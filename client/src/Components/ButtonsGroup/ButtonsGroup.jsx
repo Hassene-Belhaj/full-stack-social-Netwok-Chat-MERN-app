@@ -14,7 +14,7 @@ const ButtonsGroup = ({ replyModal , setReplyModal, likes, padding, id, userLike
   // console.log(authentication.id)
   // console.log(commentModal)
 
-  const handleOpenCommentModal = (e) => {
+  const handleOpenReplyModal = (e) => {
     setReplyModal({...replyModal,show : true , postId : id})
   }
 
@@ -39,7 +39,7 @@ const ButtonsGroup = ({ replyModal , setReplyModal, likes, padding, id, userLike
     <FlexContainer $padding={padding ? padding : null}>
       <ButtonScaleEffect onClick={likeunlike}>{!userLikes?.includes(authentication.id) ? <FaRegHeart size={25} /> : <FaHeart color="#ef4444" size={25} />}</ButtonScaleEffect>
 
-      <ButtonScaleEffect onClick={handleOpenCommentModal}>
+      <ButtonScaleEffect onClick={handleOpenReplyModal}>
         <TbMessageCircle size={25} />
       </ButtonScaleEffect>
 

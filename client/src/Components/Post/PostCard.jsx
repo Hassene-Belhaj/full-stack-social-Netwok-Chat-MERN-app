@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { dark } from "../../utils/ThemeColors";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
-const PostPage = ({ confirmModal, setConfirmModal, id, username, postedBy, avatar, text, image, likes, replies, createdAt }) => {
+const PostPage = ({replyModal , setReplyModal, confirmModal, setConfirmModal, id, username, postedBy, profilePic, text, image, likes, replies, createdAt }) => {
   const [menuList, setMenuList] = useState(false);
   const [userLikes , setUserLikes] = useState(likes)
 
@@ -28,22 +28,21 @@ const PostPage = ({ confirmModal, setConfirmModal, id, username, postedBy, avata
       <FlexContainer $display="flex" $gap=".5rem" $jc="space-between" $width="100%">
         <FlexContainer $display="flex" $gap="1rem">
           <Div $width="4rem" $height="4rem">
-            <Image $width="100%" $height="100%" src={avatar} $br="50%" $objectfit="cover" />
+            <Image $width="100%" $height="100%" src={profilePic} $br="50%" $objectfit="cover" />
           </Div>
 
           <Div $display="flex" $ai="center" $gap=".5rem">
             <Title4>{postedBy?.username}</Title4>
-            <Div $width="1.3rem" $display="flex" $jc="center" $ai="center">
-              <Image $width="100%" src={verified} $br="15px" />
+            <Div $padding='0 0 0 2rem' $width="auto" $display="flex" $jc="center" $ai="center">
+              <Title5 $fs='0.9rem'>{moment(createdAt).startOf("day").fromNow()}</Title5>
             </Div>
           </Div>
         </FlexContainer>
 
         <FlexContainer $display="flex" $position="relative">
           <Div $display="flex" $ai="center" $gap="1rem">
-            <Title5>{moment(createdAt).startOf("day").fromNow()}</Title5>
             <ButtonScaleEffect onClick={() => setMenuList(!menuList)} onBlur={handleBlur} $padding="8px" $br="50%" $border="none" $display="flex" $jc="center" $ai="center">
-              <BsThreeDots size={15} color="gray" />
+              <BsThreeDots size={25} color="gray" />
             </ButtonScaleEffect>
           </Div>
           {menuList && <MenuPost confirmModal={confirmModal} setConfirmModal={setConfirmModal} postID={id} username={username} />}
@@ -56,7 +55,7 @@ const PostPage = ({ confirmModal, setConfirmModal, id, username, postedBy, avata
         <Div $width="100%">
           <Image $width="100%" $br="15px" src={image} />
         </Div>
-        <ButtonsGroup likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes} />
+        <ButtonsGroup replyModal={replyModal} setReplyModal={setReplyModal} likes={likes} id={id} userLikes={userLikes} setUserLikes={setUserLikes} />
       </FlexContainer>
 
       <FlexContainer $display="flex" $gap="1rem" $padding="1rem 0 0 0">
@@ -91,6 +90,7 @@ const Div = styled.div`
   right: ${({ $right }) => $right};
   transform: ${({ $transform }) => $transform};
   background: ${({ $bg }) => $bg};
+  padding: ${({$padding})=>$padding};
 `;
 const FlexContainer = styled.div`
   display: ${({ $display }) => $display};
@@ -117,14 +117,13 @@ const Title3 = styled.h3`
   font-size: 1rem;
   font-weight: 400;
   padding: 1rem 0 0 0.5rem;
-`
-
+`;
 const Title4 = styled.h4`
 `;
-
 const Title5 = styled.h5`
   color: gray;
   text-transform: capitalize;
+  font-size: ${({$fs})=>$fs};
 `;
 const Span = styled.span`
   color: ${({ $color }) => $color};

@@ -140,15 +140,15 @@ const updateUser = Asyncwrapper(async (req, res, next) => {
 
   const userUpdateInfo = await user.save();
 
- // update also replies username | image
+ // update also all info in replies
     await postModel.updateMany({"replies.userID" : userID},{
     $set : {
-      "replies.$[reply].username" : user.username ,
-      "replies.$[reply].profilePic" : user.profilePic
+      "replies.$[field].username" : user.username ,
+      "replies.$[field].profilePic" : user.profilePic
     }
-  } , {arrayFilters : [{"reply.userID" : userID}]})
-
-
+  } , {arrayFilters : [{"field.userID" : userID}]})
+  //
+  generateTokenAndSetCookie(user._id,user.username,user.profilePic, res);
 
   const { password,createdAt,updatedAt, __v,followers,following, ...info } = userUpdateInfo._doc;
   res.status(200).json({ success: true, info });

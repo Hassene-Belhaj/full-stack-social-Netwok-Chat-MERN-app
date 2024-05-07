@@ -2,17 +2,19 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Spinner from '../../utils/Spinner'
-import { FeedPostAction } from '../../redux/actions/actions'
+import { FeedPostAction, getProfileAction } from '../../redux/actions/actions'
 import FollowedUserPosts from '../UserPage/FollowedUserPosts'
 import styled from 'styled-components'
 
 
 const Home = ({replyModal,setReplyModal}) => {
   const dispatch = useDispatch()
-  const {isLoggedIn} = useSelector(state=>state.auth)
+  const {userProfile , isLoggedIn , authentication} = useSelector(state=>state.auth)
   const {posts,loading,error} = useSelector(state=>state.posts)
 
-  console.log(posts[0]?.replies)
+  // console.log(posts[0]?.replies)
+  console.log(posts)
+// console.log(authentication)
  
  useEffect(()=>{
   dispatch(FeedPostAction())
@@ -24,9 +26,9 @@ const Home = ({replyModal,setReplyModal}) => {
     else {
       return (
         <Wrapper >
-        {posts?.map(({_id , image,text,followers,following,username,postedBy,createdAt,likes,replies},i)=>{
+        {posts?.map(({_id,image,text,postedBy,createdAt,likes,replies},i)=>{
             return (
-              <FollowedUserPosts key={i} replyModal={replyModal} setReplyModal={setReplyModal}  id={_id} avatar={postedBy.profilePic} username={postedBy.username} postTitle={text} postImage={image} createdAt={createdAt} likes={likes} replies={replies} />
+              <FollowedUserPosts key={i} replyModal={replyModal} setReplyModal={setReplyModal} id={_id} userID={postedBy._id} profilePic={postedBy.profilePic} username={postedBy.username} bio={postedBy.bio} postTitle={text} postImage={image} createdAt={createdAt} likes={likes} replies={replies} followers={postedBy?.followers} following={postedBy?.following} authentication={authentication} />
             ) 
             })}
         </Wrapper>

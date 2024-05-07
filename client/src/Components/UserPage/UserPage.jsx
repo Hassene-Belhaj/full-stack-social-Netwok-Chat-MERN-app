@@ -8,15 +8,16 @@ import Spinner from "../../utils/Spinner";
 import styled from "styled-components";
 import RepliesUser from "../Replies/RepliesUser";
 import FollowedUserPosts from "./FollowedUserPosts";
+import Spinner2 from "../../utils/Spinner2";
 
 const UserPage = ({ confirmModal, setConfirmModal }) => {
   const dispatch = useDispatch();
-  const [active, setActive] = useState("Threads") // userHeader sections theads and replies
+  const [active, setActive] = useState("Threads"); // userHeader sections theads and replies
   const { userProfile, authentication, loading_profile } = useSelector((state) => state.auth);
   const { posts, replies, loading, error, isAdded, isDeleted } = useSelector((state) => state.posts);
   const { username } = useParams();
-  const {pathname} = useLocation()
-  console.log(pathname)
+  const { pathname } = useLocation();
+
 
   useEffect(() => {
     dispatch(getProfileAction(username));
@@ -24,33 +25,20 @@ const UserPage = ({ confirmModal, setConfirmModal }) => {
     dispatch(GetUserRepliesAction(username));
   }, [username, isAdded]);
 
+  useEffect(() => {
+    const pathnameActive = pathname.split("/").pop();
+    if (pathnameActive === "threads") setActive("Threads");
+    if (pathnameActive === "replies") setActive("Replies");
+    if (pathnameActive === "reposts") setActive("Reposts");
+  }, []);
 
-  useEffect(()=>{
-  const pathnameActive = pathname.split('/').pop()  
-    if(pathnameActive === 'threads') setActive('Threads')
-    if(pathnameActive === 'replies') setActive('Replies')  
-    if(pathnameActive === 'reposts') setActive('Reposts')  
-  },[])
-
-  
-  if (loading_profile | loading)
-    return (
-      <Container $height="100vh" $display="flex" $ai="center" $jc="center">
-        <Spinner Size={"8px"} />
-      </Container>
-    );
-  else if (!userProfile)
-    return (
-      <Container>
-        <Title4 $padding="8rem 0 0 0" $ta="center" $fw="400" $tt="capitalize">
-          {error}
-        </Title4>
-      </Container>
-    );
+  if(loading_profile || loading) return (<Container $height="100vh" $display="flex" $ai="center" $jc="center"><Spinner Size={"8px"} /></Container>);
+  else if(!userProfile) return (<Container><Title4 $padding="8rem 0 0 0" $ta="center" $fw="400" $tt="capitalize">{error}</Title4></Container>);
   else {
     return (
       <Container $maxWidth="620px" $margin="auto">
-        <UserHeader user={userProfile} authentication={authentication} active={active} setActive={setActive} />
+        <UserHeader selected_user={userProfile} authentication={authentication} active={active} setActive={setActive} />
+
         {active === "Threads" ? (
           <>
             {!posts.length ? (
@@ -61,9 +49,33 @@ const UserPage = ({ confirmModal, setConfirmModal }) => {
               </Container>
             ) : (
               <>
+                {loading ? <Container $padding='8rem' $display='flex' $jc='center' $ai='center'><Spinner2 width={"40px"} height={"40px"}/></Container>  : 
+                <>
                 {posts.map(({ _id, postedBy, image, text, likes, createdAt, replies }, i) => {
-                  return <FollowedUserPosts confirmModal={confirmModal} setConfirmModal={setConfirmModal} key={i} id={_id} avatar={postedBy.profilePic} username={postedBy.username} verified={verified} postTitle={text} postImage={image} likes={likes} replies={replies} createdAt={createdAt} />;
+                  return (
+                    <FollowedUserPosts
+                        confirmModal={confirmModal}
+                        setConfirmModal={setConfirmModal}
+                        key={i}
+                        id={_id}
+                        profilePic={postedBy.profilePic}
+                        bio={postedBy.bio}
+                        followers={postedBy.followers}
+                        following={postedBy.following}
+                        username={postedBy.username}
+                        verified={verified}
+                        postTitle={text}
+                        postImage={image}
+                        likes={likes}
+                        replies={replies}
+                        createdAt={createdAt}
+                        userID={postedBy._id}
+                        authentication={authentication}
+                    />
+                  );
                 })}
+                </>
+              }
               </>
             )}
           </>
@@ -76,10 +88,19 @@ const UserPage = ({ confirmModal, setConfirmModal }) => {
                 </Title4>
               </Container>
             ) : (
-              <RepliesUser user={userProfile} authentication={authentication} replies={replies} />
+              <>
+              {loading? <Container $padding='8rem' $display='flex' $jc='center' $ai='center'><Spinner2 width={"40px"} height={"40px"}/></Container> 
+              :
+              <RepliesUser 
+                user={userProfile} 
+                authentication={authentication} 
+                replies={replies} />
+               }
+              </>
             )}
           </>
         )}
+        
       </Container>
     );
   }

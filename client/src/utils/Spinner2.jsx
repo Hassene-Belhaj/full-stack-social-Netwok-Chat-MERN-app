@@ -33,9 +33,9 @@ const LoaderSpinner = styled.div`
   width: ${({ $width }) => ($width ? $width : "45px")};
   height: ${({ $height }) => ($height ? $height : "45px")};
   animation: ${rotate360} 0.8s infinite linear;
-  border-right: ${({ theme }) => `3px solid ${theme.background}`};
-  border-left: ${({ theme }) => `3px solid ${theme.background}`};
-  border-top: ${({ theme }) => `3px solid ${theme.background}`};
+  border-right: 3px solid gray;
+  border-left: 3px solid gray;
+  border-top: 3px solid gray;
   border-bottom: 3px solid rgba(0, 0, 0, 0);
   background-color: transparent;
   border-radius: 50%;

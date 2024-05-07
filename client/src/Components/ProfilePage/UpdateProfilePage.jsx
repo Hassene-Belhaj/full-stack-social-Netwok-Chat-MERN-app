@@ -14,8 +14,6 @@ const UpdateProfilePage = () => {
 
   const dispatch = useDispatch();
 
-  // console.log(loading)
-  // console.log(userProfile)
 
   useEffect(() => {
     dispatch(getProfileAction(username));
