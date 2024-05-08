@@ -10,6 +10,7 @@ import SinglePostPage from '../Post/SinglePostPage'
 import styled from 'styled-components'
 import FollowedUserPosts from '../UserPage/FollowedUserPosts'
 import RepliesUser from '../Replies/RepliesUser'
+import ChatPage from '../Chat/ChatPage'
 
 
 
@@ -35,6 +36,8 @@ const Navigation = ({postModal,replyModal,setReplyModal,confirmModal,setConfirmM
                   <Route path='update/:username' element={isLoggedIn?  <UpdateProfilePage /> : <Navigate  to='/signin' /> } />
                   
                   <Route path='' element={<Home replyModal={replyModal} setReplyModal={setReplyModal} />} />
+                  <Route path='chat' element={<ChatPage />} />
+
                   <Route path='*' element={<h2 style={{padding:'4rem 0',textAlign:'center' ,fontSize:'1rem'}}>Error</h2>} />
             </Routes>
           </Container>  
