@@ -95,6 +95,7 @@ const DivMenu = styled.div`
   background-color: ${({ theme }) => (theme.background === dark.background ? "#181818" : "#fff")};
   box-shadow: ${({ theme }) => (theme.background === dark.background ? "rgba(255,255,255, 0.1) 0px 0px 5px,rgba(255,255,255, 0.05) 0px 0px 5px" : "rgba(0, 0, 0, 0.1) 0px 0px 5px,rgba(0, 0, 0, 0.05) 0px 0px 5px")};
 `;
+
 const Div = styled.div`
   width: 100%;
   height: 100%;

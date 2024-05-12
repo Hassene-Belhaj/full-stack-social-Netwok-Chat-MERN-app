@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const userRoute = require('./Routes/user');
 const postsRoute = require('./Routes/post');
+const chatRoute = require('./Routes/chat');
 const { errorHandling } = require('./Middlewares/ErrorHandler');
 const { notFound } = require('./Middlewares/notFound');
 const cloudinary = require('cloudinary').v2;
@@ -46,6 +47,7 @@ Start()
 
 app.use('/api/user',userRoute)
 app.use('/api/posts',postsRoute)
+app.use('/api/chat',chatRoute)
 
 
 app.use(errorHandling)
