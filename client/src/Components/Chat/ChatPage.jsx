@@ -1,29 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { dark } from "../../utils/ThemeColors";
-import { FiSend } from "react-icons/fi";
 import { BiConversation } from "react-icons/bi";
 import { BiCheckDouble } from "react-icons/bi";
 import ConversationUi from "./ConversationUi";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Spinner from "../../utils/Spinner";
+import { IconFisend } from "../../utils/Icons";
+import SearchButtonProfile from "./SearchButtonProfile";
 import Spinner2 from "../../utils/Spinner2";
 
 const ChatPage = () => {
   const refChat = useRef(null);
-  const { authentication } = useSelector((state) => state.auth);
-
+  const { authentication , userProfile } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(true);
   const [conversationData, setConversationData] = useState(null);
-
-  const [conversationId, setConversationId] = useState(null);
+  const [selectedConversation, setSelectedConversation] = useState(null);
   const [messagesData, setMessagesData] = useState(null);
   const [active, setActive] = useState(true);
   const [inputMessage, setInputMessage] = useState({ recipientID: "", text: "" });
   const [index, setIndex] = useState(null);
 
-  console.log(conversationData);
+  // console.log(conversationData)
+  // console.log(selectedConversation)
+  // console.log(index)
 
   const getConversation = async () => {
     try {
@@ -37,17 +39,33 @@ const ChatPage = () => {
     }
   };
 
-  const getMessage = async (id, i) => {
-    setIndex(i);
+  const getMessage = async (id) => {
+    const isitfakeconversation = conversationData.find((item) => item.participants[0]._id === id && item.lastMessage.sender === "");
+    // find index
+    const findIndex = conversationData.findIndex((item) => item.participants[0]._id === id);
+    setIndex(findIndex);
+    if (isitfakeconversation) {
+      setMessagesData([{
+        _id: Date.now(),
+        conversationID: Date.now(),
+        createdAt: Date.now(),
+        sender: { _id: userProfile?._id, username: userProfile?.username, email: userProfile?.email , profilePic: userProfile?.profilePic },
+        text: "",
+      }])
+      return ;
+    }
     setInputMessage({ ...inputMessage, recipientID: id });
-    setConversationId(null);
+    setSelectedConversation(null);
     try {
       setLoadingMessages(true);
-      const { data } = await axios.get(`/chat/${id}`);
+      const resp = await axios.get(`/chat/${id}`);
+      const { data } = resp;
       setMessagesData(data.allMessages);
-      setConversationId(data.conversationId);
+      setSelectedConversation(data.conversationId);
+      setLoadingMessages(false);
     } catch (error) {
       console.log(error);
+      setLoadingMessages(false);
     }
   };
 
@@ -63,7 +81,7 @@ const ChatPage = () => {
 
       setConversationData((prev) => {
         const updateConversation = prev.map((conversation) => {
-          if (conversation._id === conversationId) {
+          if (conversation._id === selectedConversation) {
             return {
               ...conversation,
               lastMessage: {
@@ -93,17 +111,20 @@ const ChatPage = () => {
     }
   }, [index, sendMessage]);
 
+
+
   return (
     <Container>
       <Wrapper $display="flex">
         <Section1 $flex="2">
           {!loading && (
             <>
-              Connected Users
+              <Title3>Connected Users</Title3>
+              <SearchButtonProfile getMessage={getMessage} conversationData={conversationData} setConversationData={setConversationData} setMessagesData={setMessagesData} />
               {conversationData &&
                 conversationData.map(({ lastMessage, participants }, i) => {
                   return (
-                    <FlexContainer $active={active && index === i} key={i} onClick={() => getMessage(participants[0]._id, i)}>
+                    <FlexContainer $active={active && index === i} key={i} onClick={() => getMessage(participants[0]._id)}>
                       <Div $width="4rem" $height="4rem" $position="relative">
                         <Image src={participants[0].profilePic} />
                         {/* <Cercle></Cercle> */}
@@ -111,7 +132,7 @@ const ChatPage = () => {
                       <Div>
                         <Title3>{participants[0].username}</Title3>
                         <Div $display="flex" $ai="center" $gap=".5rem">
-                          {lastMessage.sender._id !== authentication.id && <BiCheckDouble />}
+                          {lastMessage.sender._id !== authentication.id && !lastMessage.text.startsWith("Start a Conversation") ? <BiCheckDouble /> : ""}
                           <Text>{lastMessage.text.length > 24 ? lastMessage.text.substring(0, 24) + "..." : lastMessage.text}</Text>
                         </Div>
                       </Div>
@@ -144,40 +165,36 @@ const ChatPage = () => {
         <Section2 $flex="3">
           <DivMenu>
             <Section>
-              <Wrapper $display="flex" $padding="1rem" $borderBottom>
-                <Div $width="3rem" $height="3rem">
-                  <Image src={authentication.profilePic} />
-                </Div>
-                <Div $display="flex" $jc="center" $ai="center">
-                  <Title3>{authentication.username}</Title3>
-                </Div>
-              </Wrapper>
-              {!loadingMessages ? (
-                <Div $padding="10rem 0">
-                  <Spinner2 />
-                </Div>
+              {!messagesData?.length ? (
+                <>
+                  <Div $height="500px" $display="flex" $jc="center" $ai="center">
+                    <BiConversation size="50" />
+                  </Div>
+                </>
               ) : (
                 <>
-                  {!messagesData?.length ? (
-                    <Div $height="500px" $display="flex" $jc="center" $ai="center">
-                      <BiConversation size="50" />
+                  <Wrapper $display="flex" $padding="1rem" $borderBottom>
+                    <Div $width="3rem" $height="3rem">
+                      <Image src={messagesData[0].sender.profilePic} />
                     </Div>
-                  ) : (
-                    <>
-                      {messagesData.map((messages, i) => {
-                        return <ConversationUi key={i} messages={messages} ownMessage={messages.sender._id === authentication.id ? true : false} />;
-                      })}
-                    </>
-                  )}
+                    <Div $display="flex" $jc="center" $ai="center">
+                      <Title4>{messagesData[0].sender.username}</Title4>
+                    </Div>
+                  </Wrapper>
+                  {messagesData?.map((messages, i) => {
+                    return <ConversationUi key={i} messages={messages} ownMessage={messages.sender._id === authentication.id ? true : false} />;
+                  })}
                 </>
               )}
             </Section>
+
             <div ref={refChat} />
+
             {messagesData?.length && (
               <Section>
                 <Form onSubmit={sendMessage}>
-                  <Div $display="flex" $width="100%" $padding="1rem">
-                    <Input placeholder="Type a message" value={inputMessage.text} onChange={(e) => setInputMessage({ ...inputMessage, text: e.target.value })} />
+                  <Div $display="flex" $width="100%" $margin="1rem" $position="relative">
+                    <Input $width="100%" placeholder="Type a message" value={inputMessage.text} onChange={(e) => setInputMessage({ ...inputMessage, text: e.target.value })} />
                     <Button type="submit">
                       <IconFisend color="gray" size={25} />
                     </Button>
@@ -238,6 +255,7 @@ const Wrapper = styled.div`
   }
 `;
 const Div = styled.div`
+  margin: ${({ $margin }) => $margin};
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
   display: ${({ $display }) => $display};
@@ -268,18 +286,21 @@ const Form = styled.form`
   display: flex;
 `;
 const Input = styled.input`
+  position: ${({ $position }) => $position};
   padding-left: 1rem;
-  width: calc(100% - 5rem);
+  padding-right: 4rem;
+  margin-bottom: ${({ $marginBottom }) => $marginBottom};
   height: 3rem;
+  width: ${({ $width }) => $width};
+  color: ${({ theme }) => theme.color};
   background-color: ${({ theme }) => (theme.background === dark.background ? "#181818" : "#f1f5f9")};
-  color: ${({ theme }) => theme};
   outline: none;
   border: 3px solid rgba(190, 190, 190, 0.2);
   border-radius: 10px;
   font-size: 1rem;
   &:focus {
-    transition: ease-in-out 0.4s;
-    border: 3px solid #8b5cf6;
+    border: 3px solid #3a5bc7;
+    transition: ease-in-out 300ms;
   }
   &::placeholder {
     font-weight: 500;
@@ -303,14 +324,18 @@ const DivMenu = styled.div`
   box-shadow: ${({ theme }) => (theme.background === dark.background ? "rgba(255,255,255, 0.1) 0px 0px 5px,rgba(255,255,255, 0.05) 0px 0px 5px" : "rgba(0, 0, 0, 0.1) 0px 0px 5px,rgba(0, 0, 0, 0.05) 0px 0px 5px")};
 `;
 const Title3 = styled.h3`
-  font-size: 0.9rem;
+  font-weight: 500;
 `;
+const Title4 = styled.h4``;
 const Text = styled.p`
   flex-wrap: wrap;
   padding: 0.5rem 0;
+  font-style: italic;
 `;
 const Button = styled.button`
-  width: 5rem;
+  position: absolute;
+  right: 0rem;
+  width: 4rem;
   height: 3rem;
   background-color: transparent;
   outline: none;
@@ -319,12 +344,11 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-`;
-const IconFisend = styled(FiSend)`
-  color: gray;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   &:hover {
-    color: #fff;
-    transition: all ease-in-out 0.3s;
+    background-color: rgba(90, 90, 90, 0.1);
+    transition: ease-in-out 0.3s;
   }
 `;
 const LoadingAvatar = styled.div`

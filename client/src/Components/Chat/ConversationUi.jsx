@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 const ConversationUi = ({ownMessage,messages}) => {
    
-
-  return (
-    <Container>
+  if(messages.text.length === 0) return ;
+  else  {
+    return (
+      <Container>
       <Wrapper $display="flex" $padding="1rem">
           <Div $order={ownMessage} $color="#fff" $width="calc(100% - 2rem)" $height="100%" $bg={ownMessage ? "#65636D" : "#3A5BC7"} $br="10px">
             <TextChat>{messages.text}</TextChat>
@@ -18,6 +19,7 @@ const ConversationUi = ({ownMessage,messages}) => {
     </Container>
   );
 };
+} ;
 
 export default ConversationUi;
 

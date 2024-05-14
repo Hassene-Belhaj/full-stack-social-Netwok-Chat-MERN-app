@@ -35,7 +35,7 @@ const Navigation = ({postModal,replyModal,setReplyModal,confirmModal,setConfirmM
                   <Route path=':username/post/:id' element={<SinglePostPage replyModal={replyModal} setReplyModal={setReplyModal} confirmModal={confirmModal} setConfirmModal={setConfirmModal} />} />
                   <Route path='update/:username' element={isLoggedIn?  <UpdateProfilePage /> : <Navigate  to='/signin' /> } />
                   
-                  <Route path='' element={<Home replyModal={replyModal} setReplyModal={setReplyModal} />} />
+                  <Route path='' element={isLoggedIn ?  < Home replyModal={replyModal} setReplyModal={setReplyModal} /> : <Navigate to='/signin' />} />
                   <Route path='chat' element={<ChatPage />} />
 
                   <Route path='*' element={<h2 style={{padding:'4rem 0',textAlign:'center' ,fontSize:'1rem'}}>Error</h2>} />

@@ -3,8 +3,10 @@ import { IoKeyOutline } from "react-icons/io5";
 import { LuUser2 } from "react-icons/lu";
 import { MdOutlineDarkMode, MdOutlineEmail, MdOutlineLightMode } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { IoIosImages, IoIosInformationCircleOutline } from "react-icons/io";
+import { FiSend } from "react-icons/fi";
+
 
 import styled from "styled-components";
 
@@ -88,3 +90,12 @@ export const IconMdOutlineLightMode = styled(MdOutlineLightMode)`
   top: 50%;
   transform: translate(50%, -50%);
 `;
+
+export const IconAiOutlineSearch = styled(AiOutlineSearch)`
+fill: gray;
+cursor: pointer;
+`
+
+export const  IconFisend = styled(FiSend)`
+`
+

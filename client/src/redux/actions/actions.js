@@ -24,6 +24,7 @@ export const getProfileAction = (username) => async (dispatch) => {
     dispatch(end_loading_profile());
   } catch (error) {
     dispatch(loading_profile_failure(error.response.data.msg))
+    toast.error(error.response.data.msg)
     console.log(error.response.data.msg);
   } 
 };

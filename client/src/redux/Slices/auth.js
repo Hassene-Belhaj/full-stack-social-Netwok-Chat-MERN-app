@@ -42,6 +42,7 @@ const auth = createSlice({
      loading_profile_failure : (state,action) => {
      state.loading_profile = false ;
      state.error = action.payload ;
+     state.userProfile = null ;
      },
     Log_Out : (state) => {
       state.authentication = null ;
